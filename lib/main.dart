@@ -13,8 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-      ),
+      theme: ThemeData(),
       home: XummPage(),
     );
   }
@@ -28,53 +27,34 @@ class XummPage extends StatefulWidget {
 }
 
 class _XummPageState extends State<XummPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-          children: [
-
-            Text(
-                'Purchase your\nBlockchain Domain',
-                style: new TextStyle(
-                    fontSize: 22.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold
-                )
-            ),
-            Text(
-                'Please enter at least 6 Characters'
-            ),
-
-            ElevatedButton(
-                onPressed:(){
-
-                }, child: Text("Check Domain")),
-            Expanded(
-              child: Container(
-                height: 200,
-                child: _buildBody(context),
-              ),
-            ),
-            // _domainListName(context)
-          ],
-        )
-    );
+      children: [
+        Text('Purchase your\nBlockchain Domain',
+            style: new TextStyle(fontSize: 22.0, color: Colors.black, fontWeight: FontWeight.bold)),
+        Text('Please enter at least 6 Characters'),
+        ElevatedButton(onPressed: () {}, child: Text("Check Domain")),
+        Expanded(
+          child: Container(
+            height: 200,
+            child: _buildBody(context),
+          ),
+        ),
+        // _domainListName(context)
+      ],
+    ));
   }
 }
-
 
 FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
   return FutureBuilder<DomainResponseData>(
     future: client.getDomainNameList("[\"crypto\"]"),
     builder: (context, snapshot) {
-
-      if(snapshot.hasError){
-      }
+      if (snapshot.hasError) {}
       if (snapshot.connectionState == ConnectionState.done) {
-
         final posts = snapshot.data;
 
         return _buildPosts(context, posts!);
@@ -88,15 +68,12 @@ FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
 }
 
 Widget _buildPosts(BuildContext context, DomainResponseData posts) {
-  return
-    ListView.builder(
-      itemCount: posts.crypto.length,
-      itemBuilder: (context,index){
-        return Card(
-          child: ListTile(
-            title: Text(" name : ${posts.crypto[index]['label']}")
-          ),
-        );
-      },
-    );
+  return ListView.builder(
+    itemCount: posts.crypto.length,
+    itemBuilder: (context, index) {
+      return Card(
+        child: ListTile(title: Text(" name : ${posts.crypto[index]['label']}")),
+      );
+    },
+  );
 }
