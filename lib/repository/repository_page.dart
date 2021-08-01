@@ -3,32 +3,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/api/api_client.dart';
 import 'package:up_reselling_webapp/models/data.dart';
+import 'package:up_reselling_webapp/models/domain_name.dart';
 
 class Repository {
 
-  // FutureBuilder<ResponseData> _buildBody(BuildContext context) {
-  //   final client = RestClient(Dio(BaseOptions(contentType: "application/json")),
-  //       baseUrl: 'https://gorest.co.in/public-api/');
-  //   return FutureBuilder<ResponseData>(
-  //     future: client.getUsers(),
-  //     builder: (context, snapshot) {
-  //       print('snapshot.error ${snapshot.error}');
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         final posts = snapshot.data;
-  //         print(posts);
-  //         if (posts != null) {
-  //           return _buildPosts(context, posts);
-  //         } else {
-  //           return Center(
-  //             child: Container(),
-  //           );
-  //         }
-  //       } else {
-  //         return Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
+  FutureBuilder<DomainResponseData> buildBody(BuildContext context) {
+    final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
+    return FutureBuilder<DomainResponseData>(
+      future: client.getDomainNameList("[\"crypto\"]"),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {}
+        if (snapshot.connectionState == ConnectionState.done) {
+          final posts = snapshot.data;
+
+          return _buildPosts(context, posts!);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildPosts(BuildContext context, DomainResponseData posts) {
+    return ListView.builder(
+      itemCount: posts.crypto.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: ListTile(title: Text(" name : ${posts.crypto[index]['label']}")),
+        );
+      },
+    );
+  }
+
 }
