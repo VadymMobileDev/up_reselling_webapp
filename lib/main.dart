@@ -4,6 +4,7 @@ import 'package:up_reselling_webapp/api/api_client.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
+import 'package:up_reselling_webapp/repository/labeled_check_box.dart';
 
 void main() {
   runApp(MyApp());
@@ -123,27 +124,8 @@ class _XummPageState extends State<XummPage> {
           SizedBox(height: Dimens.paddingMediumLarge),
           _textExtensions("xummwallet"),
 
-            Container(
-                width: MediaQuery.of(context).size.width,
-                child:
-          GridView.count(
-            primary: false,
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              _listGridContainer(".x"),
-              _listGridContainer(".crypto"),
-              _listGridContainer(".coin"),
-              _listGridContainer(".wallet"),
-              _listGridContainer(".bitcoin"),
-              _listGridContainer(".888"),
-              _listGridContainer(".nft"),
-              _listGridContainer(".dao"),
-              _listGridContainer(".zil"),
-            ],
-          ),
-            ),
+          _gridViewContainer(context),
+          SizedBox(height: Dimens.paddingMedium),
 
           _textHelpCenter(),
           // _domainListName(context)
@@ -254,16 +236,31 @@ Widget _textHelpCenter(){
   );
 }
 
-
-Widget _listGridContainer(String text){
+Widget _gridViewContainer(BuildContext context){
   return Container(
-      padding: const EdgeInsets.all(8),
-      child: Text(text),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: AppColor.borderCardGrey)
-      )
+    width: MediaQuery.of(context).size.width,
+    child:
+    GridView.count(
+      primary: false,
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      children: <Widget>[
+
+        GridContainerBody(titleText: ".x", checkText: "100"),
+        GridContainerBody(titleText: ".crypto", checkText: "40"),
+        GridContainerBody(titleText: ".coin", checkText: "20"),
+        GridContainerBody(titleText: ".wallet", checkText: "40"),
+        GridContainerBody(titleText: ".bitcoin", checkText: "20"),
+        GridContainerBody(titleText: ".888", checkText: "20"),
+        GridContainerBody(titleText: ".nft", checkText: "20"),
+        GridContainerBody(titleText: ".dao", checkText: "20"),
+        GridContainerBody(titleText: ".zil", checkText: "20"),
+      ],
+    ),
   );
 }
+
 
 
 FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
