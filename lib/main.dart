@@ -4,7 +4,6 @@ import 'package:up_reselling_webapp/api/api_client.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
-import 'package:up_reselling_webapp/repository/repository_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,8 +32,10 @@ class _XummPageState extends State<XummPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.all(Dimens.paddingMedium),
+
+      body:SingleChildScrollView(
+          child: Padding(
+      padding: EdgeInsets.all(Dimens.paddingMediumLarge),
       child: Column(
         children: [
           SizedBox(height: Dimens.paddingMedium),
@@ -49,13 +50,27 @@ class _XummPageState extends State<XummPage> {
                       onPressed: () {
                         setState(() => _flag = !_flag);
                       },
-                      child: Text("Register Domain"),
+                      child: Text("Register Domain",
+                          style: TextStyle(color: _flag ? AppColor.white : AppColor.textGrey)),
                       style: ElevatedButton.styleFrom(
-                        primary: _flag
-                            ? AppColor.primaryBlue
-                            : AppColor.primaryGrey, // This is what you need!
+                        primary: _flag ? AppColor.primaryBlue : AppColor.primaryGrey, minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimens.paddingDefault),
+                          )
                       ))),
-              Expanded(child: ElevatedButton(onPressed: () {}, child: Text("Manage Domain"))),
+              Expanded(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        setState(() => _flag = !_flag);
+                      },
+                      child: Text("Manage Domain",
+                          style: TextStyle(color: _flag ? AppColor.textGrey : AppColor.white)),
+                      style: ElevatedButton.styleFrom(
+                        primary: _flag ? AppColor.primaryGrey : AppColor.primaryBlue, minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimens.paddingDefault),
+                          )
+                      ))),
             ],
           ),
 
@@ -63,46 +78,108 @@ class _XummPageState extends State<XummPage> {
           _unstoppableCard(),
           _purchaseCard(),
 
-/*        Expanded(
-          child: Container(
-            height: 100,
-            child: _buildBody(context),
+          Card(
+            color: AppColor.backgroundLightGrey,
+            elevation: 0.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(Dimens.paddingDefault)),
+                side: BorderSide(width: 2, color: AppColor.borderCardGrey)),
+            child: Padding(
+              padding: EdgeInsets.all(Dimens.paddingSemi),
+              child: Row(
+                children: <Widget>[
+              Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child:
+                  Text("wwumwallet", style: TextStyle(color: AppColor.black, fontSize: Dimens.paddingMedium)),
+              )),
+               ElevatedButton(
+                    onPressed: () {},
+                    child:Row(
+                      children:[
+                        Container(
+                          child: Text(".crypto", style: TextStyle(color: AppColor.black)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
+                          child: Icon(Icons.arrow_drop_down, color: AppColor.textGreyDark, size: Dimens.paddingMedium)
+                          ),
+                      ],
+                    ),
+                      style: ElevatedButton.styleFrom(
+                      primary: AppColor.backgroundLightGrey, elevation: 0.0
+                    ),
+                  )
+
+                ],
+              ),
+            ),
           ),
-        ),*/
-          ElevatedButton(
-              onPressed: () {},
-              child: Text("Check Domain"),
-              style: ElevatedButton.styleFrom(
-                  primary: AppColor.primaryBlue, minimumSize: Size(double.infinity, 60))),
+
+
+          SizedBox(height: Dimens.paddingMedium),
+          _checkDomainButton(),
+          SizedBox(height: Dimens.paddingMediumLarge),
+          _textExtensions("xummwallet"),
+
+            Container(
+                width: MediaQuery.of(context).size.width,
+                child:
+          GridView.count(
+            primary: false,
+            crossAxisCount: 3,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              _listGridContainer(".x"),
+              _listGridContainer(".crypto"),
+              _listGridContainer(".coin"),
+              _listGridContainer(".wallet"),
+              _listGridContainer(".bitcoin"),
+              _listGridContainer(".888"),
+              _listGridContainer(".nft"),
+              _listGridContainer(".dao"),
+              _listGridContainer(".zil"),
+            ],
+          ),
+            ),
 
           _textHelpCenter(),
           // _domainListName(context)
         ],
       ),
-    ));
+    )));
   }
 }
 
 Widget _backToHome() {
   return Row(
     children: [
-      Icon(Icons.ac_unit),
-      ElevatedButton.icon(
-        icon: Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-        onPressed: () {},
-        label: Text("Beck To Home", style: TextStyle(color: AppColor.black),),
-        style: ElevatedButton.styleFrom(
-        primary: AppColor.primaryGrey,
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(Dimens.borderButtonRadius),
+  Expanded(
+     child: Align(
+    alignment: Alignment.centerLeft,
+    child:   Icon(Icons.ac_unit),
+    ),),
+  Expanded(
+    child: Align(
+        alignment: Alignment.centerRight,
+        child:       ElevatedButton.icon(
+          icon: Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
+          onPressed: () {},
+          label: Text("Beck To Home", style: TextStyle(color: AppColor.black),),
+          style: ElevatedButton.styleFrom(
+            primary: AppColor.primaryGrey,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
+            ),
           ),
-        ),
-      )
+        )
+      ),),
+
     ],
   );
 }
-
-
 
 Widget _unstoppableCard() {
   return Card(
@@ -144,11 +221,27 @@ Widget _purchaseCard() {
   );
 }
 
+Widget _textExtensions(String name) {
+  return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+          child: Text("Extensions for \"" + "$name" + "\"",
+              style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold))));
+}
+
+Widget _checkDomainButton(){
+  return ElevatedButton(
+      onPressed: () {},
+      child: Text("Check Domain"),
+      style: ElevatedButton.styleFrom(
+          primary: AppColor.primaryBlue,
+          minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimens.paddingDefault))));
+}
+
 Widget _textHelpCenter(){
-  return Expanded(
-    child: Align(
-      alignment: Alignment.bottomCenter,
-      child: RichText(
+  return RichText(
         text: TextSpan(
           children: <TextSpan>[
             TextSpan(
@@ -158,18 +251,20 @@ Widget _textHelpCenter(){
                 style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
           ],
         ),
-      ),
-    ),
   );
 }
 
-/*    Row(
-    children: [
-      ElevatedButton(onPressed: () {}, child: Text("Register Domain")),
-      ElevatedButton(onPressed: () {}, child: Text("Manage Domain")),
-    ],
-  );*/
-// }
+
+Widget _listGridContainer(String text){
+  return Container(
+      padding: const EdgeInsets.all(8),
+      child: Text(text),
+      decoration: BoxDecoration(
+          border: Border.all(width: 1, color: AppColor.borderCardGrey)
+      )
+  );
+}
+
 
 FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));

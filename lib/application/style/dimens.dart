@@ -28,4 +28,6 @@ abstract class Dimens {
 
 /* Other sizes */
   static const double borderButtonRadius = 20.0;
+  static const double margeButtonsEdge = 50.0;
+  static const double margeButtonEdge = 60.0;
 }
