@@ -29,7 +29,7 @@ class GridContainerBodyState extends State<GridContainerBody> {
             Text(widget.titleText,
                 style: TextStyle(fontSize: Dimens.paddingMedium, color: Colors.black, fontWeight: FontWeight.bold)),
 
-        LabeledCheckbox(
+        GridItem(
           label: "\$ "+widget.checkText,
           value: _isSelected,
           onChanged: (bool newValue) {
@@ -41,17 +41,11 @@ class GridContainerBodyState extends State<GridContainerBody> {
           ],
         ),
       ),);
-
-
-
-
-
-
   }
 }
 
-class LabeledCheckbox extends StatelessWidget {
-  const LabeledCheckbox({
+class GridItem extends StatelessWidget {
+  const GridItem({
     Key? key,
     required this.label,
     required this.value,
@@ -73,6 +67,8 @@ class LabeledCheckbox extends StatelessWidget {
         children: <Widget>[
           Checkbox(
             value: value,
+            activeColor: AppColor.green,
+            shape: CircleBorder(),
             onChanged: (bool? newValue) {
               onChanged(newValue);
             },
@@ -83,3 +79,51 @@ class LabeledCheckbox extends StatelessWidget {
     );
   }
 }
+
+/*
+
+class GridItem extends StatefulWidget {
+  final Key key;
+  final DomainGrid item;
+  final ValueChanged<bool> isSelected;
+
+  GridItem({required this.item, required this.isSelected, required this.key});
+
+  @override
+  _GridItemState createState() => _GridItemState();
+}
+
+class _GridItemState extends State<GridItem> {
+  bool isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isSelected = !isSelected;
+          widget.isSelected(isSelected);
+        });
+      },
+      child: Stack(
+        children: <Widget>[
+          Text(
+            widget.item.domainName
+          ),
+          isSelected
+              ? Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.check_circle,
+                color: Colors.blue,
+              ),
+            ),
+          )
+              : Container()
+        ],
+      ),
+    );
+  }
+}*/

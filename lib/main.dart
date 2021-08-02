@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/api/api_client.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/models/credit_card_model.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/repository/labeled_check_box.dart';
+import 'package:up_reselling_webapp/widgets/credit_card_form.dart';
+import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
+
+import 'models/grid_domain.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +34,11 @@ class XummPage extends StatefulWidget {
 
 class _XummPageState extends State<XummPage> {
   bool _flag = true;
-
+  String cardNumber = '';
+  String expiryDate = '';
+  String cvvCode = '';
+  bool isCvvFocused = false;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +49,7 @@ class _XummPageState extends State<XummPage> {
       child: Column(
         children: [
           SizedBox(height: Dimens.paddingMedium),
-          _backToHome(),
+          BeckToHomeWidget(),
           SizedBox(height: Dimens.paddingMedium),
           // _chooseDomainButtons(),
 
@@ -76,8 +85,8 @@ class _XummPageState extends State<XummPage> {
           ),
 
           SizedBox(height: Dimens.paddingMedium),
-          _unstoppableCard(),
-          _purchaseCard(),
+          CardUnstoppableWidget(),
+          CardPurchaseWidget(),
 
           Card(
             color: AppColor.backgroundLightGrey,
@@ -122,93 +131,116 @@ class _XummPageState extends State<XummPage> {
           SizedBox(height: Dimens.paddingMedium),
           _checkDomainButton(),
           SizedBox(height: Dimens.paddingMediumLarge),
-          _textExtensions("xummwallet"),
+          TitleExtensionsWidget(domainName: "xummwallet"),
 
           _gridViewContainer(context),
+
+
+/*          Container(
+    width: MediaQuery.of(context).size.width,
+    child:
+          GridView.builder(
+              itemCount: itemList.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: 0.56,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 2),
+              itemBuilder: (context, index) {
+                return GridItem(
+                    item: itemList[index],
+                    isSelected: (bool value) {
+                      setState(() {
+                        if (value) {
+                          selectedList.add(itemList[index]);
+                        } else {
+                          selectedList.remove(itemList[index]);
+                        }
+                      });
+                      print("$index : $value");
+                    },
+                    key: Key(itemList[index].price));
+              }),
+          ),*/
+
           SizedBox(height: Dimens.paddingMedium),
 
-          _textHelpCenter(),
-          // _domainListName(context)
+          HelpCenterWidget(),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                  children:[
+                    CreditCardForm(
+                      formKey: formKey,
+                      obscureCvv: true,
+                      obscureNumber: true,
+                      cardNumber: cardNumber,
+                      cvvCode: cvvCode,
+                      expiryDate: expiryDate,
+                      themeColor: Colors.blue,
+                      cardNumberDecoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Number',
+                        hintText: 'XXXX XXXX XXXX XXXX',
+                      ),
+                      expiryDateDecoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Expired Date',
+                        hintText: 'XX/XX',
+                      ),
+                      cvvCodeDecoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'CVV',
+                        hintText: 'XXX',
+                      ),
+                      onCreditCardModelChange: onCreditCardModelChange,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        primary: const Color(0xff1b447b),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.all(8),
+                        child: const Text(
+                          'VALIDATE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'halter',
+                            fontSize: 14,
+                            package: 'flutter_credit_card',
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          print('valid!');
+                        } else {
+                          print('invalid!');
+                        }
+                      },
+                    )
+                  ],
+                ),
+              ),
         ],
       ),
+
     )));
   }
-}
 
-Widget _backToHome() {
-  return Row(
-    children: [
-  Expanded(
-     child: Align(
-    alignment: Alignment.centerLeft,
-    child:   Icon(Icons.ac_unit),
-    ),),
-  Expanded(
-    child: Align(
-        alignment: Alignment.centerRight,
-        child:       ElevatedButton.icon(
-          icon: Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-          onPressed: () {},
-          label: Text("Beck To Home", style: TextStyle(color: AppColor.black),),
-          style: ElevatedButton.styleFrom(
-            primary: AppColor.primaryGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
-            ),
-          ),
-        )
-      ),),
 
-    ],
-  );
-}
+  void onCreditCardModelChange(CreditCardModel? creditCardModel) {
+    setState(() {
+      cardNumber = creditCardModel!.cardNumber;
+      expiryDate = creditCardModel.expiryDate;
+      cvvCode = creditCardModel.cvvCode;
+      isCvvFocused = creditCardModel.isCvvFocused;
+    });
+  }
 
-Widget _unstoppableCard() {
-  return Card(
-    color: AppColor.backgroundLightBlue,
-    child: Padding(
-      padding: EdgeInsets.all(Dimens.paddingLarge),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text("UNSTOPPABLE\nDOMAINS",
-              style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold)),
-          SizedBox(height: Dimens.paddingSemi),
-          Text('Replace cryptocurrency addresses with\na human readable name',
-              style: TextStyle(fontSize: 14.0, color: AppColor.textGreyDark)),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _purchaseCard() {
-  return Card(
-    color: AppColor.backgroundLightGrey,
-    elevation: 0.0,
-    child: Padding(
-      padding: EdgeInsets.only(top: Dimens.paddingMedium, bottom: Dimens.paddingMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text("Purchase your\nBlockchain Domain",
-              style: TextStyle(fontSize: 22.0, color: Colors.black, fontWeight: FontWeight.bold)),
-          SizedBox(height: Dimens.paddingSemi),
-          Text("Please enter at least 6 Characters", style: TextStyle(color: AppColor.textGrey)),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _textExtensions(String name) {
-  return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-          child: Text("Extensions for \"" + "$name" + "\"",
-              style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold))));
 }
 
 Widget _checkDomainButton(){
@@ -220,20 +252,6 @@ Widget _checkDomainButton(){
           minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Dimens.paddingDefault))));
-}
-
-Widget _textHelpCenter(){
-  return RichText(
-        text: TextSpan(
-          children: <TextSpan>[
-            TextSpan(
-                text: "Have any issues? ", style: TextStyle(color: AppColor.textGreyDark)),
-            TextSpan(
-                text: "Help Center",
-                style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
-          ],
-        ),
-  );
 }
 
 Widget _gridViewContainer(BuildContext context){
@@ -292,3 +310,4 @@ Widget _buildPosts(BuildContext context, DomainResponseData posts) {
     },
   );
 }
+
