@@ -4,9 +4,11 @@ import 'package:up_reselling_webapp/api/api_client.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/credit_card_model.dart';
+import 'package:up_reselling_webapp/models/crypto_card_model.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/repository/labeled_check_box.dart';
 import 'package:up_reselling_webapp/widgets/credit_card_form.dart';
+import 'package:up_reselling_webapp/widgets/crypto_card_form.dart';
 import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
 
 import 'models/grid_domain.dart';
@@ -34,17 +36,19 @@ class XummPage extends StatefulWidget {
 
 class _XummPageState extends State<XummPage> {
   bool _flag = true;
+  bool _flagCard = true;
   String cardNumber = '';
+  String cryptoCardNumber = '';
   String expiryDate = '';
   String cvvCode = '';
   bool isCvvFocused = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body:SingleChildScrollView(
-          child: Padding(
+        body: SingleChildScrollView(
+            child: Padding(
       padding: EdgeInsets.all(Dimens.paddingMediumLarge),
       child: Column(
         children: [
@@ -63,11 +67,11 @@ class _XummPageState extends State<XummPage> {
                       child: Text("Register Domain",
                           style: TextStyle(color: _flag ? AppColor.white : AppColor.textGrey)),
                       style: ElevatedButton.styleFrom(
-                        primary: _flag ? AppColor.primaryBlue : AppColor.primaryGrey, minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
+                          primary: _flag ? AppColor.primaryBlue : AppColor.primaryGrey,
+                          minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dimens.paddingDefault),
-                          )
-                      ))),
+                          )))),
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
@@ -76,11 +80,11 @@ class _XummPageState extends State<XummPage> {
                       child: Text("Manage Domain",
                           style: TextStyle(color: _flag ? AppColor.textGrey : AppColor.white)),
                       style: ElevatedButton.styleFrom(
-                        primary: _flag ? AppColor.primaryGrey : AppColor.primaryBlue, minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
+                          primary: _flag ? AppColor.primaryGrey : AppColor.primaryBlue,
+                          minimumSize: Size(double.infinity, Dimens.margeButtonsEdge),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dimens.paddingDefault),
-                          )
-                      ))),
+                          )))),
             ],
           ),
 
@@ -98,35 +102,32 @@ class _XummPageState extends State<XummPage> {
               padding: EdgeInsets.all(Dimens.paddingSemi),
               child: Row(
                 children: <Widget>[
-              Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child:
-                  Text("wwumwallet", style: TextStyle(color: AppColor.black, fontSize: Dimens.paddingMedium)),
-              )),
-               ElevatedButton(
+                  Expanded(
+                      child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("wwumwallet",
+                        style: TextStyle(color: AppColor.black, fontSize: Dimens.paddingMedium)),
+                  )),
+                  ElevatedButton(
                     onPressed: () {},
-                    child:Row(
-                      children:[
+                    child: Row(
+                      children: [
                         Container(
                           child: Text(".crypto", style: TextStyle(color: AppColor.black)),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
-                          child: Icon(Icons.arrow_drop_down, color: AppColor.textGreyDark, size: Dimens.paddingMedium)
-                          ),
+                            padding: EdgeInsets.fromLTRB(4, 0, 10, 0),
+                            child: Icon(Icons.arrow_drop_down,
+                                color: AppColor.textGreyDark, size: Dimens.paddingMedium)),
                       ],
                     ),
-                      style: ElevatedButton.styleFrom(
-                      primary: AppColor.backgroundLightGrey, elevation: 0.0
-                    ),
+                    style: ElevatedButton.styleFrom(
+                        primary: AppColor.backgroundLightGrey, elevation: 0.0),
                   )
-
                 ],
               ),
             ),
           ),
-
 
           SizedBox(height: Dimens.paddingMedium),
           _checkDomainButton(),
@@ -135,102 +136,113 @@ class _XummPageState extends State<XummPage> {
 
           _gridViewContainer(context),
 
-
-/*          Container(
-    width: MediaQuery.of(context).size.width,
-    child:
-          GridView.builder(
-              itemCount: itemList.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: 0.56,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2),
-              itemBuilder: (context, index) {
-                return GridItem(
-                    item: itemList[index],
-                    isSelected: (bool value) {
-                      setState(() {
-                        if (value) {
-                          selectedList.add(itemList[index]);
-                        } else {
-                          selectedList.remove(itemList[index]);
-                        }
-                      });
-                      print("$index : $value");
-                    },
-                    key: Key(itemList[index].price));
-              }),
-          ),*/
-
           SizedBox(height: Dimens.paddingMedium),
 
           HelpCenterWidget(),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                  children:[
-                    CreditCardForm(
-                      formKey: formKey,
-                      obscureCvv: true,
-                      obscureNumber: true,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      expiryDate: expiryDate,
-                      themeColor: Colors.blue,
-                      cardNumberDecoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Number',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                      ),
-                      expiryDateDecoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Expired Date',
-                        hintText: 'XX/XX',
-                      ),
-                      cvvCodeDecoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'CVV',
-                        hintText: 'XXX',
-                      ),
-                      onCreditCardModelChange: onCreditCardModelChange,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        primary: const Color(0xff1b447b),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.all(8),
-                        child: const Text(
-                          'VALIDATE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'halter',
-                            fontSize: 14,
-                            package: 'flutter_credit_card',
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          print('valid!');
-                        } else {
-                          print('invalid!');
-                        }
-                      },
-                    )
-                  ],
+          SizedBox(height: Dimens.paddingMedium),
+
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    setState(() => _flagCard = !_flagCard);
+                  },
+                  child: Text("Pay with Credit Card",
+                      style: TextStyle(
+                          color: _flagCard ? AppColor.primaryBlue : AppColor.black,
+                          fontSize: _flagCard ? Dimens.defaultFountSize : Dimens.paddingMedium,
+                          fontWeight: FontWeight.bold)),
                 ),
               ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    setState(() => _flagCard = !_flagCard);
+                  },
+                  child: Text("Pay with Crypto",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                          color: _flagCard ? AppColor.black : AppColor.primaryBlue,
+                          fontSize: _flagCard ? Dimens.paddingMedium : Dimens.defaultFountSize,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: Dimens.paddingXSLarge),
+
+          Column(
+            children: <Widget>[
+              if (_flagCard)
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: Text("Your Balance",
+                              style: TextStyle(color: AppColor.black, fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                      CryptoCardForm(
+                        formKey: formKey,
+                        obscureNumber: true,
+                        cryptoCardNumber: cryptoCardNumber,
+                        themeColor: AppColor.primaryBlue,
+                        cardNumberDecoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: '0.00000000',
+                        ),
+                        onCryptoCardModelChange: onCryptoCardModelChange,
+                      ),
+                    ],
+                  ),
+                )
+              else
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: Text("Card Details",
+                              style: TextStyle(color: AppColor.black, fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                      CreditCardForm(
+                        formKey: formKey,
+                        obscureCvv: true,
+                        obscureNumber: true,
+                        cardNumber: cardNumber,
+                        cvvCode: cvvCode,
+                        expiryDate: expiryDate,
+                        themeColor: AppColor.primaryBlue,
+                        cardNumberDecoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Card Number',
+                        ),
+                        expiryDateDecoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "MM/YY",
+                        ),
+                        cvvCodeDecoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "CVC",
+                        ),
+                        onCreditCardModelChange: onCreditCardModelChange,
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          )
         ],
       ),
-
     )));
   }
-
 
   void onCreditCardModelChange(CreditCardModel? creditCardModel) {
     setState(() {
@@ -241,30 +253,33 @@ class _XummPageState extends State<XummPage> {
     });
   }
 
+  void onCryptoCardModelChange(CryptoCardModel? cryptoCardModel) {
+    setState(() {
+      cryptoCardNumber = cryptoCardModel!.cryptoCardNumber;
+    });
+  }
 }
 
-Widget _checkDomainButton(){
+Widget _checkDomainButton() {
   return ElevatedButton(
       onPressed: () {},
       child: Text("Check Domain"),
       style: ElevatedButton.styleFrom(
           primary: AppColor.primaryBlue,
           minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimens.paddingDefault))));
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.paddingDefault))));
 }
 
-Widget _gridViewContainer(BuildContext context){
+Widget _gridViewContainer(BuildContext context) {
   return Container(
     width: MediaQuery.of(context).size.width,
-    child:
-    GridView.count(
+    child: GridView.count(
       primary: false,
       crossAxisCount: 3,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-
         GridContainerBody(titleText: ".x", checkText: "100"),
         GridContainerBody(titleText: ".crypto", checkText: "40"),
         GridContainerBody(titleText: ".coin", checkText: "20"),
@@ -278,8 +293,6 @@ Widget _gridViewContainer(BuildContext context){
     ),
   );
 }
-
-
 
 FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
@@ -310,4 +323,3 @@ Widget _buildPosts(BuildContext context, DomainResponseData posts) {
     },
   );
 }
-

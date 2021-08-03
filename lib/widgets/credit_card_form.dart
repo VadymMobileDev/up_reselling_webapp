@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/credit_card_model.dart';
+import 'package:up_reselling_webapp/repository/masked_card_contriller.dart';
 
 class CreditCardForm extends StatefulWidget {
   const CreditCardForm({
@@ -12,7 +15,7 @@ class CreditCardForm extends StatefulWidget {
     this.obscureNumber = false,
     required this.onCreditCardModelChange,
     required this.themeColor,
-    this.textColor = Colors.black,
+    this.textColor = AppColor.black,
     this.cursorColor,
     this.cardNumberDecoration = const InputDecoration(
       labelText: 'Card number',
@@ -65,10 +68,14 @@ class _CreditCardFormState extends State<CreditCardForm> {
   late void Function(CreditCardModel) onCreditCardModelChange;
   late CreditCardModel creditCardModel;
 
+  final MaskedTextController _cardNumberController =
+      MaskedTextController(mask: '0000 0000 0000 0000');
+  final TextEditingController _expiryDateController = MaskedTextController(mask: '00/00');
+  final TextEditingController _cvvCodeController = MaskedTextController(mask: '000');
+
   FocusNode cvvFocusNode = FocusNode();
   FocusNode cardNumberNode = FocusNode();
   FocusNode expiryDateNode = FocusNode();
-  FocusNode cardHolderNode = FocusNode();
 
   void textFieldFocusDidChange() {
     creditCardModel.isCvvFocused = cvvFocusNode.hasFocus;
@@ -80,8 +87,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
     expiryDate = widget.expiryDate;
     cvvCode = widget.cvvCode;
 
-    creditCardModel = CreditCardModel(
-        cardNumber, expiryDate, cvvCode, isCvvFocused);
+    creditCardModel = CreditCardModel(cardNumber, expiryDate, cvvCode, isCvvFocused);
   }
 
   @override
@@ -94,11 +100,33 @@ class _CreditCardFormState extends State<CreditCardForm> {
 
     cvvFocusNode.addListener(textFieldFocusDidChange);
 
+    _cardNumberController.addListener(() {
+      setState(() {
+        cardNumber = _cardNumberController.text;
+        creditCardModel.cardNumber = cardNumber;
+        onCreditCardModelChange(creditCardModel);
+      });
+    });
+
+    _expiryDateController.addListener(() {
+      setState(() {
+        expiryDate = _expiryDateController.text;
+        creditCardModel.expiryDate = expiryDate;
+        onCreditCardModelChange(creditCardModel);
+      });
+    });
+
+    _cvvCodeController.addListener(() {
+      setState(() {
+        cvvCode = _cvvCodeController.text;
+        creditCardModel.cvvCode = cvvCode;
+        onCreditCardModelChange(creditCardModel);
+      });
+    });
   }
 
   @override
   void dispose() {
-    cardHolderNode.dispose();
     cvvFocusNode.dispose();
     expiryDateNode.dispose();
     super.dispose();
@@ -123,9 +151,11 @@ class _CreditCardFormState extends State<CreditCardForm> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              margin: const EdgeInsets.only(
+                  top: Dimens.paddingSmall),
               child: TextFormField(
                 obscureText: widget.obscureNumber,
+                controller: _cardNumberController,
                 cursorColor: widget.cursorColor ?? themeColor,
                 onEditingComplete: () {
                   FocusScope.of(context).requestFocus(expiryDateNode);
@@ -137,7 +167,6 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: (String? value) {
-                  // Validate less that 13 digits +3 white spaces
                   if (value!.isEmpty || value.length < 16) {
                     return widget.numberValidationMessage;
                   }
@@ -150,8 +179,11 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                    margin: const EdgeInsets.only(
+                        top: Dimens.paddingDefault,
+                        right: Dimens.paddingMedium),
                     child: TextFormField(
+                      controller: _expiryDateController,
                       cursorColor: widget.cursorColor ?? themeColor,
                       focusNode: expiryDateNode,
                       onEditingComplete: () {
@@ -174,9 +206,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
                         final int year = int.parse('20${date.last}');
                         final DateTime cardDate = DateTime(year, month);
 
-                        if (cardDate.isBefore(now) ||
-                            month > 12 ||
-                            month == 0) {
+                        if (cardDate.isBefore(now) || month > 12 || month == 0) {
                           return widget.dateValidationMessage;
                         }
                         return null;
@@ -187,14 +217,12 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    margin: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                    margin: const EdgeInsets.only(left: Dimens.paddingMedium, top: Dimens.paddingDefault),
                     child: TextFormField(
                       obscureText: widget.obscureCvv,
                       focusNode: cvvFocusNode,
+                      controller: _cvvCodeController,
                       cursorColor: widget.cursorColor ?? themeColor,
-                      onEditingComplete: () {
-                        FocusScope.of(context).requestFocus(cardHolderNode);
-                      },
                       style: TextStyle(
                         color: widget.textColor,
                       ),

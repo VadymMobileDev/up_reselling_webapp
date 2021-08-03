@@ -93,7 +93,7 @@ class CardPurchaseWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("Purchase your\nBlockchain Domain",
-              style: TextStyle(fontSize: 22.0, color: Colors.black, fontWeight: FontWeight.bold)),
+              style: TextStyle(fontSize: 22.0, color: AppColor.black, fontWeight: FontWeight.bold)),
           SizedBox(height: Dimens.paddingSemi),
           Text("Please enter at least 6 Characters", style: TextStyle(color: AppColor.textGrey)),
         ],
