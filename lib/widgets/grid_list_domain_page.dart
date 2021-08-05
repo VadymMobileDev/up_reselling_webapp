@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/grid_domain.dart';
 import 'grid_item_form.dart';
 
@@ -28,14 +29,13 @@ class _GridListDomainState extends State<GridListDomainPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: Dimens.paddingMedium),
         Container(
-          width: MediaQuery.of(context).size.width,
           child: GridView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
               itemCount: itemList.length,
               itemBuilder: (BuildContext ctx, index) {
                 return GridItem(
@@ -52,34 +52,32 @@ class _GridListDomainState extends State<GridListDomainPage> {
                     },
                     key: Key(itemList[index].domainName));
               }),
-
         ),
-
-          Container(
-          width: MediaQuery.of(context).size.width,
-            child: GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: selectedList.length > 0 ? selectedList.length : 1),
-                itemCount: selectedList.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return GridItem(
-                      item: selectedList[index],
-                      isSelected: (bool value) {
-                        // setState(() {
-                        //   if (value) {
-                        //     selectedList.add(itemList[index]);
-                        //   } else {
-                        //     selectedList.remove(itemList[index]);
-                        //   }
-                        // });
-                      },
-                      key: Key(itemList[index].domainName));
-                }),
-)
-
+        Container(
+          width: MediaQuery.of(context).size.shortestSide,
+          child: GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: selectedList.length > 0 ? selectedList.length : 1),
+              itemCount: selectedList.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return GridItem(
+                    item: selectedList[index],
+                    isSelected: (bool value) {
+                      // setState(() {
+                      //   if (value) {
+                      //     selectedList.add(itemList[index]);
+                      //   } else {
+                      //     selectedList.remove(itemList[index]);
+                      //   }
+                      // });
+                    },
+                    key: Key(itemList[index].domainName));
+              }),
+        ),
+        SizedBox(height: Dimens.paddingMedium),
       ],
     );
   }

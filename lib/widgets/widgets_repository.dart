@@ -18,15 +18,18 @@ class HelpCenterWidget extends StatelessWidget {
       );
 }
 
-class BeckToHomeWidget extends StatelessWidget {
-  const BeckToHomeWidget({Key? key}) : super(key: key);
+class BeckToHomeOpenWidget extends StatelessWidget {
+  const BeckToHomeOpenWidget({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) => Row(
         children: [
           Expanded(
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Icon(Icons.ac_unit),
+              child: Image(
+                image: AssetImage("assets/icon_light.png"),
+                  height: Dimens.margeButtonsEdge
+              ),
             ),
           ),
           Expanded(
@@ -50,6 +53,44 @@ class BeckToHomeWidget extends StatelessWidget {
           ),
         ],
       );
+}
+
+
+class BeckToHomeCloseWidget extends StatelessWidget {
+  const BeckToHomeCloseWidget({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Image(
+              image: AssetImage("assets/icon_light.png"),
+              height: Dimens.margeButtonsEdge
+          ),
+        ),
+      ),
+      Expanded(
+        child: Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              icon:
+              Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
+              onPressed: () {},
+              label: Text(
+                "Beck",
+                style: TextStyle(color: AppColor.black),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: AppColor.primaryGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
+                ),
+              ),
+            )),
+      ),
+    ],
+  );
 }
 
 class CardUnstoppableWidget extends StatelessWidget {
@@ -97,7 +138,7 @@ class CardPurchaseWidget extends StatelessWidget {
         color: AppColor.backgroundLightGrey,
         elevation: 0.0,
         child: Padding(
-          padding: EdgeInsets.only(top: Dimens.paddingMedium, bottom: Dimens.paddingMedium),
+          padding: EdgeInsets.only(bottom: Dimens.paddingMedium),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
