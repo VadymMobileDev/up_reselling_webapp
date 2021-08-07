@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/bloc/games/bloc.dart';
+import 'package:up_reselling_webapp/repository/games_repository.dart';
 
 class HelpCenterWidget extends StatelessWidget {
   const HelpCenterWidget({Key? key}) : super(key: key);
@@ -21,38 +24,44 @@ class HelpCenterWidget extends StatelessWidget {
 class BeckToHomeOpenWidget extends StatelessWidget {
   const BeckToHomeOpenWidget({Key? key}) : super(key: key);
 
-  Widget build(BuildContext context) => Row(
-        children: [
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image(
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => GamesBloc(repository: GamesRepository()),
+    child: Row(
+      children: [
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Image(
                 image: AssetImage("assets/icon_light.png"),
-                  height: Dimens.margeButtonsEdge
-              ),
+                height: Dimens.margeButtonsEdge
             ),
           ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton.icon(
-                  icon:
-                      Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-                  onPressed: () {},
-                  label: Text(
-                    "Beck To Home",
-                    style: TextStyle(color: AppColor.black),
+        ),
+        Expanded(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton.icon(
+                icon:
+                Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
+                onPressed: () {
+                 // GamesRepository().getUsers();
+                },
+                label: Text(
+                  "Beck To Home",
+                  style: TextStyle(color: AppColor.black),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: AppColor.primaryGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColor.primaryGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
-                    ),
-                  ),
-                )),
-          ),
-        ],
-      );
+                ),
+              )),
+        ),
+      ],
+    ));
+  }
 }
 
 

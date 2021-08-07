@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:up_reselling_webapp/api/api_client.dart';
-import 'package:up_reselling_webapp/models/data.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
+import 'package:up_reselling_webapp/network/api/api_client.dart';
 
 class Repository {
 
-  FutureBuilder<DomainResponseData> buildBody(BuildContext context) {
+/*  FutureBuilder<DomainResponseData> buildBody(BuildContext context) {
     final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
     return FutureBuilder<DomainResponseData>(
       future: client.getDomainNameList("[\"crypto\"]"),
@@ -35,6 +34,6 @@ class Repository {
         );
       },
     );
-  }
+  }*/
 
 }
