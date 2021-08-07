@@ -6,7 +6,7 @@ import 'package:up_reselling_webapp/network/api/api_client.dart';
 
 class Repository {
 
-/*  FutureBuilder<DomainResponseData> buildBody(BuildContext context) {
+  FutureBuilder<DomainResponseData> buildBody(BuildContext context) {
     final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
     return FutureBuilder<DomainResponseData>(
       future: client.getDomainNameList("[\"crypto\"]"),
@@ -34,6 +34,6 @@ class Repository {
         );
       },
     );
-  }*/
+  }
 
 }

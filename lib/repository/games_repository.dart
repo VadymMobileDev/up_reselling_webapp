@@ -15,9 +15,9 @@ class GamesRepository implements Repository2 {
   GamesRepository._internal({required this.apiRepository});
 
 
-  // @override
-  // Future<ResponseData> getUsers() async {
-  //   return await apiRepository.getUsers();
-  // }
+  @override
+  Future<ResponseData> getUsers() async {
+    return await apiRepository.getUsers();
+  }
 
 }
