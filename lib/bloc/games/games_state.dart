@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:up_reselling_webapp/models/data.dart';
+import 'package:up_reselling_webapp/models/domain_name.dart';
 
 abstract class GamesState extends Equatable {
   const GamesState();
@@ -13,12 +13,14 @@ class InitialGames extends GamesState {}
 class GamesLoading extends GamesState {}
 
 class GamesHasData extends GamesState {
-  // final ResponseData result;
-  //
-  // const GamesHasData(this.result);
-  //
-  // @override
-  // List<Object> get props => [result];
+  final DomainResponseData result;
+
+  const GamesHasData(this.result);
+
+  @override
+  List<Object> get props {
+    return[result.crypto];
+  }
 }
 
 class GamesNoData extends GamesState {
@@ -27,7 +29,10 @@ class GamesNoData extends GamesState {
   const GamesNoData(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props{
+    return[message];
+  }
+
 }
 
 class GamesNoInternetConnection extends GamesState {}

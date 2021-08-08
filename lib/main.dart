@@ -1,12 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/repository/games_repository.dart';
 import 'package:up_reselling_webapp/widgets/check_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/payment/credit_cardand_crypto_page.dart';
 import 'package:up_reselling_webapp/widgets/grid_list_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/register_manage_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
+
+import 'bloc/games/games_bloc.dart';
+import 'models/domain_name.dart';
+import 'network/api/api_client.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,7 +41,12 @@ class _XummPageState extends State<XummPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GamesBloc(repository: GamesRepository()),
+        ),],
+    child: Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -88,7 +99,13 @@ class _XummPageState extends State<XummPage> {
                       TitleExtensionsWidget(domainName: "xummwallet"),
                       GridListDomainPage(),
                       HelpCenterWidget(),
-                      CreditCardAndCryptoPage()
+                      HomeScreen(),
+                      CreditCardAndCryptoPage(),
+                      Container(
+                        height: 100,
+                        //child: _buildBody(context),
+                      )
+
                     ],
                   ),
                 );
@@ -98,16 +115,15 @@ class _XummPageState extends State<XummPage> {
           )
         ],
       ),
-    );
+    ));
   }
 }
 
 
-/*
 FutureBuilder<DomainResponseData> _buildBody(BuildContext context) {
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
   return FutureBuilder<DomainResponseData>(
-    future: client.getDomainNameList("[\"crypto\"]"),
+    //future: client.getDomainNameList("[\"crypto\"]"),
     builder: (context, snapshot) {
       if (snapshot.hasError) {}
       if (snapshot.connectionState == ConnectionState.done) {
@@ -133,4 +149,3 @@ Widget _buildPosts(BuildContext context, DomainResponseData posts) {
     },
   );
 }
-*/

@@ -25,9 +25,7 @@ class BeckToHomeOpenWidget extends StatelessWidget {
   const BeckToHomeOpenWidget({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => GamesBloc(repository: GamesRepository()),
-    child: Row(
+    return  Row(
       children: [
         Expanded(
           child: Align(
@@ -44,8 +42,10 @@ class BeckToHomeOpenWidget extends StatelessWidget {
               child: ElevatedButton.icon(
                 icon:
                 Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-                onPressed: () {
-                 // GamesRepository().getUsers();
+                onPressed: () async {
+                  var games = await GamesRepository().getDomainNameList();
+
+                  print("------result: - " + games.crypto.length.toString());
                 },
                 label: Text(
                   "Beck To Home",
@@ -60,7 +60,7 @@ class BeckToHomeOpenWidget extends StatelessWidget {
               )),
         ),
       ],
-    ));
+    );
   }
 }
 
@@ -162,4 +162,46 @@ class CardPurchaseWidget extends StatelessWidget {
           ),
         ),
       );
+}
+
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    context.read<GamesBloc>().add(LoadGames());
+    return Container(
+        child: BlocBuilder<GamesBloc, GamesState>(builder: (_, state) {
+          if (state is GamesHasData) {
+            print("------resultGamesHasData : ${state.result.crypto}");
+
+            return Text("GamesHasData  ${state.result}");
+          } else if (state is GamesLoading) {
+            print("------result GamesLoading : ${state}");
+
+            return Text("GamesLoading  ${state}");
+          } else if (state is GamesNoData) {
+            print("------result GamesNoData : ${state}");
+
+            return Container(
+              child: Center(
+                child: Text(state.message),
+              ),
+            );
+          } else if (state is GamesNoInternetConnection) {
+            return Text('No Internet Connection');
+          }else if (state is GamesError) {
+            return Text('GamesError');
+          }
+          else {
+            return Text("else else else ${state.toString()}");
+          }
+        }));
+  }
+}
+
+class LoadingIndicator extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: CircularProgressIndicator());
+  }
 }

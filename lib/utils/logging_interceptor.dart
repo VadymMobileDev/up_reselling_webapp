@@ -8,16 +8,16 @@ class LoggingInterceptors extends Interceptor {
   Future<FutureOr> onRequest(RequestOptions options,
   RequestInterceptorHandler handler) async {
     print(
-        "--> ${options.method.isNotEmpty ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl) + (options.path)}");
+        "--> ${options.method.isNotEmpty ? options.method.toUpperCase() : 'METHOD'} ${"->" + (options.baseUrl) + (options.path)}");
     print("Headers:");
     options.headers.forEach((k, v) => print('$k: $v'));
     print("queryParameters:");
-    options.queryParameters.forEach((k, v) => print('$k: $v'));
+    options.queryParameters.forEach((k, v) => print("parameters: " + '$k: $v'));
     if (options.data.isNotEmpty) {
       print("Body: ${options.data}");
     }
     print(
-        "--> END ${options.method.isNotEmpty ? options.method.toUpperCase() : 'METHOD'}");
+        "--> END ${options.method.isNotEmpty ? options.data.toString() : 'METHOD'}");
 
     return options;
   }
@@ -35,9 +35,10 @@ class LoggingInterceptors extends Interceptor {
   @override
   Future<FutureOr> onResponse(Response response,
       ResponseInterceptorHandler handler) async {
+    print("Headers: -onResponse ");
     print(
         "<-- ${response.statusCode} ${(response.data != null ? (response.requestOptions.baseUrl + response.requestOptions.path) : 'URL')}");
-    print("Headers:");
+    print("Headers: -");
     response.headers.forEach((k, v) => print('$k: $v'));
     print("Response: ${response.data}");
     print("<-- END HTTP");

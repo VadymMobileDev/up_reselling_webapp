@@ -14,7 +14,7 @@ class Repository {
         if (snapshot.hasError) {}
         if (snapshot.connectionState == ConnectionState.done) {
           final posts = snapshot.data;
-
+          //var games = await repository.getDomainNameList();
           return _buildPosts(context, posts!);
         } else {
           return Center(
