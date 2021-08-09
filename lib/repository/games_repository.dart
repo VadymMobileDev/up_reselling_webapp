@@ -1,29 +1,34 @@
-import 'package:up_reselling_webapp/models/data.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
+import 'package:up_reselling_webapp/models/order.dart';
 import 'package:up_reselling_webapp/network/api_repository.dart';
 import 'package:up_reselling_webapp/network/repository.dart';
 
-class GamesRepository implements Repository2 {
+class DomainRepository implements Repository {
   final ApiRepository apiRepository;
 
-  static final GamesRepository _singleton =
-      GamesRepository._internal(apiRepository: ApiRepository());
+  static final DomainRepository _singleton =
+      DomainRepository._internal(apiRepository: ApiRepository());
 
-  factory GamesRepository() {
+  factory DomainRepository() {
     return _singleton;
   }
 
-  GamesRepository._internal({required this.apiRepository});
+  DomainRepository._internal({required this.apiRepository});
 
-
-  @override
-  Future<ResponseData> getUsers() async {
-    return await apiRepository.getUsers();
-  }
 
   @override
   Future<DomainResponseData> getDomainNameList() async {
     return await apiRepository.getDomainNameList();
   }
 
+  @override
+  Future<OrderParent> getOrderNumber(String resellerID, String email, String orderNumber) async {
+    return await apiRepository.getOrderNumber(resellerID, email, orderNumber);
+  }
+
+  @override
+  Future<Order> sendOrderNumber() {
+    // TODO: implement sendOrderNumber
+    throw UnimplementedError();
+  }
 }

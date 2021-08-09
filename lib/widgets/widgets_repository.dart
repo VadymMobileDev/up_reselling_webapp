@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
-import 'package:up_reselling_webapp/bloc/games/bloc.dart';
+import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
+import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
 import 'package:up_reselling_webapp/repository/games_repository.dart';
 
 class HelpCenterWidget extends StatelessWidget {
@@ -43,7 +44,7 @@ class BeckToHomeOpenWidget extends StatelessWidget {
                 icon:
                 Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
                 onPressed: () async {
-                  var games = await GamesRepository().getDomainNameList();
+                  var games = await DomainRepository().getDomainNameList();
 
                   print("------result: - " + games.crypto.length.toString());
                 },
@@ -168,40 +169,54 @@ class CardPurchaseWidget extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<GamesBloc>().add(LoadGames());
+    context.read<DomainChooseBloc>().add(LoadDomains());
     return Container(
-        child: BlocBuilder<GamesBloc, GamesState>(builder: (_, state) {
-          if (state is GamesHasData) {
+        child: BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
+          if (state is HasData) {
             print("------resultGamesHasData : ${state.result.crypto}");
 
-            return Text("GamesHasData  ${state.result}");
-          } else if (state is GamesLoading) {
-            print("------result GamesLoading : ${state}");
-
-            return Text("GamesLoading  ${state}");
-          } else if (state is GamesNoData) {
-            print("------result GamesNoData : ${state}");
-
+            return Text("GamesHasData  ${state.result.crypto}");
+          } else if (state is Loading) {
+            return CircularProgressIndicator();
+          } else if (state is NoData) {
             return Container(
               child: Center(
                 child: Text(state.message),
               ),
             );
-          } else if (state is GamesNoInternetConnection) {
+          } else if (state is NoInternet) {
             return Text('No Internet Connection');
-          }else if (state is GamesError) {
-            return Text('GamesError');
-          }
-          else {
-            return Text("else else else ${state.toString()}");
+          } else {
+            return CircularProgressIndicator();
           }
         }));
   }
 }
 
-class LoadingIndicator extends StatelessWidget {
+
+class HomeScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
+    context.read<OrderBloc>().add(LoadOrder());
+    return Container(
+        child: BlocBuilder<OrderBloc, OrderState>(builder: (_, state) {
+          if (state is HasDataOrder) {
+            print("------resultOrderHasData : ${state.result.orderNumber}");
+
+            return Text("GamesHasData  ${state}");
+          } else if (state is LoadingOrder) {
+            return CircularProgressIndicator();
+          } else if (state is NoDataOrder) {
+            return Container(
+              child: Center(
+                child: Text(state.message),
+              ),
+            );
+          } else if (state is NoInternetOrder) {
+            return Text('No Internet Connection');
+          } else {
+            return CircularProgressIndicator();
+          }
+        }));
   }
 }

@@ -1,7 +1,8 @@
-import 'package:up_reselling_webapp/models/data.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
+import 'package:up_reselling_webapp/models/order.dart';
 
-abstract class Repository2 {
-  Future<ResponseData> getUsers();
+abstract class Repository {
   Future<DomainResponseData> getDomainNameList();
+  Future<Order> sendOrderNumber();
+  Future<OrderParent> getOrderNumber(String resellerID, String email, String orderNumber);
 }

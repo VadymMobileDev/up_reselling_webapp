@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 
-abstract class GamesState extends Equatable {
-  const GamesState();
+abstract class DomainChooseState extends Equatable {
+  const DomainChooseState();
 
   @override
   List<Object> get props => [];
 }
 
-class InitialGames extends GamesState {}
+class Initial extends DomainChooseState {}
 
-class GamesLoading extends GamesState {}
+class Loading extends DomainChooseState {}
 
-class GamesHasData extends GamesState {
+class HasData extends DomainChooseState {
   final DomainResponseData result;
 
-  const GamesHasData(this.result);
+  const HasData(this.result);
 
   @override
   List<Object> get props {
@@ -23,10 +23,10 @@ class GamesHasData extends GamesState {
   }
 }
 
-class GamesNoData extends GamesState {
+class NoData extends DomainChooseState {
   final String message;
 
-  const GamesNoData(this.message);
+  const NoData(this.message);
 
   @override
   List<Object> get props{
@@ -35,12 +35,12 @@ class GamesNoData extends GamesState {
 
 }
 
-class GamesNoInternetConnection extends GamesState {}
+class NoInternet extends DomainChooseState {}
 
-class GamesError extends GamesState {
+class Error extends DomainChooseState {
   final String errorMessage;
 
-  const GamesError(this.errorMessage);
+  const Error(this.errorMessage);
 
   @override
   List<Object> get props => [errorMessage];
