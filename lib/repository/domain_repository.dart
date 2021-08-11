@@ -17,8 +17,8 @@ class DomainRepository implements Repository {
 
 
   @override
-  Future<DomainResponseData> getDomainNameList() async {
-    return await apiRepository.getDomainNameList();
+  Future<DomainResponseData> getDomainNameList(String domains) async {
+    return await apiRepository.getDomainNameList(domains);
   }
 
   @override

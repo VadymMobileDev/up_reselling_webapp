@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
-import 'package:up_reselling_webapp/models/grid_domain.dart';
 
 class GridItem extends StatefulWidget {
   final Key key;
-  final DomainGrid item;
+  final dynamic item;
   final ValueChanged<bool> isSelected;
 
   GridItem({required this.item, required this.isSelected, required this.key});
@@ -36,7 +35,7 @@ class _GridItemState extends State<GridItem> {
             padding: EdgeInsets.only(top: Dimens.paddingLarge, bottom: Dimens.paddingMedium),
             child: Column(
               children: <Widget>[
-                Text(widget.item.domainName,
+                Text( widget.item["extension"],
                     style: TextStyle(
                         fontSize: Dimens.paddingMedium,
                         color: Colors.black,
@@ -55,7 +54,7 @@ class _GridItemState extends State<GridItem> {
                         });
                       },
                     ),
-                    Text("\$ " + widget.item.price),
+                    Text("\$ ${widget.item["price"]/100}"),
                   ],
                 )
               ],

@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
-import 'package:up_reselling_webapp/models/grid_domain.dart';
 import 'grid_item_form.dart';
 
 class GridListDomainPage extends StatefulWidget {
-  GridListDomainPage({Key? key}) : super(key: key);
+  final List domainsGridList;
+
+  GridListDomainPage({Key? key, required this.domainsGridList}) : super(key: key);
 
   @override
   _GridListDomainState createState() => _GridListDomainState();
 }
 
 class _GridListDomainState extends State<GridListDomainPage> {
-  late List<DomainGrid> itemList = [
-    DomainGrid(".x", "100"),
-    DomainGrid(".crypto", "40"),
-    DomainGrid(".coin", "20"),
-    DomainGrid(".wallet", "40"),
-    DomainGrid(".bitcoin", "20"),
-    DomainGrid(".888", "20"),
-    DomainGrid(".nft", "20"),
-    DomainGrid(".dao", "20"),
-    DomainGrid(".zil", "20"),
-  ];
-
-  late List<DomainGrid> selectedList = [];
+  late List<dynamic> selectedList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +25,20 @@ class _GridListDomainState extends State<GridListDomainPage> {
               physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemCount: itemList.length,
+              itemCount: widget.domainsGridList.length,
               itemBuilder: (BuildContext ctx, index) {
                 return GridItem(
-                    item: itemList[index],
+                    item: widget.domainsGridList[index],
                     isSelected: (bool value) {
                       setState(() {
                         if (value) {
-                          selectedList.add(itemList[index]);
+                          selectedList.add(widget.domainsGridList[index]);
                         } else {
-                          selectedList.remove(itemList[index]);
+                          selectedList.remove(widget.domainsGridList[index]);
                         }
                       });
-                      print("$index : $value    ==== ${selectedList.length}");
                     },
-                    key: Key(itemList[index].domainName));
+                    key: Key(widget.domainsGridList[index]['extension']));
               }),
         ),
         Container(
@@ -74,7 +62,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                       //   }
                       // });
                     },
-                    key: Key(itemList[index].domainName));
+                    key: Key(widget.domainsGridList[index]['extension']));
               }),
         ),
         SizedBox(height: Dimens.paddingMedium),

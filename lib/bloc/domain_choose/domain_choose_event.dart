@@ -1,10 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 abstract class DomainChooseEvent extends Equatable {
-  const DomainChooseEvent();
+  final String domains;
+  const DomainChooseEvent(this.domains);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [domains];
 }
 
-class LoadDomains extends DomainChooseEvent {}
+class LoadDomains extends DomainChooseEvent {
+  LoadDomains(String domains) : super(domains);
+}

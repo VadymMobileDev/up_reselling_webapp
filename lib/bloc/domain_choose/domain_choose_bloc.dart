@@ -12,20 +12,18 @@ class DomainChooseBloc extends Bloc<DomainChooseEvent, DomainChooseState> {
   DomainChooseBloc({required this.repository}) : super(Initial());
 
   @override
-  Stream<DomainChooseState> mapEventToState(
-    DomainChooseEvent event,
-  ) async* {
+  Stream<DomainChooseState> mapEventToState(DomainChooseEvent event) async* {
     if (event is LoadDomains) {
-      yield* loadDomainsListToState();
+      yield* loadDomainsListToState(event.domains);
     }
   }
 
-  Stream<DomainChooseState> loadDomainsListToState() async* {
+  Stream<DomainChooseState> loadDomainsListToState(String domains) async* {
     try {
       yield Loading();
-      var games = await repository.getDomainNameList();
+      var games = await repository.getDomainNameList(domains);
 
-      if (games.crypto.isEmpty) {
+      if (games.toJson().isEmpty) {
         yield NoData("Games Not Found");
       } else {
         yield HasData(games);

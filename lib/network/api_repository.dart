@@ -11,10 +11,9 @@ class ApiRepository implements Repository {
 
 
   @override
-  Future<DomainResponseData> getDomainNameList() {
-    return _restClient.getDomainNameList("[\"crypto\"]");
+  Future<DomainResponseData> getDomainNameList(String domains) {
+    return _restClient.getDomainNameList("[\""+domains+"\"]");
   }
-
   @override
   Future<OrderParent> getOrderNumber(String resellerID, String email, String orderNumber) {
     return _restClient.getOrderNumber(resellerID, email, orderNumber);

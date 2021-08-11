@@ -3,6 +3,7 @@ abstract class Dimens {
   static const double paddingXSmall = 2.0;
   static const double paddingSmall = 4.0;
   static const double paddingDefault = 8.0;
+  static const double paddingTenFount = 10.0;
   static const double paddingSemi = 12.0;
   static const double paddingMedium = 16.0;
   static const double paddingMediumLarge = 24.0;

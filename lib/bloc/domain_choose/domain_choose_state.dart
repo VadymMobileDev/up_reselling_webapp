@@ -19,7 +19,7 @@ class HasData extends DomainChooseState {
 
   @override
   List<Object> get props {
-    return[result.crypto];
+    return[result];
   }
 }
 

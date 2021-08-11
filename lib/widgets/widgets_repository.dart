@@ -5,102 +5,92 @@ import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
-import 'package:up_reselling_webapp/repository/games_repository.dart';
 
-class HelpCenterWidget extends StatelessWidget {
-  const HelpCenterWidget({Key? key}) : super(key: key);
-
-  Widget build(BuildContext context) => RichText(
-        text: TextSpan(
-          children: <TextSpan>[
-            TextSpan(text: "Have any issues? ", style: TextStyle(color: AppColor.textGreyDark)),
-            TextSpan(
-                text: "Help Center",
-                style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
-          ],
-        ),
-      );
-}
+import 'xumm/xumm_page.dart';
 
 class BeckToHomeOpenWidget extends StatelessWidget {
   const BeckToHomeOpenWidget({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    return  Row(
-      children: [
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Image(
-                image: AssetImage("assets/icon_light.png"),
-                height: Dimens.margeButtonsEdge
+    return Padding(
+      padding: EdgeInsets.only(
+        top: Dimens.paddingMediumLarge,
+        bottom: Dimens.paddingMediumLarge,
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child:
+                  Image(image: AssetImage("assets/xumm_logo.png"), height: Dimens.margeButtonsEdge),
             ),
           ),
-        ),
-        Expanded(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton.icon(
-                icon:
-                Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-                onPressed: () async {
-                  var games = await DomainRepository().getDomainNameList();
-
-                  print("------result: - " + games.crypto.length.toString());
-                },
-                label: Text(
-                  "Beck To Home",
-                  style: TextStyle(color: AppColor.black),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: AppColor.primaryGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
+          Expanded(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  icon:
+                      Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
+                  onPressed: () {},
+                  label: Text(
+                    "Beck To Home",
+                    style: TextStyle(color: AppColor.black),
                   ),
-                ),
-              )),
-        ),
-      ],
+                  style: ElevatedButton.styleFrom(
+                    primary: AppColor.primaryGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
+                    ),
+                  ),
+                )),
+          ),
+        ],
+      ),
     );
   }
 }
 
-
 class BeckToHomeCloseWidget extends StatelessWidget {
   const BeckToHomeCloseWidget({Key? key}) : super(key: key);
 
-  Widget build(BuildContext context) => Row(
-    children: [
-      Expanded(
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Image(
-              image: AssetImage("assets/icon_light.png"),
-              height: Dimens.margeButtonsEdge
-          ),
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.only(bottom: Dimens.paddingMedium),
+        child: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Image(
+                    image: AssetImage("assets/icon_light.png"), height: Dimens.margeButtonsEdge),
+              ),
+            ),
+            Expanded(
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton.icon(
+                    icon: Icon(Icons.arrow_back_ios,
+                        color: AppColor.black, size: Dimens.paddingMedium),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                        return XummPage();
+                      }));
+                    },
+                    label: Text(
+                      "Beck",
+                      style: TextStyle(color: AppColor.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColor.primaryGrey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
+                      ),
+                    ),
+                  )),
+            ),
+          ],
         ),
-      ),
-      Expanded(
-        child: Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton.icon(
-              icon:
-              Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
-              onPressed: () {},
-              label: Text(
-                "Beck",
-                style: TextStyle(color: AppColor.black),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: AppColor.primaryGrey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Dimens.borderButtonRadius),
-                ),
-              ),
-            )),
-      ),
-    ],
-  );
+      );
 }
 
 class CardUnstoppableWidget extends StatelessWidget {
@@ -165,58 +155,160 @@ class CardPurchaseWidget extends StatelessWidget {
       );
 }
 
+class HelpCenterWidget extends StatelessWidget {
+  const HelpCenterWidget({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) => RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(text: "Have any issues? ", style: TextStyle(color: AppColor.textGreyDark)),
+            TextSpan(
+                text: "Help Center",
+                style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
+          ],
+        ),
+      );
+}
+
+class BottomTextUnstoppableWidget extends StatelessWidget {
+  const BottomTextUnstoppableWidget({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) => Column(
+        children: [
+          SizedBox(height: Dimens.paddingXLarge),
+          Text("Powered By",
+              style: TextStyle(color: AppColor.textGreyMiddle, fontSize: Dimens.paddingTenFount)),
+          Text("Unstoppable Domains",
+              style: TextStyle(
+                  color: AppColor.textGrey,
+                  fontSize: Dimens.paddingSemi,
+                  fontWeight: FontWeight.bold))
+        ],
+      );
+}
+
+class AddToCartWidget extends StatelessWidget {
+  const AddToCartWidget({Key? key}) : super(key: key);
+
+  Widget build(BuildContext context) => Card(
+        child: Padding(
+          padding: EdgeInsets.all(Dimens.paddingSemi),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Image(
+                          image: AssetImage("assets/icon_light.png"),
+                          height: Dimens.margeButtonsEdge),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton.icon(
+                          icon: Icon(Icons.ios_share,
+                              color: AppColor.white, size: Dimens.paddingMediumLarge),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                              return XummPage();
+                            }));
+                          },
+                          label: Text(
+                            "Add to Cart"),
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0.0,
+                              primary: AppColor.primaryBlue,
+                              minimumSize: Size(double.infinity, Dimens.iconHeight),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(Dimens.paddingDefault))),
+                        )),
+                  ),
+                ],
+              ),
+              SizedBox(height: Dimens.paddingSemi),
+              Card(
+                color: AppColor.backgroundLightBlue,
+                child: Padding(
+                  padding: EdgeInsets.all(Dimens.paddingDefault),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.centerLeft,
+                           child:  Text('Available')
+                        ),
+                      ),
+                      Expanded(
+                        child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Icon(Icons.favorite, color: AppColor.textGrey)),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+}
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<DomainChooseBloc>().add(LoadDomains());
-    return Container(
-        child: BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
-          if (state is HasData) {
-            print("------resultGamesHasData : ${state.result.crypto}");
+    context.read<DomainChooseBloc>().add(LoadDomains("crypto"));
+    return Container(child: BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
+      if (state is HasData) {
+        print("------resultGamesHasData : ${state.result.crypto}");
 
-            return Text("GamesHasData  ${state.result.crypto}");
-          } else if (state is Loading) {
-            return CircularProgressIndicator();
-          } else if (state is NoData) {
-            return Container(
-              child: Center(
-                child: Text(state.message),
-              ),
-            );
-          } else if (state is NoInternet) {
-            return Text('No Internet Connection');
-          } else {
-            return CircularProgressIndicator();
-          }
-        }));
+        List list = state.result.crypto.toList();
+        print("------list : ${list.length}");
+
+        return Text("GamesHasData  ${state.result}");
+      } else if (state is Loading) {
+        return CircularProgressIndicator();
+      } else if (state is NoData) {
+        return Container(
+          child: Center(
+            child: Text(state.message),
+          ),
+        );
+      } else if (state is NoInternet) {
+        return Text('No Internet Connection');
+      } else {
+        return CircularProgressIndicator();
+      }
+    }));
   }
 }
-
 
 class HomeScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<OrderBloc>().add(LoadOrder());
-    return Container(
-        child: BlocBuilder<OrderBloc, OrderState>(builder: (_, state) {
-          if (state is HasDataOrder) {
-            print("------resultOrderHasData : ${state.result.orderNumber}");
+    return Container(child: BlocBuilder<OrderBloc, OrderState>(builder: (_, state) {
+      if (state is HasDataOrder) {
+        print("------resultOrderHasData : ${state.result.orderNumber}");
 
-            return Text("GamesHasData  ${state}");
-          } else if (state is LoadingOrder) {
-            return CircularProgressIndicator();
-          } else if (state is NoDataOrder) {
-            return Container(
-              child: Center(
-                child: Text(state.message),
-              ),
-            );
-          } else if (state is NoInternetOrder) {
-            return Text('No Internet Connection');
-          } else {
-            return CircularProgressIndicator();
-          }
-        }));
+        return Text("GamesHasData  ${state}");
+      } else if (state is LoadingOrder) {
+        return CircularProgressIndicator();
+      } else if (state is NoDataOrder) {
+        return Container(
+          child: Center(
+            child: Text(state.message),
+          ),
+        );
+      } else if (state is NoInternetOrder) {
+        return Text('No Internet Connection');
+      } else {
+        return CircularProgressIndicator();
+      }
+    }));
   }
 }
