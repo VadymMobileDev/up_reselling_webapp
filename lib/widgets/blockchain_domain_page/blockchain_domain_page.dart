@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/order_bloc.dart';
-import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 
@@ -14,6 +13,7 @@ const _spacePadding = const EdgeInsets.only(
   top: Dimens.paddingLarge,
   left: Dimens.paddingMediumLarge,
   right: Dimens.paddingMediumLarge,
+  bottom: Dimens.paddingMediumLarge,
 );
 
 class BlockchainDomainPage extends StatefulWidget {
@@ -52,11 +52,11 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
             child: Column(children: [
               BeckToHomeCloseWidget(),
               CardPurchaseWidget(),
-              CheckDomainPage(enabled: false),
-              AddToCartWidget(),
+              CheckDomainPage(enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),
               TitleExtensionsWidget(domainName: widget.domainName),
               GridListDomainPage(
                 domainsGridList: widget.domainsList,
+                domainsLogoSelected: widget.domainName + widget.domainLogo,
               )
             ]),
           ),

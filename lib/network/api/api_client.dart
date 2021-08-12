@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/models/order.dart';
 
@@ -18,9 +19,10 @@ abstract class RestClient {
   Future<Order> sendOrderNumber();
 
   @GET(Api.pollStatus)
-  Future<OrderParent> getOrderNumber(
-      @Path("resellerID") String resellerID,
-      @Path("email") String email,
-      @Path("orderNumber") String orderNumber,
-      );
+  Future<OrderParent> getOrderNumber(@Path("resellerID") String resellerID,
+      @Path("email") String email, @Path("orderNumber") String orderNumber);
+
+  @GET(Api.checkDomain)
+  Future<DomainCheck> getCheckDomain(
+      @Path("resellerID") String resellerID, @Path("domainName") String domainName);
 }

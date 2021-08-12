@@ -132,7 +132,23 @@ class CreditCardAndCryptoState extends State<CreditCardAndCryptoPage> {
                 ),
               ),
           ],
-        )
+        ),
+        SizedBox(height: Dimens.paddingMedium),
+        ElevatedButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                print('valid!');
+              } else {
+                print('invalid!');
+              }
+            },
+            child: Text("Continue"),
+            style: ElevatedButton.styleFrom(
+                elevation: 0.0,
+                primary: AppColor.primaryBlue,
+                minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.paddingDefault)))),
       ],
     );
   }

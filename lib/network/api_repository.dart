@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/models/order.dart';
 import 'package:up_reselling_webapp/network/api/api_client.dart';
@@ -22,5 +23,10 @@ class ApiRepository implements Repository {
   @override
   Future<Order> sendOrderNumber() {
     return _restClient.sendOrderNumber();
+  }
+
+  @override
+  Future<DomainCheck> getCheckDomain(String resellerID, String domainName) {
+    return _restClient.getCheckDomain(resellerID, domainName);
   }
 }

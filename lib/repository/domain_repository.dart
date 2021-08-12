@@ -1,3 +1,4 @@
+import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/models/order.dart';
 import 'package:up_reselling_webapp/network/api_repository.dart';
@@ -27,8 +28,14 @@ class DomainRepository implements Repository {
   }
 
   @override
+  Future<DomainCheck> getCheckDomain(String resellerID, String domainName) async {
+    return await apiRepository.getCheckDomain(resellerID, domainName);
+  }
+
+  @override
   Future<Order> sendOrderNumber() {
     // TODO: implement sendOrderNumber
     throw UnimplementedError();
   }
+
 }

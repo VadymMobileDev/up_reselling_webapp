@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
@@ -10,6 +11,7 @@ import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
 const _spacePadding = const EdgeInsets.only(
   left: Dimens.paddingMediumLarge,
   right: Dimens.paddingMediumLarge,
+  bottom: Dimens.paddingMediumLarge,
 );
 
 class XummPage extends StatefulWidget {
@@ -34,11 +36,13 @@ class _XummPageState extends State<XummPage> {
           BlocProvider(
             create: (context) => OrderBloc(repository: DomainRepository()),
           ),
+          BlocProvider(
+            create: (context) => CheckDomainBloc(repository: DomainRepository()),
+          ),
         ],
         child: Scaffold(
-          body: SingleChildScrollView(
-          child:
-              Padding(
+          resizeToAvoidBottomInset: false,
+          body: Padding(
                 padding: _spacePadding,
                 child: Column(
                   children: [
@@ -46,12 +50,14 @@ class _XummPageState extends State<XummPage> {
                     CardUnstoppableWidget(),
                     SizedBox(height: Dimens.paddingSemi),
                     CardPurchaseWidget(),
-                    CheckDomainPage(enabled: true),
+                    HomeScreen1(),
+                    CheckDomainPage(enabled: true, nameEnabled: "", domainEnabled: ""),
                     HelpCenterWidget(),
+                    SpaceHeightWidget(),
                     BottomTextUnstoppableWidget()
                   ],
                 ),
-              ),
+
           ),
                 ),
               );

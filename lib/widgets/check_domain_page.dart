@@ -11,8 +11,11 @@ import 'blockchain_domain_page/blockchain_domain_page.dart';
 class CheckDomainPage extends StatefulWidget {
 
   final bool enabled;
+  final String nameEnabled;
+  final String domainEnabled;
 
-  CheckDomainPage({Key? key, required this.enabled}) : super(key: key);
+  CheckDomainPage({Key? key, required this.enabled, required this.nameEnabled,
+    required this.domainEnabled}) : super(key: key);
 
   @override
   CheckDomainState createState() => CheckDomainState();
@@ -20,10 +23,9 @@ class CheckDomainPage extends StatefulWidget {
 
 class CheckDomainState extends State<CheckDomainPage> {
   List<String> spinnerItems = ['.crypto', '.x', '.coin', '.wallet', '.bitcoin'];
-  late String dropdownValue = spinnerItems[0];
+  late String dropdownValue = widget.enabled ? spinnerItems[0] : widget.domainEnabled;
   TextEditingController domainController = TextEditingController();
   late List listDomain;
-
   @override
   Widget build(BuildContext context) {
     context.read<DomainChooseBloc>().add(LoadDomains("crypto"));
@@ -31,7 +33,7 @@ class CheckDomainState extends State<CheckDomainPage> {
       Container(child: BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
         if (state is HasData) {
           listDomain = state.result.crypto.toList();
-          return Text("data  ${state.result}");
+          return Text("");
         } else {
           return CircularProgressIndicator();
         }
@@ -51,13 +53,12 @@ class CheckDomainState extends State<CheckDomainPage> {
                       alignment: Alignment.centerLeft,
                       child: TextField(
                         enabled: widget.enabled ? true : false,
-                        controller: domainController,
+                        controller: widget.enabled ? domainController : domainController = TextEditingController(text:widget.nameEnabled),
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          // add padding to adjust text
                           isDense: true,
                           hintText: "Domain name",
                         ),

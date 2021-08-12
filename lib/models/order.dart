@@ -10,18 +10,6 @@ class OrderParent {
 
   factory OrderParent.fromJson(Map<String, dynamic> json) => _$OrderParentFromJson(json);
   Map<String, dynamic> toJson() => _$OrderParentToJson(this);
-
-  // OrderParent.fromJson(Map<String, dynamic> json) {
-  //   order = json['order'] != null ? new Order.fromJson(json['order']) : null;
-  // }
-  //
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   if (this.order != null) {
-  //     data['order'] = this.order.toJson();
-  //   }
-  //   return data;
-  // }
 }
 
 
