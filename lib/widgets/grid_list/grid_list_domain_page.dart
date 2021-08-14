@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_bloc.dart';
+import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_event.dart';
+import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_state.dart';
 import '../widgets_repository.dart';
 
 class GridListDomainPage extends StatefulWidget {
-  final List domainsGridList;
   final String domainsLogoSelected;
+  final int? resellingPrice;
 
-  GridListDomainPage({Key? key, required this.domainsGridList, required this.domainsLogoSelected})
-      : super(key: key);
+  GridListDomainPage({
+    Key? key,
+    required this.domainsLogoSelected,
+    required this.resellingPrice,
+  }) : super(key: key);
 
   @override
   _GridListDomainState createState() => _GridListDomainState();
@@ -16,33 +23,55 @@ class GridListDomainPage extends StatefulWidget {
 
 class _GridListDomainState extends State<GridListDomainPage> {
   List _selectedIcons = [];
+  List listDomainPriceSort = [];
+  bool stateGrid = true;
+  dynamic selectedGridDomain;
 
   @override
   Widget build(BuildContext context) {
+    if (stateGrid) {
+      context.read<DomainChooseBloc>().add(LoadDomains("crypto"));
+      print("------ ${selectedGridDomain.toString()}");
+    }
     return Column(
       children: [
         SizedBox(height: Dimens.paddingMedium),
-        Container(
-            child: GridView.count(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          crossAxisCount: 3,
-          children: widget.domainsGridList.map((domain) {
-            return GestureDetector(
-              onTap: () {
-                _selectedIcons.clear();
+        BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
+          if (state is HasData) {
+            state.result.crypto.forEach((domains) {
+              if (domains['price'] == (widget.resellingPrice! * 1000)) {
+                if (stateGrid){
+                  listDomainPriceSort.add(domains);
+                }
+              }
+            });
+            return Container(
+                child: GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              crossAxisCount: 3,
+              children: listDomainPriceSort.map((domain) {
+                return GestureDetector(
+                  onTap: () {
+                    stateGrid = false;
+                    _selectedIcons.clear();
+                    setState(() {
+                      _selectedIcons.add(domain);
 
-                setState(() {
-                  _selectedIcons.add(domain);
-                });
-              },
-              child: GridViewItem(domain, _selectedIcons.contains(domain)),
-            );
-          }).toList(),
-        )),
+                      selectedGridDomain = domain;
+                    });
+                  },
+                  child: GridViewItem(domain, _selectedIcons.contains(domain)),
+                );
+              }).toList(),
+            ));
+          } else {
+            return CircularProgressIndicator();
+          }
+        }),
         SizedBox(height: Dimens.paddingMedium),
-        AddToCartWidget(selectedDomain: widget.domainsLogoSelected),
+        AddToCartWidget(selectedDomain: widget.domainsLogoSelected, selectedGridDomain: selectedGridDomain),
       ],
     );
   }

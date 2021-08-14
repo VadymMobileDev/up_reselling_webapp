@@ -186,10 +186,14 @@ class BottomTextUnstoppableWidget extends StatelessWidget {
 
 class AddToCartWidget extends StatelessWidget {
   final String selectedDomain;
+  final dynamic selectedGridDomain;
 
-  const AddToCartWidget({Key? key, required this.selectedDomain}) : super(key: key);
+  const AddToCartWidget({Key? key, required this.selectedDomain, required this.selectedGridDomain}) : super(key: key);
 
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) =>
+      Visibility(
+        visible: selectedGridDomain != null ? true : false,
+  child: Card(
         child: Padding(
           padding: EdgeInsets.all(Dimens.paddingSemi),
           child: Column(
@@ -210,7 +214,7 @@ class AddToCartWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                               top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
-                          child: Text("\$100",
+                          child: Text(selectedGridDomain != null ? "\$${selectedGridDomain["price"]}" : "",
                               style: TextStyle(
                                   fontSize: Dimens.paddingMedium,
                                   color: AppColor.primaryBlue,
@@ -275,6 +279,7 @@ class AddToCartWidget extends StatelessWidget {
             ],
           ),
         ),
+  ),
       );
 }
 
@@ -333,20 +338,13 @@ class SpaceHeightWidget extends StatelessWidget {
 class HomeScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<CheckDomainBloc>().add(LoadCheckDomain("unstoppabledomains", "vadym.crypto"));
-    return Container(child: BlocBuilder<CheckDomainBloc, CheckDomainState>(builder: (_, state) {
+    //context.read<CheckDomainBloc>().add(LoadCheckDomain("unstoppabledomains", "vadym.crypto"));
+    return Container(
+        child: BlocBuilder<CheckDomainBloc, CheckDomainState>(builder: (_, state) {
       if (state is HasDataCheckDomain) {
         print("------resultCheckDomainData : ${state.result.domain.name}");
 
-// succeeds - is dynamic
-// gives List<dynamic>
-//         List d = List<dynamic>.from(state.result.crypto);
-//         List de = state.result.crypto.cast<DomainName>();
-//
-//         List list = state.result.crypto.toList();
-//         print("------list : ${list.length}");
-
-        return Text("GamesHasData  ${state.result}");
+        return Text("");
       } else if (state is LoadingCheckDomain) {
         return CircularProgressIndicator();
       } else if (state is NoDataCheckDomain) {
@@ -369,35 +367,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<DomainChooseBloc>().add(LoadDomains("crypto"));
-    return Container(child: BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
-      if (state is HasData) {
-        print("------resultGamesHasData : ${state.result.crypto}");
-
-        var target_list_1 = [] + state.result.crypto;
-
-// succeeds - is dynamic
-// gives List<dynamic>
-//         List d = List<dynamic>.from(state.result.crypto);
-//         List de = state.result.crypto.cast<DomainName>();
-//
-//         List list = state.result.crypto.toList();
-//         print("------list : ${list.length}");
-
-        return Text("GamesHasData  ${state.result}");
-      } else if (state is Loading) {
-        return CircularProgressIndicator();
-      } else if (state is NoData) {
-        return Container(
-          child: Center(
-            child: Text(state.message),
-          ),
-        );
-      } else if (state is NoInternet) {
-        return Text('No Internet Connection');
-      } else {
-        return CircularProgressIndicator();
-      }
-    }));
+    return Text("");
   }
 }
 

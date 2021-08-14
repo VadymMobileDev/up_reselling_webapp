@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
-import 'package:up_reselling_webapp/bloc/order_bloc/order_bloc.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 
@@ -19,14 +19,14 @@ const _spacePadding = const EdgeInsets.only(
 class BlockchainDomainPage extends StatefulWidget {
   final String domainName;
   final String domainLogo;
+  final int? resellingPrice;
 
-  final List domainsList;
 
   BlockchainDomainPage({
     Key? key,
     required this.domainName,
     required this.domainLogo,
-    required this.domainsList,
+    required this.resellingPrice,
   }) : super(key: key);
 
   @override
@@ -42,7 +42,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
           create: (context) => DomainChooseBloc(repository: DomainRepository()),
         ),
         BlocProvider(
-          create: (context) => OrderBloc(repository: DomainRepository()),
+          create: (context) => CheckDomainBloc(repository: DomainRepository()),
         ),
       ],
       child: Scaffold(
@@ -55,8 +55,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
               CheckDomainPage(enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),
               TitleExtensionsWidget(domainName: widget.domainName),
               GridListDomainPage(
-                domainsGridList: widget.domainsList,
-                domainsLogoSelected: widget.domainName + widget.domainLogo,
+                domainsLogoSelected: widget.domainName + widget.domainLogo, resellingPrice: widget.resellingPrice
               )
             ]),
           ),
