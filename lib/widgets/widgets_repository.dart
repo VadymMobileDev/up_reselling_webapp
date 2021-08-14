@@ -6,6 +6,7 @@ import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
+import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class BeckToHomeOpenWidget extends StatelessWidget {
@@ -186,7 +187,7 @@ class BottomTextUnstoppableWidget extends StatelessWidget {
 
 class AddToCartWidget extends StatelessWidget {
   final String selectedDomain;
-  final dynamic selectedGridDomain;
+  final DomainItem? selectedGridDomain;
 
   const AddToCartWidget({Key? key, required this.selectedDomain, required this.selectedGridDomain}) : super(key: key);
 
@@ -214,7 +215,7 @@ class AddToCartWidget extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                               top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
-                          child: Text(selectedGridDomain != null ? "\$${selectedGridDomain["price"]}" : "",
+                          child: Text(selectedGridDomain != null ? "\$${selectedGridDomain!.price}" : "",
                               style: TextStyle(
                                   fontSize: Dimens.paddingMedium,
                                   color: AppColor.primaryBlue,

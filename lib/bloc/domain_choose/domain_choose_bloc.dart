@@ -23,8 +23,8 @@ class DomainChooseBloc extends Bloc<DomainChooseEvent, DomainChooseState> {
       yield Loading();
       var games = await repository.getDomainNameList(domains);
 
-      if (games.toJson().isEmpty) {
-        yield NoData("Games Not Found");
+      if (games.isEmpty) {
+        yield NoData("Domain Choose Found");
       } else {
         yield HasData(games);
       }

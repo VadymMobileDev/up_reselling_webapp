@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:up_reselling_webapp/models/domain_name.dart';
 
 abstract class DomainChooseState extends Equatable {
   const DomainChooseState();
@@ -13,7 +12,7 @@ class Initial extends DomainChooseState {}
 class Loading extends DomainChooseState {}
 
 class HasData extends DomainChooseState {
-  final DomainResponseData result;
+  final String result;
 
   const HasData(this.result);
 

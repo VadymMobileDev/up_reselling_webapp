@@ -13,7 +13,7 @@ abstract class RestClient {
   factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @GET(Api.domainName)
-  Future<DomainResponseData> getDomainNameList(@Query("domains") String domains);
+  Future<String> getDomainNameList(@Query("domains") String domains);
 
   @POST(Api.ordersNumber)
   Future<Order> sendOrderNumber();

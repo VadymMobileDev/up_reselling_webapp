@@ -1,5 +1,4 @@
 import 'package:up_reselling_webapp/models/domain_check.dart';
-import 'package:up_reselling_webapp/models/domain_name.dart';
 import 'package:up_reselling_webapp/models/order.dart';
 import 'package:up_reselling_webapp/network/api_repository.dart';
 import 'package:up_reselling_webapp/network/repository.dart';
@@ -18,7 +17,7 @@ class DomainRepository implements Repository {
 
 
   @override
-  Future<DomainResponseData> getDomainNameList(String domains) async {
+  Future<String> getDomainNameList(String domains) async {
     return await apiRepository.getDomainNameList(domains);
   }
 
