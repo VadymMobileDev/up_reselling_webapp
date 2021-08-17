@@ -7,7 +7,6 @@ import 'package:up_reselling_webapp/bloc/check_domain_bloc/bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
-import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class BeckToHomeOpenWidget extends StatelessWidget {
   const BeckToHomeOpenWidget({Key? key}) : super(key: key);
@@ -185,122 +184,38 @@ class BottomTextUnstoppableWidget extends StatelessWidget {
       );
 }
 
-class AddToCartWidget extends StatelessWidget {
-  final String selectedDomain;
-  final DomainItem? selectedGridDomain;
-
-  const AddToCartWidget({Key? key, required this.selectedDomain, required this.selectedGridDomain}) : super(key: key);
-
-  Widget build(BuildContext context) =>
-      Visibility(
-        visible: selectedGridDomain != null ? true : false,
-  child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(Dimens.paddingSemi),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("$selectedDomain",
-                            style: TextStyle(
-                                fontSize: Dimens.paddingMedium,
-                                color: AppColor.black,
-                                fontWeight: FontWeight.bold)),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
-                          child: Text(selectedGridDomain != null ? "\$${selectedGridDomain!.price}" : "",
-                              style: TextStyle(
-                                  fontSize: Dimens.paddingMedium,
-                                  color: AppColor.primaryBlue,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton.icon(
-                          icon: Icon(Icons.add_shopping_cart,
-                              color: AppColor.white, size: Dimens.paddingMediumLarge),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                              return PaymentPage();
-                            }));
-                          },
-                          label: Text("Add to Cart"),
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              primary: AppColor.primaryBlue,
-                              minimumSize: Size(double.infinity, Dimens.iconHeight),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Dimens.paddingDefault))),
-                        )),
-                  ),
-                ],
-              ),
-              SizedBox(height: Dimens.paddingSemi),
-              Card(
-                color: AppColor.backgroundLightBlue,
-                child: Padding(
-                  padding: EdgeInsets.all(Dimens.paddingDefault),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
-                              child: Text("Available",
-                                  style: TextStyle(
-                                      color: AppColor.black, fontWeight: FontWeight.bold)),
-                            ),
-                            Text("This domain is available for purchase",
-                                style: TextStyle(color: AppColor.textGrey)),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: Dimens.paddingDefault),
-                        child: Icon(Icons.remove_red_eye_outlined, color: AppColor.textGrey),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-  ),
-      );
-}
-
 //---------  Payment Page Widgets --------
 
 class CardPaymentDataWidget extends StatelessWidget {
-  const CardPaymentDataWidget({Key? key}) : super(key: key);
+  final List<DomainItemCart> selectedDomainItems;
+
+  const CardPaymentDataWidget({Key? key, required this.selectedDomainItems}) : super(key: key);
 
   Widget build(BuildContext context) => Card(
         color: AppColor.backgroundLightBlue,
         child: Padding(
-          padding: EdgeInsets.all(Dimens.paddingMedium),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text('Replace cryptocurrency addresses  - 40\$'),
-              SizedBox(height: Dimens.paddingSemi),
-              Text('Replace cryptocurrency addresses ')
-            ],
+          padding: EdgeInsets.all(Dimens.paddingXSmall),
+          child: Container(
+            height: 60,
+            child: ListView.builder(
+              // shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: selectedDomainItems.length,
+              itemBuilder: (context, index) {
+                final item = selectedDomainItems[index];
+                return ListTile(
+                  title:
+                      Expanded(
+                          child: Text("${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                              style: TextStyle(
+                                  fontSize: Dimens.paddingMedium,
+                                  color: AppColor.black,
+                                  fontWeight: FontWeight.bold))
+                  ),
+                );
+              },
+            ),
           ),
         ),
       );
@@ -311,7 +226,6 @@ class BottomTextPoweredWidget extends StatelessWidget {
 
   Widget build(BuildContext context) => Column(
         children: [
-          SizedBox(height: Dimens.paddingXLarge),
           Text("Secured Checkout",
               style: TextStyle(color: AppColor.textGreyMiddle, fontSize: Dimens.paddingTenFount)),
           Text("Powered by Stripe",
@@ -335,13 +249,11 @@ class SpaceHeightWidget extends StatelessWidget {
 }
 ///////
 
-
 class HomeScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //context.read<CheckDomainBloc>().add(LoadCheckDomain("unstoppabledomains", "vadym.crypto"));
-    return Container(
-        child: BlocBuilder<CheckDomainBloc, CheckDomainState>(builder: (_, state) {
+    return Container(child: BlocBuilder<CheckDomainBloc, CheckDomainState>(builder: (_, state) {
       if (state is HasDataCheckDomain) {
         print("------resultCheckDomainData : ${state.result.domain.name}");
 
@@ -363,7 +275,6 @@ class HomeScreen1 extends StatelessWidget {
   }
 }
 
-
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -375,7 +286,7 @@ class HomeScreen extends StatelessWidget {
 class HomeScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<OrderBloc>().add(LoadOrder());
+    context.read<OrderBloc>().add(LoadOrder("", ""));
     return Container(child: BlocBuilder<OrderBloc, OrderState>(builder: (_, state) {
       if (state is HasDataOrder) {
         print("------resultOrderHasData : ${state.result.orderNumber}");

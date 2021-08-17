@@ -1,5 +1,6 @@
 import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/order.dart';
+import 'package:up_reselling_webapp/models/order_send.dart';
 import 'package:up_reselling_webapp/network/api_repository.dart';
 import 'package:up_reselling_webapp/network/repository.dart';
 
@@ -32,9 +33,8 @@ class DomainRepository implements Repository {
   }
 
   @override
-  Future<Order> sendOrderNumber() {
-    // TODO: implement sendOrderNumber
-    throw UnimplementedError();
+  Future<OrderSend> sendOrderNumber(String resellerID, String email, String json) async {
+    return await apiRepository.sendOrderNumber(resellerID, email, json);
   }
 
 }

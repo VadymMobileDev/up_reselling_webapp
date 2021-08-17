@@ -19,3 +19,9 @@ class DomainItem {
     return data;
   }
 }
+
+class DomainItemCart{
+  late String nameDomain;
+  late DomainItem? domainItem;
+  DomainItemCart({required this.nameDomain, required this.domainItem});
+}

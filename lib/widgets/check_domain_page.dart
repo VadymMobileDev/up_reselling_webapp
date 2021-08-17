@@ -21,7 +21,7 @@ class CheckDomainPage extends StatefulWidget {
 }
 
 class CheckDomainPageState extends State<CheckDomainPage> {
-  List<String> spinnerItems = ['.crypto', '.x', '.coin', '.wallet', '.bitcoin'];
+  List<String> spinnerItems = ['.crypto', '.x', '.coin', '.wallet', '.bitcoin', '.888', '.nft', '.dao', '.zil', 'blockchain'];
   late String dropdownValue = widget.enabled ? spinnerItems[0] : widget.domainEnabled;
   TextEditingController domainController = TextEditingController();
 
@@ -29,8 +29,6 @@ class CheckDomainPageState extends State<CheckDomainPage> {
   Widget build(BuildContext context) => BlocListener<CheckDomainBloc, CheckDomainState>(
       listener: (context, state) {
         if (state is HasDataCheckDomain) {
-
-
           if (domainController.text.isNotEmpty) {
             Navigator.push(
               context,
