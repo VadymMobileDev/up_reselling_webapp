@@ -3,8 +3,7 @@ import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 
 class CheckAndPayPage extends StatefulWidget {
-  final bool showHidePay;
-  CheckAndPayPage({Key? key, required this.showHidePay}) : super(key: key);
+  CheckAndPayPage({Key? key}) : super(key: key);
 
   @override
   CheckAndPayPageState createState() => CheckAndPayPageState();
@@ -13,9 +12,7 @@ class CheckAndPayPage extends StatefulWidget {
 class CheckAndPayPageState extends State<CheckAndPayPage> {
 
   @override
-  Widget build(BuildContext context) => Visibility(
-  visible: widget.showHidePay,
-  child: Column(children: [
+  Widget build(BuildContext context) => Column(children: [
         Text("You are about to pay"),
         Text(""),
         Text("for "),
@@ -31,5 +28,5 @@ class CheckAndPayPageState extends State<CheckAndPayPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.paddingDefault)))),
         SizedBox(height: Dimens.paddingMediumLarge),
-      ]));
+      ]);
 }

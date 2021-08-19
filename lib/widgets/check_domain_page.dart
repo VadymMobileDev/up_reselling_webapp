@@ -56,10 +56,12 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         alignment: Alignment.centerLeft,
                         child: TextField(
                           enabled: widget.enabled ? true : false,
+                          maxLength: 6,
                           controller: widget.enabled
                               ? domainController
                               : domainController = TextEditingController(text: widget.nameEnabled),
                           decoration: InputDecoration(
+                            counterText: '',
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
