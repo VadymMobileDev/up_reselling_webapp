@@ -102,7 +102,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                   top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
                               child: Text(
                                   selectedGridDomain != null
-                                      ? "\$${selectedGridDomain!.price}"
+                                      ? "\$${selectedGridDomain!.price ~/ 100}"
                                       : "",
                                   style: TextStyle(
                                       fontSize: Dimens.paddingMedium,

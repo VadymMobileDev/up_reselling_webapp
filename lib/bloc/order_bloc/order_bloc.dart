@@ -14,14 +14,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   @override
   Stream<OrderState> mapEventToState(OrderEvent event) async* {
     if (event is LoadOrder) {
-      yield* loadOrderToState(event.email, event.domainName);
+      yield* loadOrderToState(event.email, event.orderNumber);
     }
   }
 
   Stream<OrderState> loadOrderToState(String email, String orderNumber) async* {
     try {
       yield LoadingOrder();
-      var orderParent = await repository.getOrderNumber("unstoppabledomains", "nischal@unstoppabledomains.com", "449652");
+      var orderParent = await repository.getOrderNumber("unstoppabledomains", email, orderNumber);
 
       if (orderParent.order.orderNumber == 0) {
         yield NoDataOrder("Data Not Found");

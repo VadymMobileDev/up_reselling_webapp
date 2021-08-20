@@ -5,7 +5,10 @@ import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_event.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_state.dart';
+
 import 'blockchain_domain_page/blockchain_domain_page.dart';
+
+const resellerID = "unstoppabledomains";
 
 class CheckDomainPage extends StatefulWidget {
   final bool enabled;
@@ -21,7 +24,18 @@ class CheckDomainPage extends StatefulWidget {
 }
 
 class CheckDomainPageState extends State<CheckDomainPage> {
-  List<String> spinnerItems = ['.crypto', '.x', '.coin', '.wallet', '.bitcoin', '.888', '.nft', '.dao', '.zil', 'blockchain'];
+  List<String> spinnerItems = [
+    '.crypto',
+    '.x',
+    '.coin',
+    '.wallet',
+    '.bitcoin',
+    '.888',
+    '.nft',
+    '.dao',
+    '.zil',
+    'blockchain'
+  ];
   late String dropdownValue = widget.enabled ? spinnerItems[0] : widget.domainEnabled;
   TextEditingController domainController = TextEditingController();
 
@@ -33,11 +47,14 @@ class CheckDomainPageState extends State<CheckDomainPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      BlockchainDomainPage(
-                          domainName: domainController.text, domainLogo: dropdownValue, resellingPrice: state.result.domain.reselling.price)),
+                  builder: (context) => BlockchainDomainPage(
+                      domainName: domainController.text,
+                      domainLogo: dropdownValue,
+                      resellingPrice: state.result.domain.reselling.price)),
             );
-          } else {}
+          } else {
+            Text("Please try another domain name.");
+          }
         }
       },
       child: Column(children: [
@@ -104,10 +121,10 @@ class CheckDomainPageState extends State<CheckDomainPage> {
         SizedBox(height: Dimens.paddingMedium),
         ElevatedButton(
             onPressed: () {
-              if(widget.enabled){
+              if (widget.enabled) {
                 context
                     .read<CheckDomainBloc>()
-                    .add(LoadCheckDomain("unstoppabledomains", "vadym.crypto"));
+                    .add(LoadCheckDomain(resellerID, "${domainController.text}$dropdownValue"));
               }
             },
             child: Text("Check Domain"),

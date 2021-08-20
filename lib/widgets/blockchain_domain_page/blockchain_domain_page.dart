@@ -64,3 +64,5 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
     );
   }
 }
+
+typedef void ShowHidePayCallback(bool val);
