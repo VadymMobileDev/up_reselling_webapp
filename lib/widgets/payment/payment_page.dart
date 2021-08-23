@@ -48,8 +48,9 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
       ],
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
+        // resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+        child: Padding(
           padding: _spacePadding,
           child: Column(children: [
             BeckToHomeCloseWidget(),
@@ -63,6 +64,7 @@ class _PaymentPageState extends State<PaymentPage> {
             BottomTextPoweredWidget(),
           ]),
         ),
+      ),
       ),
     );
   }

@@ -21,7 +21,6 @@ class BlockchainDomainPage extends StatefulWidget {
   final String domainLogo;
   final int? resellingPrice;
 
-
   BlockchainDomainPage({
     Key? key,
     required this.domainName,
@@ -52,11 +51,12 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
             child: Column(children: [
               BeckToHomeCloseWidget(),
               CardPurchaseWidget(),
-              CheckDomainPage(enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),
+              CheckDomainPage(
+                  enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),
               TitleExtensionsWidget(domainName: widget.domainName),
               GridListDomainPage(
-                domainsLogoSelected: widget.domainName + widget.domainLogo, resellingPrice: widget.resellingPrice
-              )
+                  domainsLogoSelected: widget.domainName + widget.domainLogo,
+                  resellingPrice: widget.resellingPrice)
             ]),
           ),
         ),
@@ -65,4 +65,4 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
   }
 }
 
-typedef void ShowHidePayCallback(bool val);
+typedef void ShowHideCheckCallback(bool val);

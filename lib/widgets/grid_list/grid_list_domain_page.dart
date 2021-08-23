@@ -9,7 +9,6 @@ import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_event.dart'
 import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_state.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
-import '../widgets_repository.dart';
 
 class GridListDomainPage extends StatefulWidget {
   final String domainsLogoSelected;
@@ -50,33 +49,32 @@ class _GridListDomainState extends State<GridListDomainPage> {
             return Visibility(
                 visible: showHideGridList,
                 child: Container(
-                child: GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              crossAxisCount: 3,
-              children: listDomainPriceSort.map((domain) {
-                return GestureDetector(
-                  onTap: () {
-                    stateGrid = false;
-                    _selectedDomains.clear();
-                    setState(() {
-                      _selectedDomains.add(domain);
+                  child: GridView.count(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    crossAxisCount: 3,
+                    children: listDomainPriceSort.map((domain) {
+                      return GestureDetector(
+                        onTap: () {
+                          stateGrid = false;
+                          _selectedDomains.clear();
+                          setState(() {
+                            _selectedDomains.add(domain);
 
-                      selectedGridDomain = domain;
-                    });
-                  },
-                  child: GridViewItem(domain, _selectedDomains.contains(domain)),
-                );
-              }).toList(),
-                ),
-            ));
+                            selectedGridDomain = domain;
+                          });
+                        },
+                        child: GridViewItem(domain, _selectedDomains.contains(domain)),
+                      );
+                    }).toList(),
+                  ),
+                ));
           } else {
             return CircularProgressIndicator();
           }
         }),
         SizedBox(height: Dimens.paddingMedium),
-
         Visibility(
           visible: selectedGridDomain != null ? true : false,
           child: Card(
@@ -183,11 +181,13 @@ class _GridListDomainState extends State<GridListDomainPage> {
             ),
           ),
         ),
-        CheckoutDomainWidget(selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
+        CheckoutDomainWidget(
+            selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
         SizedBox(height: Dimens.paddingMedium),
       ],
     );
   }
+
   parsingJSONToDomainList(String json, String domain, int price) {
     Map mapValue = jsonDecode(json);
     mapValue[domain].forEach((v) {
@@ -243,7 +243,9 @@ class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
   final bool showHide;
 
-  const CheckoutDomainWidget({Key? key, required this.selectedDomainItemCarts, required this.showHide}) : super(key: key);
+  const CheckoutDomainWidget(
+      {Key? key, required this.selectedDomainItemCarts, required this.showHide})
+      : super(key: key);
 
   @override
   CheckoutDomainWidgetState createState() => CheckoutDomainWidgetState();
@@ -251,8 +253,8 @@ class CheckoutDomainWidget extends StatefulWidget {
 
 class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
   Widget build(BuildContext context) => Visibility(
-      visible: widget.showHide,
-      child: Card(
+        visible: widget.showHide,
+        child: Card(
           color: AppColor.backgroundLightBlue,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -277,8 +279,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                           fontWeight: FontWeight.bold)),
                                   Text(" ${widget.selectedDomainItemCarts.length} item(s)",
                                       style: TextStyle(
-                                          fontSize: Dimens.paddingMedium,
-                                          color: AppColor.black)),
+                                          fontSize: Dimens.paddingMedium, color: AppColor.black)),
                                 ],
                               ),
                               Container(
@@ -294,23 +295,27 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                     return ListTile(
                                       title: Row(
                                         children: [
-                                      Expanded(
-                                      child: Text("${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
-                                          style: TextStyle(
-                                          fontSize: Dimens.paddingMedium,
-                                          color: AppColor.black,
-                                          fontWeight: FontWeight.bold))
-                                      ),
+                                          Expanded(
+                                              child: Text(
+                                                  "${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                                                  style: TextStyle(
+                                                      fontSize: Dimens.paddingMedium,
+                                                      color: AppColor.black,
+                                                      fontWeight: FontWeight.bold))),
                                           Expanded(
                                             child: Align(
                                               alignment: Alignment.centerRight,
-                                              child: IconButton(icon: Icon(Icons.clear), onPressed: () {
-                                                setState(() {
-                                                  widget.selectedDomainItemCarts.removeAt(index);
-                                                });
-                                              }),
+                                              child: IconButton(
+                                                  icon: Icon(Icons.clear),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      widget.selectedDomainItemCarts
+                                                          .removeAt(index);
+                                                    });
+                                                  }),
                                             ),
-                                          )                                        ],
+                                          )
+                                        ],
                                       ),
                                     );
                                   },
@@ -332,33 +337,34 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(left: Dimens.paddingDefault),
-                            child: Row(
-                              children: [
-                                Text("Total: ",
-                                    style:
-                                    TextStyle(color: AppColor.black, fontWeight: FontWeight.bold)),
-                                Text(" \$${totalAmount(widget.selectedDomainItemCarts) }",
-                                    style:
-                                    TextStyle(color: AppColor.primaryBlue, fontWeight: FontWeight.bold)),
-                              ],
-                            )
-                          ),
+                              padding: EdgeInsets.only(left: Dimens.paddingDefault),
+                              child: Row(
+                                children: [
+                                  Text("Total: ",
+                                      style: TextStyle(
+                                          color: AppColor.black, fontWeight: FontWeight.bold)),
+                                  Text(" \$${totalAmount(widget.selectedDomainItemCarts)}",
+                                      style: TextStyle(
+                                          color: AppColor.primaryBlue,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              )),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Padding(
                           padding: const EdgeInsets.only(
-                              left: Dimens.paddingTenFount,
-                              right: Dimens.paddingTenFount,
-                              top: Dimens.paddingSmall,
-                              bottom: Dimens.paddingSmall,
+                            left: Dimens.paddingTenFount,
+                            right: Dimens.paddingTenFount,
+                            top: Dimens.paddingSmall,
+                            bottom: Dimens.paddingSmall,
                           ),
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                return PaymentPage(selectedDomainItems: widget.selectedDomainItemCarts);
+                                return PaymentPage(
+                                    selectedDomainItems: widget.selectedDomainItemCarts);
                               }));
                             },
                             child: Text("Checkout"),
@@ -375,15 +381,14 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
               ),
             ],
           ),
-          ),
+        ),
       );
 
-  String totalAmount(List<DomainItemCart> selectedDomainItemCarts){
+  String totalAmount(List<DomainItemCart> selectedDomainItemCarts) {
     int total = 0;
     selectedDomainItemCarts.forEach((v) {
       total += v.domainItem!.price ~/ 100;
     });
     return total.toString();
   }
-
 }

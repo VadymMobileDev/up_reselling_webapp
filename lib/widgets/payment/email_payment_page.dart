@@ -54,7 +54,6 @@ class EmailPaymentState extends State<EmailPaymentPage> {
                                   widget.callback(domainController.text);
                                 },
                               )))),
-                  Container(height: 20, width: 2, color: AppColor.borderCardGrey),
                 ],
               ),
             ),

@@ -7,8 +7,9 @@ import 'package:up_reselling_webapp/widgets/check_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
 
 const _spacePadding = const EdgeInsets.only(
-  left: Dimens.paddingMediumLarge,
-  right: Dimens.paddingMediumLarge,
+  top: Dimens.paddingMediumLarge,
+  left: Dimens.paddingMedium,
+  right: Dimens.paddingMedium,
   bottom: Dimens.paddingMediumLarge,
 );
 
@@ -25,7 +26,8 @@ class _XummPageState extends State<XummPage> {
         create: (context) => CheckDomainBloc(repository: DomainRepository()),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Padding(
+          body: SingleChildScrollView(
+            child: Padding(
             padding: _spacePadding,
             child: Column(
               children: [
@@ -39,7 +41,7 @@ class _XummPageState extends State<XummPage> {
                 BottomTextUnstoppableWidget()
               ],
             ),
-          ),
+          ),)
         ),
       );
 }

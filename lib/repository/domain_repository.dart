@@ -16,7 +16,6 @@ class DomainRepository implements Repository {
 
   DomainRepository._internal({required this.apiRepository});
 
-
   @override
   Future<String> getDomainNameList(String domains) async {
     return await apiRepository.getDomainNameList(domains);
@@ -36,5 +35,4 @@ class DomainRepository implements Repository {
   Future<OrderSend> sendOrderNumber(String resellerID, String email, String json) async {
     return await apiRepository.sendOrderNumber(resellerID, email, json);
   }
-
 }

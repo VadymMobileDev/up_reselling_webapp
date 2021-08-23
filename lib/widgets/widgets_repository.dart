@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
-import 'package:up_reselling_webapp/bloc/check_domain_bloc/bloc.dart';
-import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
-import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
 
 class BeckToHomeOpenWidget extends StatelessWidget {
@@ -205,14 +201,12 @@ class CardPaymentDataWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = selectedDomainItems[index];
                 return ListTile(
-                  title:
-                      Expanded(
-                          child: Text("${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                  title:Text("${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
                               style: TextStyle(
                                   fontSize: Dimens.paddingMedium,
                                   color: AppColor.black,
                                   fontWeight: FontWeight.bold))
-                  ),
+
                 );
               },
             ),
@@ -236,14 +230,11 @@ class BottomTextPoweredWidget extends StatelessWidget {
 
 class SpaceHeightWidget extends StatelessWidget {
   const SpaceHeightWidget({Key? key}) : super(key: key);
-
-  Widget build(BuildContext context) => Expanded(
-        child: Align(
+  Widget build(BuildContext context) =>  Align(
           alignment: FractionalOffset.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(bottom: 10.0),
+            padding: EdgeInsets.only(bottom: Dimens.paddingXLarge),
             child: Text(""),
           ),
-        ),
       );
 }
