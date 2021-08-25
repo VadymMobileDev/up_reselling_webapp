@@ -16,7 +16,7 @@ class DomainCheck {
 @JsonSerializable()
 class Domain {
   late String? name;
-  Reselling reselling;
+  Reselling? reselling;
   late bool? premium;
   late bool? registered;
   late bool? protected;

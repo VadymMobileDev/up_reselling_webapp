@@ -44,13 +44,14 @@ class CheckDomainPageState extends State<CheckDomainPage> {
       listener: (context, state) {
         if (state is HasDataCheckDomain) {
           if (domainController.text.isNotEmpty) {
+            bool resellingValidate = state.result.domain.reselling == null ? false : true;
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => BlockchainDomainPage(
                       domainName: domainController.text,
                       domainLogo: dropdownValue,
-                      resellingPrice: state.result.domain.reselling.price)),
+                      resellingValidate: resellingValidate)),
             );
           } else {
             Text("Please try another domain name.");

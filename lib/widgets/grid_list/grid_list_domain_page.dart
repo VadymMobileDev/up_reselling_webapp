@@ -8,16 +8,19 @@ import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_event.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_state.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
+import 'package:up_reselling_webapp/widgets/blockchain_domain_page/blockchain_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class GridListDomainPage extends StatefulWidget {
   final String domainsLogoSelected;
-  final int? resellingPrice;
+  final bool? resellingValidate;
+  final ShowHideCheckCallback callback;
 
   GridListDomainPage({
     Key? key,
     required this.domainsLogoSelected,
-    required this.resellingPrice,
+    required this.resellingValidate,
+    required this.callback,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class GridListDomainPage extends StatefulWidget {
 
 class _GridListDomainState extends State<GridListDomainPage> {
   List<DomainItem> _selectedDomains = [];
-  List<DomainItem> listDomainPriceSort = [];
+  List<DomainItem> listDomainAll = [];
   bool stateGrid = true;
   DomainItem? selectedGridDomain;
   bool showHideGridList = true;
@@ -45,7 +48,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
         BlocBuilder<DomainChooseBloc, DomainChooseState>(builder: (_, state) {
           if (state is HasData) {
             parsingJSONToDomainList(
-                state.result, widget.domainsLogoSelected, widget.resellingPrice!);
+                state.result, widget.domainsLogoSelected);
             return Visibility(
                 visible: showHideGridList,
                 child: Container(
@@ -54,7 +57,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     crossAxisCount: 3,
-                    children: listDomainPriceSort.map((domain) {
+                    children: listDomainAll.map((domain) {
                       return GestureDetector(
                         onTap: () {
                           stateGrid = false;
@@ -65,7 +68,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                             selectedGridDomain = domain;
                           });
                         },
-                        child: GridViewItem(domain, _selectedDomains.contains(domain)),
+                        child: GridViewItem(domain, _selectedDomains.contains(domain), widget.resellingValidate!),
                       );
                     }).toList(),
                   ),
@@ -75,6 +78,9 @@ class _GridListDomainState extends State<GridListDomainPage> {
           }
         }),
         SizedBox(height: Dimens.paddingMedium),
+    Visibility(
+    visible: showHideGridList,
+    child:
         Visibility(
           visible: selectedGridDomain != null ? true : false,
           child: Card(
@@ -146,6 +152,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                           setState(() {
                             showHideAddToCart = true;
                             showHideGridList = false;
+                            widget.callback(true);
                             // CheckoutDomainWidget(selectedDomainItemCarts: selectedDomainItemCart);
                           });
                         },
@@ -180,7 +187,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
               ),
             ),
           ),
-        ),
+        ),),
         CheckoutDomainWidget(
             selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
         SizedBox(height: Dimens.paddingMedium),
@@ -188,23 +195,24 @@ class _GridListDomainState extends State<GridListDomainPage> {
     );
   }
 
-  parsingJSONToDomainList(String json, String domain, int price) {
+  parsingJSONToDomainList(String json, String domain) {
     Map mapValue = jsonDecode(json);
     mapValue[domain].forEach((v) {
-      if (DomainItem.fromJson(v).price <= price * 100) {
         if (stateGrid) {
-          listDomainPriceSort.add(DomainItem.fromJson(v));
+          listDomainAll.add(DomainItem.fromJson(v));
         }
-      }
     });
+    final ids = listDomainAll.map((e) => e.extension).toSet();
+    listDomainAll.retainWhere((x) => ids.remove(x.extension));
   }
 }
 
 class GridViewItem extends StatelessWidget {
   final DomainItem item;
   final bool _isSelected;
+  final bool resellingValidate;
 
-  GridViewItem(this.item, this._isSelected);
+  GridViewItem(this.item, this._isSelected, this.resellingValidate);
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +228,7 @@ class GridViewItem extends StatelessWidget {
                 Text(item.extension,
                     style: TextStyle(
                         fontSize: Dimens.paddingMedium,
-                        color: Colors.black,
+                        color: resellingValidate ? Colors.black : Colors.red,
                         fontWeight: FontWeight.bold)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

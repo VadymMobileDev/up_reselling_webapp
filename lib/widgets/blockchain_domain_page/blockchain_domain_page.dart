@@ -19,13 +19,13 @@ const _spacePadding = const EdgeInsets.only(
 class BlockchainDomainPage extends StatefulWidget {
   final String domainName;
   final String domainLogo;
-  final int? resellingPrice;
+  final bool? resellingValidate;
 
   BlockchainDomainPage({
     Key? key,
     required this.domainName,
     required this.domainLogo,
-    required this.resellingPrice,
+    required this.resellingValidate,
   }) : super(key: key);
 
   @override
@@ -33,6 +33,9 @@ class BlockchainDomainPage extends StatefulWidget {
 }
 
 class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
+
+  bool showHideBlockchainDomain = true;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -56,7 +59,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
               TitleExtensionsWidget(domainName: widget.domainName),
               GridListDomainPage(
                   domainsLogoSelected: widget.domainName + widget.domainLogo,
-                  resellingPrice: widget.resellingPrice)
+                  resellingValidate: widget.resellingValidate, callback: (val) => setState(() => showHideBlockchainDomain = val))
             ]),
           ),
         ),
