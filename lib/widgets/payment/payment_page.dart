@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/order_bloc.dart';
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_bloc.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
+import 'package:up_reselling_webapp/widgets/payment/success_pay_form.dart';
 
 import '../widgets_repository.dart';
 import 'check_and_pay_page.dart';
@@ -31,7 +33,9 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   TextEditingController domainController = TextEditingController();
   bool showHidePay = true;
+  bool successPay = false;
   String email = "nischal@unstoppabledomains.com";
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +52,25 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
       ],
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
+        backgroundColor: AppColor.white,
         body: SingleChildScrollView(
         child: Padding(
           padding: _spacePadding,
           child: Column(children: [
             BeckToHomeCloseWidget(),
-            CardPaymentDataWidget(selectedDomainItems: widget.selectedDomainItems),
-            EmailPaymentPage(callback: (v) => setState(() => email = v), showHidePay: showHidePay),
-            CreditCardAndCryptoPage(
-                callback: (val) => setState(() => showHidePay = val), showHidePay: showHidePay),
-            CheckAndPayPage(
-                selectedDomainItems: widget.selectedDomainItems, showHidePay: showHidePay, userEmail: email),
+            Visibility(
+                visible: !successPay,
+                child: Column(
+              children: [
+                CardPaymentDataWidget(selectedDomainItems: widget.selectedDomainItems),
+                EmailPaymentPage(callback: (v) => setState(() => email = v), showHidePay: showHidePay),
+                CreditCardAndCryptoPage(
+                    callback: (val) => setState(() => showHidePay = val), showHidePay: showHidePay),
+                CheckAndPayPage(callbackSuccessPay: (val) => setState(() => successPay = val),
+                    selectedDomainItems: widget.selectedDomainItems, showHidePay: showHidePay, userEmail: email),
+              ],
+            )),
+            SuccessPayWidget(showSuccessPay: successPay, email: email),
             SpaceHeightWidget(),
             BottomTextPoweredWidget(),
           ]),
@@ -72,3 +83,4 @@ class _PaymentPageState extends State<PaymentPage> {
 
 typedef void ShowHidePayCallback(bool val);
 typedef void EmailCallback(String v);
+typedef void ShowSuccessPayCallback(bool v);

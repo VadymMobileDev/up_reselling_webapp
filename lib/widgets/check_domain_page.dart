@@ -51,7 +51,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                   builder: (context) => BlockchainDomainPage(
                       domainName: domainController.text,
                       domainLogo: dropdownValue,
-                      resellingValidate: resellingValidate)),
+                      resellingValidate: resellingValidate, spinnerItems: spinnerItems)),
             );
           } else {
             Text("Please try another domain name.");

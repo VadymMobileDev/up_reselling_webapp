@@ -9,14 +9,16 @@ import 'package:up_reselling_webapp/bloc/send_order_number/send_order_bloc.dart'
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_event.dart';
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_state.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
+import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class CheckAndPayPage extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItems;
   final bool showHidePay;
   final String userEmail;
+  final ShowSuccessPayCallback callbackSuccessPay;
 
   CheckAndPayPage(
-      {Key? key,
+      {Key? key, required this.callbackSuccessPay,
       required this.selectedDomainItems,
       required this.showHidePay,
       required this.userEmail})
@@ -69,6 +71,7 @@ class CheckAndPayPageState extends State<CheckAndPayPage> {
                 if (state is HasDataOrder) {
                   setState(() {
                     orderNumber = state.result.orderNumber!;
+                    widget.callbackSuccessPay(true);
                   });
                 }
               },
