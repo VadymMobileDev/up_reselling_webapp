@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 
-const _spacePadding = const EdgeInsets.only(
-  top: Dimens.paddingLarge,
-  left: Dimens.paddingMedium,
-  right: Dimens.paddingMedium,
-  bottom: Dimens.paddingMediumLarge,
-);
+import '../widgets_repository.dart';
 
 class MoreAboutProgramingPage extends StatefulWidget {
   MoreAboutProgramingPage({Key? key}) : super(key: key);
@@ -21,9 +17,9 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColor.backgroundLightBlue,
+        backgroundColor: AppColor.backgroundLightBlue,
         body: Padding(
-            padding: _spacePadding,
+            padding: spacePadding,
             child: Column(
               children: [
                 Card(
@@ -37,16 +33,14 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: <Widget>[
-                          Text("Give \$10, Get \$10",
-                              style: TextStyle(
-                                  fontSize: Dimens.borderButtonRadius,
-                                  color: AppColor.textBlue,
-                                  fontWeight: FontWeight.bold)),
+                          TextBold(
+                              text: AppText.more_give,
+                              fontSize: Dimens.borderButtonRadius,
+                              color: AppColor.textBlue),
                           SizedBox(height: Dimens.paddingMediumLarge),
-                          Text(
-                              "Refer a friend with a \$10 credit and \n earn \$10 credit after they make their \nfirst purchase.",
+                          Text(AppText.more_refer,
                               style: TextStyle(color: AppColor.textGrey),
-                            textAlign: TextAlign.center),
+                              textAlign: TextAlign.center),
                           SizedBox(height: Dimens.paddingMediumLarge),
                           Card(
                             color: AppColor.backgroundLightGrey,
@@ -72,7 +66,8 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                                               errorBorder: InputBorder.none,
                                               disabledBorder: InputBorder.none,
                                               isDense: true,
-                                              hintText: "https://unstoppabledomains.com/r/2 2b214f68524f2",
+                                              hintText:
+                                                  "https://unstoppabledomains.com/r/2 2b214f68524f2",
                                               hintStyle: TextStyle(color: AppColor.black),
                                             ),
                                           ))),
@@ -90,15 +85,44 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                                   minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(Dimens.paddingDefault)))),
+                          SizedBox(height: Dimens.borderButtonRadius),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CircleAvatar(
+                                  radius: 28,
+                                  child: Image.asset("assets/icon_light.png"),
+                                ),
+                              ),
+                              Expanded(
+                                child: CircleAvatar(
+                                  radius: 28,
+                                  child: Image.asset("assets/icon_light.png"),
+                                ),
+                              ),
+                              Expanded(
+                                child: CircleAvatar(
+                                  radius: 28,
+                                  child: Image.asset("assets/icon_light.png"),
+                                ),
+                              ),
+                              Expanded(
+                                child: CircleAvatar(
+                                  radius: 28,
+                                  child: Image.asset("assets/icon_light.png"),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: Dimens.paddingMedium),
                         ],
                       ),
                     )))),
                 SizedBox(height: Dimens.paddingLarge),
-                Text("Learn more about the program",
-                    style: TextStyle(
-                        fontSize: Dimens.paddingMedium,
-                        color: AppColor.textBlue,
-                        fontWeight: FontWeight.bold)),
+                TextBold(
+                    text: AppText.more_learn,
+                    fontSize: Dimens.paddingMedium,
+                    color: AppColor.textBlue)
               ],
             )),
       );

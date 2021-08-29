@@ -30,6 +30,7 @@ dependencies:
   flutter_bloc: ^7.1.0
   json_annotation: ^4.0.1
   email_validator: ^2.0.1
+  lint: ^1.6.0
 
 
   # The following adds the Cupertino Icons font to your application.

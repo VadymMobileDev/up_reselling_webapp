@@ -9,13 +9,6 @@ import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart
 import '../check_domain_page.dart';
 import '../widgets_repository.dart';
 
-const _spacePadding = const EdgeInsets.only(
-  top: Dimens.paddingLarge,
-  left: Dimens.paddingMediumLarge,
-  right: Dimens.paddingMediumLarge,
-  bottom: Dimens.paddingMediumLarge,
-);
-
 class BlockchainDomainPage extends StatefulWidget {
   final String domainName;
   final String domainLogo;
@@ -52,7 +45,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: _spacePadding,
+            padding: spacePadding,
             child: Column(children: [
               BeckToHomeCloseWidget(),
               CardPurchaseWidget(),

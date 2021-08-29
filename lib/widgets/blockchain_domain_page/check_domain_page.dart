@@ -142,6 +142,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
               ],
             ),
           ),
+          SizedBox(height: Dimens.paddingMedium),
         ],
       ),
     ),

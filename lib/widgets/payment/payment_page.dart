@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
-import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/order_bloc.dart';
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_bloc.dart';
@@ -13,13 +12,6 @@ import '../widgets_repository.dart';
 import 'check_and_pay_page.dart';
 import 'credit_cardand_crypto_page.dart';
 import 'email_payment_page.dart';
-
-const _spacePadding = const EdgeInsets.only(
-  top: Dimens.paddingLarge,
-  left: Dimens.paddingMediumLarge,
-  right: Dimens.paddingMediumLarge,
-  bottom: Dimens.paddingMediumLarge,
-);
 
 class PaymentPage extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItems;
@@ -55,7 +47,7 @@ class _PaymentPageState extends State<PaymentPage> {
         backgroundColor: AppColor.white,
         body: SingleChildScrollView(
         child: Padding(
-          padding: _spacePadding,
+          padding: spacePadding,
           child: Column(children: [
             BeckToHomeCloseWidget(),
             Visibility(

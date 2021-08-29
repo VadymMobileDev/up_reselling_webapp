@@ -6,13 +6,6 @@ import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/check_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/widgets_repository.dart';
 
-const _spacePadding = const EdgeInsets.only(
-  top: Dimens.paddingMediumLarge,
-  left: Dimens.paddingMedium,
-  right: Dimens.paddingMedium,
-  bottom: Dimens.paddingMediumLarge,
-);
-
 class XummPage extends StatefulWidget {
   XummPage({Key? key}) : super(key: key);
 
@@ -25,23 +18,23 @@ class _XummPageState extends State<XummPage> {
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => CheckDomainBloc(repository: DomainRepository()),
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SingleChildScrollView(
-            child: Padding(
-            padding: _spacePadding,
-            child: Column(
-              children: [
-                BeckToHomeOpenWidget(),
-                CardUnstoppableWidget(),
-                SizedBox(height: Dimens.paddingSemi),
-                CardPurchaseWidget(),
-                CheckDomainPage(enabled: true, nameEnabled: "", domainEnabled: ""),
-                HelpCenterWidget(),
-                SpaceHeightWidget(),
-                BottomTextUnstoppableWidget()
-              ],
-            ),
-          ),)
-        ),
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: spacePadding,
+                child: Column(
+                  children: [
+                    BeckToHomeOpenWidget(),
+                    CardUnstoppableWidget(),
+                    SizedBox(height: Dimens.paddingSemi),
+                    CardPurchaseWidget(),
+                    CheckDomainPage(enabled: true, nameEnabled: "", domainEnabled: ""),
+                    HelpCenterWidget(),
+                    SpaceHeightWidget(),
+                    BottomTextUnstoppableWidget()
+                  ],
+                ),
+              ),
+            )),
       );
 }

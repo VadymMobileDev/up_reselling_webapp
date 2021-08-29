@@ -17,4 +17,5 @@ abstract class Dimens {
   static const double defaultFountSize = 14.0;
   static const double paddingXSLarge = 18.0;
   static const double iconHeight = 40.0;
+  static const double fontSizeXL = 22.0;
 }

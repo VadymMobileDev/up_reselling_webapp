@@ -10,7 +10,9 @@ import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_state.dart'
 import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/widgets/blockchain_domain_page/blockchain_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/blockchain_domain_page/check_domain_page.dart';
+import 'package:up_reselling_webapp/widgets/blockchain_domain_page/suggestion_list_form.dart';
 
+import '../widgets_repository.dart';
 import 'grid_view_item_form.dart';
 
 class GridListDomainPage extends StatefulWidget {
@@ -54,98 +56,46 @@ class _GridListDomainState extends State<GridListDomainPage> {
           if (state is HasData) {
             parsingJSONToDomainList(
                 state.result, widget.domainsLogoSelected, widget.resellingValidate);
-            return Visibility(
-                visible: showHideGridList,
-                child: Container(
-                  child: GridView.count(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    crossAxisCount: 3,
-                    children: listDomainAll.map((domain) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (widget.resellingValidate) {
-                            stateGrid = false;
-                            _selectedDomains.clear();
-                            setState(() {
-                              _selectedDomains.add(domain);
-                              selectedGridDomain = domain;
-                            });
-                          }
-                        },
-                        child: GridViewItem(
-                            domain, _selectedDomains.contains(domain), widget.resellingValidate),
-                      );
-                    }).toList(),
-                  ),
-                ));
+            return Column(
+              children: [
+                Visibility(
+                    visible: showHideGridList,
+                    child: Container(
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        crossAxisCount: 3,
+                        children: listDomainAll.map((domain) {
+                          return GestureDetector(
+                            onTap: () {
+                              if (widget.resellingValidate) {
+                                stateGrid = false;
+                                _selectedDomains.clear();
+                                setState(() {
+                                  _selectedDomains.add(domain);
+                                  selectedGridDomain = domain;
+                                });
+                              }
+                            },
+                            child: GridViewItem(domain, _selectedDomains.contains(domain),
+                                widget.resellingValidate),
+                          );
+                        }).toList(),
+                      ),
+                    )),
+                SuggestionListForm(
+                    resellingValidate: widget.resellingValidate,
+                    listDomainSuggestion: listDomainSuggestion,
+                    domainsLogoSelected: widget.domainsLogoSelected,
+                    callback: (val) => setState(() => selectedDomainItemCart = val),
+                    callbackShow: (val) => setState(() => showHideAddToCart = val)),
+              ],
+            );
           } else {
             return CircularProgressIndicator();
           }
         }),
-        Visibility(
-          visible: widget.resellingValidate ? false : true,
-          child: Column(
-            children: [
-              SizedBox(height: Dimens.paddingMedium),
-              Text("Didn't find what you are looking for? How about one of those?",
-                  style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
-              Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: listDomainSuggestion.length,
-                  itemBuilder: (context, index) {
-                    final item = listDomainSuggestion[index];
-                    return ListTile(
-                      title: Row(
-                        children: [
-                          Expanded(
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text("${item.label}.${item.extension}",
-                                      style: TextStyle(
-                                          fontSize: Dimens.paddingSemi,
-                                          color: AppColor.black,
-                                          fontWeight: FontWeight.bold)))),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text("\$${item.price ~/ 100}.00",
-                                  style: TextStyle(
-                                      fontSize: Dimens.paddingSemi,
-                                      color: AppColor.textBlue,
-                                      fontWeight: FontWeight.bold))),
-                          Expanded(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: ElevatedButton.icon(
-                                  icon: Icon(Icons.add_shopping_cart,
-                                      color: AppColor.white, size: Dimens.paddingMedium),
-                                  onPressed: () {
-                                    setState(() {
-                                      _selectedDomains.add(item);
-                                    });
-                                  },
-                                  label: Text("Add to Cart",
-                                      style: TextStyle(fontSize: Dimens.paddingSemi)),
-                                  style: ElevatedButton.styleFrom(
-                                      primary: AppColor.primaryBlue,
-                                      minimumSize: Size(double.minPositive, Dimens.paddingLarge),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(Dimens.paddingSmall))),
-                                )),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
         SizedBox(height: Dimens.paddingMedium),
         Visibility(
           visible: showHideGridList,
@@ -172,14 +122,12 @@ class _GridListDomainState extends State<GridListDomainPage> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: Dimens.paddingSmall, bottom: Dimens.paddingSmall),
-                                child: Text(
-                                    selectedGridDomain != null
+                                child: TextBold(
+                                    text: selectedGridDomain != null
                                         ? "\$${selectedGridDomain!.price ~/ 100}"
                                         : "",
-                                    style: TextStyle(
-                                        fontSize: Dimens.paddingMedium,
-                                        color: AppColor.primaryBlue,
-                                        fontWeight: FontWeight.bold)),
+                                    fontSize: Dimens.paddingMedium,
+                                    color: AppColor.primaryBlue),
                               ),
                             ],
                           ),
@@ -254,9 +202,9 @@ class _GridListDomainState extends State<GridListDomainPage> {
             ),
           ),
         ),
+        Text("-----------   ${selectedDomainItemCart.length}"),
         CheckoutDomainWidget(
             selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
-        SizedBox(height: Dimens.paddingMedium),
       ],
     );
   }
@@ -270,16 +218,21 @@ class _GridListDomainState extends State<GridListDomainPage> {
         }
       });
     } else {
-      widget.spinnerItems.forEach((element) {
-        listDomainAll.add(DomainItem(label: "", extension: element, price: 0));
-      });
-      mapValue[domain].forEach((v) {
-        listDomainSuggestion.add(DomainItem.fromJson(v));
-      });
+      if (!showHideAddToCart) {
+        widget.spinnerItems.forEach((element) {
+          if (stateGrid) {
+            listDomainAll.add(DomainItem(label: "", extension: element, price: 0));
+          }
+        });
+        mapValue[domain].forEach((v) {
+          listDomainSuggestion.add(DomainItem.fromJson(v));
+        });
+      }
     }
     final ids = listDomainAll.map((e) => e.extension).toSet();
     listDomainAll.retainWhere((x) => ids.remove(x.extension));
   }
 }
 
-
+typedef void SuggestionDomainListCallback(List<DomainItemCart> selectedDomainItemCart);
+typedef void SuggestionShowCartCallback(bool showHideAddToCart);

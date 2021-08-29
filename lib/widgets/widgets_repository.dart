@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
 
@@ -30,7 +31,7 @@ class BeckToHomeOpenWidget extends StatelessWidget {
                       Icon(Icons.arrow_back_ios, color: AppColor.black, size: Dimens.paddingMedium),
                   onPressed: () {},
                   label: Text(
-                    "Beck To Home",
+                    AppText.x_beck,
                     style: TextStyle(color: AppColor.black),
                   ),
                   style: ElevatedButton.styleFrom(
@@ -137,12 +138,10 @@ class CardPurchaseWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text("Purchase your\nBlockchain Domain",
-                  style: TextStyle(
-                      fontSize: 22.0, color: AppColor.black, fontWeight: FontWeight.bold)),
+              TextBold(
+                  text: AppText.x_purchase, fontSize: Dimens.fontSizeXL, color: AppColor.black),
               SizedBox(height: Dimens.paddingSemi),
-              Text("Please enter at least 6 Characters",
-                  style: TextStyle(color: AppColor.textGrey)),
+              Text(AppText.x_6_characters, style: TextStyle(color: AppColor.textGrey)),
             ],
           ),
         ),
@@ -169,13 +168,10 @@ class BottomTextUnstoppableWidget extends StatelessWidget {
 
   Widget build(BuildContext context) => Column(
         children: [
-          Text("Powered By",
+          Text(AppText.x_powered,
               style: TextStyle(color: AppColor.textGreyMiddle, fontSize: Dimens.paddingTenFount)),
-          Text("Unstoppable Domains",
-              style: TextStyle(
-                  color: AppColor.textGrey,
-                  fontSize: Dimens.paddingSemi,
-                  fontWeight: FontWeight.bold))
+          TextBold(
+              text: AppText.x_unstoppable, fontSize: Dimens.paddingSemi, color: AppColor.textGrey),
         ],
       );
 }
@@ -194,20 +190,15 @@ class CardPaymentDataWidget extends StatelessWidget {
           child: Container(
             height: 60,
             child: ListView.builder(
-              // shrinkWrap: true,
-              // physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: selectedDomainItems.length,
               itemBuilder: (context, index) {
                 final item = selectedDomainItems[index];
                 return ListTile(
-                  title:Text("${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
-                              style: TextStyle(
-                                  fontSize: Dimens.paddingMedium,
-                                  color: AppColor.black,
-                                  fontWeight: FontWeight.bold))
-
-                );
+                    title: TextBold(
+                        text: "${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                        fontSize: Dimens.paddingMedium,
+                        color: AppColor.black));
               },
             ),
           ),
@@ -230,11 +221,35 @@ class BottomTextPoweredWidget extends StatelessWidget {
 
 class SpaceHeightWidget extends StatelessWidget {
   const SpaceHeightWidget({Key? key}) : super(key: key);
-  Widget build(BuildContext context) =>  Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(bottom: Dimens.paddingXLarge),
-            child: Text(""),
-          ),
+
+  Widget build(BuildContext context) => Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: Dimens.paddingXLarge),
+          child: Text(""),
+        ),
       );
 }
+
+class TextBold extends StatelessWidget {
+  final String text;
+  final double fontSize;
+  final Color color;
+
+  const TextBold({
+    Key? key,
+    required this.text,
+    required this.fontSize,
+    required this.color,
+  }) : super(key: key);
+
+  Widget build(BuildContext context) =>
+      Text(text, style: TextStyle(fontSize: fontSize, color: color, fontWeight: FontWeight.bold));
+}
+
+const spacePadding = const EdgeInsets.only(
+  top: Dimens.paddingLarge,
+  left: Dimens.paddingMediumLarge,
+  right: Dimens.paddingMediumLarge,
+  bottom: Dimens.paddingMediumLarge,
+);
