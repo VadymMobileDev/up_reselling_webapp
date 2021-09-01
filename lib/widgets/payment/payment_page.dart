@@ -8,7 +8,7 @@ import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/payment/success_pay_form.dart';
 
-import '../widgets_repository.dart';
+import '../general/widgets_repository.dart';
 import 'check_and_pay_page.dart';
 import 'credit_cardand_crypto_page.dart';
 import 'email_payment_page.dart';

@@ -60,23 +60,20 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                     children: [
                                       Expanded(
                                           child: Text(
-                                              "${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                                              "${item.domainItem?.label}.${item.domainItem?.extension} - \$${item.domainItem!.price ~/ 100}",
                                               style: TextStyle(
                                                   fontSize: Dimens.paddingMedium,
                                                   color: AppColor.black,
                                                   fontWeight: FontWeight.bold))),
-                                      Expanded(
-                                        child: Align(
+                                       Align(
                                           alignment: Alignment.centerRight,
                                           child: IconButton(
                                               icon: Icon(Icons.clear),
                                               onPressed: () {
                                                 setState(() {
-                                                  widget.selectedDomainItemCarts
-                                                      .removeAt(index);
+                                                  widget.selectedDomainItemCarts.removeAt(index);
                                                 });
                                               }),
-                                        ),
                                       )
                                     ],
                                   ),

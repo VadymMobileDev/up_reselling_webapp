@@ -31,6 +31,7 @@ dependencies:
   json_annotation: ^4.0.1
   email_validator: ^2.0.1
   lint: ^1.6.0
+  webview_flutter: ^2.0.12
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,6 +61,8 @@ flutter:
     - assets/unstoppable_domains_logo.png
     - assets/icon_light.png
     - assets/xumm_logo.png
+    - assets/frame.png
+    - assets/purchase.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -12,4 +12,22 @@ class AppText {
       "Refer a friend with a \$10 credit and \n earn \$10 credit after they make their \nfirst purchase.";
   static const more_learn = "Learn more about the program";
   static const more_give = "Give \$10, Get \$10";
+
+
+  static const success_order = "Thank you four your order!";
+  static const success_emailed = "We've emailed your receipt to";
+  static const success_join = "Join our Referral Program";
+  static const success_search = "Search for a New Domain";
+  static const spinnerItems = [
+    '.crypto',
+    '.x',
+    '.coin',
+    '.wallet',
+    '.bitcoin',
+    '.888',
+    '.nft',
+    '.dao',
+    '.zil',
+    'blockchain'
+  ];
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/widgets/general/web_view_page.dart';
 
-import '../widgets_repository.dart';
+import '../general/widgets_repository.dart';
 
 class MoreAboutProgramingPage extends StatefulWidget {
   MoreAboutProgramingPage({Key? key}) : super(key: key);
@@ -33,6 +34,10 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         children: <Widget>[
+                          FittedBox(
+                            child: Image.asset("assets/frame.png"),
+                            fit: BoxFit.fill,
+                          ),
                           TextBold(
                               text: AppText.more_give,
                               fontSize: Dimens.borderButtonRadius,
@@ -77,7 +82,8 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                           ),
                           SizedBox(height: Dimens.paddingMedium),
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                              },
                               child: Text("Copy Link"),
                               style: ElevatedButton.styleFrom(
                                   elevation: 0.0,
@@ -88,37 +94,17 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                           SizedBox(height: Dimens.borderButtonRadius),
                           Row(
                             children: [
-                              Expanded(
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  child: Image.asset("assets/icon_light.png"),
-                                ),
-                              ),
-                              Expanded(
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  child: Image.asset("assets/icon_light.png"),
-                                ),
-                              ),
-                              Expanded(
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  child: Image.asset("assets/icon_light.png"),
-                                ),
-                              ),
-                              Expanded(
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  child: Image.asset("assets/icon_light.png"),
-                                ),
-                              ),
+                              _circleAvatar("https://twitter.com/unstoppableweb", "assets/icon_light.png"),
+                              _circleAvatar("https://www.facebook.com/unstoppableweb/", "assets/icon_light.png"),
+                              _circleAvatar("https://www.instagram.com/unstoppabledomains134/", "assets/icon_light.png"),
+                              _circleAvatar("support@unstoppabledomains.com", "assets/icon_light.png")
                             ],
                           ),
                           SizedBox(height: Dimens.paddingMedium),
                         ],
                       ),
                     )))),
-                SizedBox(height: Dimens.paddingLarge),
+                SizedBox(height: Dimens.paddingMedium),
                 TextBold(
                     text: AppText.more_learn,
                     fontSize: Dimens.paddingMedium,
@@ -126,4 +112,19 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
               ],
             )),
       );
+
+  Widget _circleAvatar(String url, String image)=> Expanded(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+              builder: (context) => WebViewPage(url: url)));
+        },
+        child: CircleAvatar(
+          radius: 28,
+          child: Image.asset(image),
+        ),
+      ),
+    );
 }

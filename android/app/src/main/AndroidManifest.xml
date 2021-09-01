@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.up_reselling_webapp">
+
    <application
         android:label="up_reselling_webapp"
         android:icon="@mipmap/ic_launcher">

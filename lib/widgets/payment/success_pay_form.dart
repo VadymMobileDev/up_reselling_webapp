@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/widgets/more_about_program/more_about_program_page.dart';
 import 'package:up_reselling_webapp/widgets/xumm/xumm_page.dart';
+
+import '../general/widgets_repository.dart';
 
 class SuccessPayWidget extends StatelessWidget {
   final bool showSuccessPay;
@@ -21,59 +24,58 @@ class SuccessPayWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Center(
-                  child: MergeSemantics(
-                      child: Padding(
-                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: <Widget>[
-                    Text("Thank you four your order!",
-                        style: TextStyle(
-                            fontSize: Dimens.paddingXSLarge,
-                            color: AppColor.black,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: Dimens.paddingMedium),
-                    Text("We've emailed your receipt to",
-                        style: TextStyle(color: AppColor.textGrey)),
-                    SizedBox(height: Dimens.paddingSemi),
-                    Text("$email",
-                        style: TextStyle(color: AppColor.black, fontWeight: FontWeight.bold)),
-                    SizedBox(height: Dimens.paddingSemi),
-                    Text("View Receipt",
-                        style: TextStyle(color: AppColor.textBlue, fontWeight: FontWeight.bold)),
-                    SizedBox(height: Dimens.paddingMedium),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Text("Order Total: ", style: TextStyle(color: AppColor.black)),
-                                  Text(" \$${40}",
-                                      style: TextStyle(
-                                          color: AppColor.primaryBlue,
-                                          fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text(" Details ", style: TextStyle(color: AppColor.primaryBlue)),
-                          style: ElevatedButton.styleFrom(
-                              elevation: 0.0,
-                              primary: AppColor.backgroundLightBlue,
-                              minimumSize: Size(double.minPositive, Dimens.iconHeight),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Dimens.paddingDefault))),
-                        ),
-                      ],
+                    FittedBox(
+                      child: Image.asset("assets/purchase.png"),
+                      fit: BoxFit.fill,
                     ),
+                    Padding(
+                        padding: const EdgeInsets.all(Dimens.paddingMedium),
+                        child: Column(
+                          children: [
+                            TextBold(
+                                text: AppText.success_order,
+                                fontSize: Dimens.paddingXSLarge,
+                                color: AppColor.black),
+                            SizedBox(height: Dimens.paddingMedium),
+                            Text(AppText.success_emailed,
+                                style: TextStyle(color: AppColor.textGrey)),
+                            SizedBox(height: Dimens.paddingSemi),
+                            Text("$email",
+                                style:
+                                    TextStyle(color: AppColor.black, fontWeight: FontWeight.bold)),
+                            SizedBox(height: Dimens.paddingSemi),
+                            Text("View Receipt",
+                                style: TextStyle(
+                                    color: AppColor.textBlue, fontWeight: FontWeight.bold)),
+                            SizedBox(height: Dimens.paddingMedium),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Row(
+                                        children: [
+                                          Text("Order Total: ",
+                                              style: TextStyle(color: AppColor.black)),
+                                          Text(" \$${40}",
+                                              style: TextStyle(
+                                                  color: AppColor.primaryBlue,
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                   ],
                 ),
-              )))),
+              )),
           SizedBox(height: Dimens.paddingMedium),
           ElevatedButton(
               onPressed: () {
@@ -81,7 +83,7 @@ class SuccessPayWidget extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => MoreAboutProgramingPage()),
                     (route) => false);
               },
-              child: Text("Join our Referral Program"),
+              child: Text(AppText.success_join),
               style: ElevatedButton.styleFrom(
                   elevation: 0.0,
                   primary: AppColor.primaryBlue,
@@ -95,7 +97,7 @@ class SuccessPayWidget extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => XummPage()), (route) => false);
             },
             child: Text(
-              "Search for a New Domain",
+              AppText.success_search,
               style: TextStyle(
                 color: AppColor.primaryBlue,
               ),

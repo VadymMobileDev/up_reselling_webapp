@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_event.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_state.dart';
 
-import 'blockchain_domain_page/blockchain_domain_page.dart';
+import '../blockchain_domain_page/blockchain_domain_page.dart';
 
 const resellerID = "unstoppabledomains";
 
@@ -24,19 +25,7 @@ class CheckDomainPage extends StatefulWidget {
 }
 
 class CheckDomainPageState extends State<CheckDomainPage> {
-  List<String> spinnerItems = [
-    '.crypto',
-    '.x',
-    '.coin',
-    '.wallet',
-    '.bitcoin',
-    '.888',
-    '.nft',
-    '.dao',
-    '.zil',
-    'blockchain'
-  ];
-  late String dropdownValue = widget.enabled ? spinnerItems[0] : widget.domainEnabled;
+  late String dropdownValue = widget.enabled ? AppText.spinnerItems[0] : widget.domainEnabled;
   TextEditingController domainController = TextEditingController();
 
   @override
@@ -45,13 +34,15 @@ class CheckDomainPageState extends State<CheckDomainPage> {
         if (state is HasDataCheckDomain) {
           if (domainController.text.isNotEmpty) {
             bool resellingValidate = state.result.domain.reselling == null ? false : true;
+
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => BlockchainDomainPage(
                       domainName: domainController.text,
                       domainLogo: dropdownValue,
-                      resellingValidate: resellingValidate, spinnerItems: spinnerItems)),
+                      resellingValidate: resellingValidate,
+                      spinnerItems: AppText.spinnerItems)),
             );
           } else {
             Text("Please try another domain name.");
@@ -107,7 +98,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                             });
                           }
                         : null,
-                    items: spinnerItems.map<DropdownMenuItem<String>>((String value) {
+                    items: AppText.spinnerItems.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),

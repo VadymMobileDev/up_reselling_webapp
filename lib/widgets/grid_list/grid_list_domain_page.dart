@@ -12,7 +12,7 @@ import 'package:up_reselling_webapp/widgets/blockchain_domain_page/blockchain_do
 import 'package:up_reselling_webapp/widgets/blockchain_domain_page/check_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/blockchain_domain_page/suggestion_list_form.dart';
 
-import '../widgets_repository.dart';
+import '../general/widgets_repository.dart';
 import 'grid_view_item_form.dart';
 
 class GridListDomainPage extends StatefulWidget {
@@ -89,7 +89,9 @@ class _GridListDomainState extends State<GridListDomainPage> {
                     listDomainSuggestion: listDomainSuggestion,
                     domainsLogoSelected: widget.domainsLogoSelected,
                     callback: (val) => setState(() => selectedDomainItemCart = val),
-                    callbackShow: (val) => setState(() => showHideAddToCart = val)),
+                    callbackShow: (val) => setState(() => showHideAddToCart = val),
+                    stateGrid: (val) => setState(() => stateGrid = val)
+                ),
               ],
             );
           } else {
@@ -202,7 +204,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
             ),
           ),
         ),
-        Text("-----------   ${selectedDomainItemCart.length}"),
         CheckoutDomainWidget(
             selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
       ],
@@ -236,3 +237,4 @@ class _GridListDomainState extends State<GridListDomainPage> {
 
 typedef void SuggestionDomainListCallback(List<DomainItemCart> selectedDomainItemCart);
 typedef void SuggestionShowCartCallback(bool showHideAddToCart);
+typedef void SuggestionGridShowCartCallback(bool stateGrid);

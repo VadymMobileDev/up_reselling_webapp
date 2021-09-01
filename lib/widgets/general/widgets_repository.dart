@@ -196,7 +196,7 @@ class CardPaymentDataWidget extends StatelessWidget {
                 final item = selectedDomainItems[index];
                 return ListTile(
                     title: TextBold(
-                        text: "${item.nameDomain} - \$${item.domainItem!.price ~/ 100}",
+                        text: "${item.domainItem?.label}.${item.domainItem?.extension} - \$${item.domainItem!.price ~/ 100}",
                         fontSize: Dimens.paddingMedium,
                         color: AppColor.black));
               },

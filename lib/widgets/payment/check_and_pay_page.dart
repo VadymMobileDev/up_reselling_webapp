@@ -56,7 +56,7 @@ class CheckAndPayPageState extends State<CheckAndPayPage> {
             ElevatedButton(
                 onPressed: () {
                   context.read<SendOrderBloc>().add(LoadSendOrder(
-                      widget.userEmail, "${widget.selectedDomainItems[0].nameDomain}"));
+                      widget.userEmail, "${widget.selectedDomainItems[0].domainItem?.label}.${widget.selectedDomainItems[0].domainItem?.extension}"));
                 },
                 child: Text("Pay"),
                 style: ElevatedButton.styleFrom(

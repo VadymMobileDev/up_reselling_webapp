@@ -5,7 +5,7 @@ import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 
-import '../widgets_repository.dart';
+import '../general/widgets_repository.dart';
 
 class SuggestionListForm extends StatefulWidget {
   final bool resellingValidate;
@@ -14,6 +14,7 @@ class SuggestionListForm extends StatefulWidget {
 
   final SuggestionDomainListCallback callback;
   final SuggestionShowCartCallback callbackShow;
+  final SuggestionGridShowCartCallback stateGrid;
 
   SuggestionListForm({
     Key? key,
@@ -22,6 +23,7 @@ class SuggestionListForm extends StatefulWidget {
     required this.domainsLogoSelected,
     required this.callback,
     required this.callbackShow,
+    required this.stateGrid,
   }) : super(key: key);
 
   @override
@@ -72,13 +74,13 @@ class _SuggestionListFormState extends State<SuggestionListForm> {
                                 icon: Icon(Icons.add_shopping_cart,
                                     color: AppColor.white, size: Dimens.paddingMedium),
                                 onPressed: () {
+                                  selectedDomainItemCart.add(DomainItemCart(
+                                      nameDomain: widget.domainsLogoSelected,
+                                      domainItem: item));
+                                  widget.callback(selectedDomainItemCart);
                                   setState(() {
-                                    selectedDomainItemCart.add(DomainItemCart(
-                                        nameDomain: widget.domainsLogoSelected,
-                                        domainItem: item));
-                                    widget.callback(selectedDomainItemCart);
                                     widget.callbackShow(true);
-
+                                    widget.stateGrid(false);
                                   });
                                 },
                                 label: Text("Add to Cart",

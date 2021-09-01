@@ -6,8 +6,8 @@ import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 
-import '../check_domain_page.dart';
-import '../widgets_repository.dart';
+import '../general/check_domain_page.dart';
+import '../general/widgets_repository.dart';
 
 class BlockchainDomainPage extends StatefulWidget {
   final String domainName;
