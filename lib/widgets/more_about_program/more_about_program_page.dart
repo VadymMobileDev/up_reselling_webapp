@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
@@ -71,8 +72,7 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                                               errorBorder: InputBorder.none,
                                               disabledBorder: InputBorder.none,
                                               isDense: true,
-                                              hintText:
-                                                  "https://unstoppabledomains.com/r/2 2b214f68524f2",
+                                              hintText: AppText.more_url_copy,
                                               hintStyle: TextStyle(color: AppColor.black),
                                             ),
                                           ))),
@@ -83,6 +83,7 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                           SizedBox(height: Dimens.paddingMedium),
                           ElevatedButton(
                               onPressed: () {
+                                Clipboard.setData(ClipboardData(text: AppText.more_url_copy));
                               },
                               child: Text("Copy Link"),
                               style: ElevatedButton.styleFrom(
@@ -94,10 +95,10 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                           SizedBox(height: Dimens.borderButtonRadius),
                           Row(
                             children: [
-                              _circleAvatar("https://twitter.com/unstoppableweb", "assets/icon_light.png"),
-                              _circleAvatar("https://www.facebook.com/unstoppableweb/", "assets/icon_light.png"),
-                              _circleAvatar("https://www.instagram.com/unstoppabledomains134/", "assets/icon_light.png"),
-                              _circleAvatar("support@unstoppabledomains.com", "assets/icon_light.png")
+                              _circleAvatar(AppText.more_url_twitter, "assets/twitter.png"),
+                              _circleAvatar(AppText.more_url_facebook, "assets/facebook.png"),
+                              _circleAvatar(AppText.more_url_instagram, "assets/messenger.png"),
+                              _circleAvatar(AppText.more_url_support, "assets/mail.png")
                             ],
                           ),
                           SizedBox(height: Dimens.paddingMedium),

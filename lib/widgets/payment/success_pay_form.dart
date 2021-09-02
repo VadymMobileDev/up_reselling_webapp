@@ -10,8 +10,9 @@ import '../general/widgets_repository.dart';
 class SuccessPayWidget extends StatelessWidget {
   final bool showSuccessPay;
   final String email;
+  final int orderPrice;
 
-  const SuccessPayWidget({Key? key, required this.showSuccessPay, required this.email})
+  const SuccessPayWidget({Key? key, required this.showSuccessPay, required this.email, required this.orderPrice})
       : super(key: key);
 
   Widget build(BuildContext context) => Visibility(
@@ -60,7 +61,7 @@ class SuccessPayWidget extends StatelessWidget {
                                         children: [
                                           Text("Order Total: ",
                                               style: TextStyle(color: AppColor.black)),
-                                          Text(" \$${40}",
+                                          Text(" \$$orderPrice",
                                               style: TextStyle(
                                                   color: AppColor.primaryBlue,
                                                   fontWeight: FontWeight.bold)),

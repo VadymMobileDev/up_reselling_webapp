@@ -13,6 +13,15 @@ class AppText {
   static const more_learn = "Learn more about the program";
   static const more_give = "Give \$10, Get \$10";
 
+  static const more_url_copy = "https://unstoppabledomains.com/r/2 2b214f68524f2";
+
+  static const more_url_twitter = "https://twitter.com/unstoppableweb";
+  static const more_url_facebook = "https://www.facebook.com/unstoppableweb/";
+  static const more_url_instagram = "https://www.instagram.com/unstoppabledomains134/";
+  static const more_url_support = "support@unstoppabledomains.com";
+
+
+
 
   static const success_order = "Thank you four your order!";
   static const success_emailed = "We've emailed your receipt to";

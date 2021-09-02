@@ -12,8 +12,6 @@ class OrderSend {
   Map<String, dynamic> toJson() => _$OrderSendToJson(this);
 }
 
-
-
 @JsonSerializable()
 class Order {
   late int? orderNumber;

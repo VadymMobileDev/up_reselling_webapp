@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
+import 'package:up_reselling_webapp/bloc/order_bloc/bloc.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/order_bloc.dart';
-import 'package:up_reselling_webapp/bloc/order_bloc/order_event.dart';
 import 'package:up_reselling_webapp/bloc/order_bloc/order_state.dart';
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_bloc.dart';
 import 'package:up_reselling_webapp/bloc/send_order_number/send_order_event.dart';
@@ -30,14 +30,19 @@ class CheckAndPayPage extends StatefulWidget {
 
 class CheckAndPayPageState extends State<CheckAndPayPage> {
   int orderNumber = 0;
-
+  List<int?> orders = [];
+  var orderPrice = 0;
   @override
   Widget build(BuildContext context) => BlocListener<SendOrderBloc, SendOrderState>(
       listener: (context, state) {
         if (state is HasDataSendOrder) {
-          context
-              .read<OrderBloc>()
-              .add(LoadOrder(widget.userEmail, "${state.result.order.orderNumber}"));
+          orders.add(state.result.order.orderNumber);
+          orderPrice += state.result.order.subtotal!;
+        if(orders.length == widget.selectedDomainItems.length){
+            orders.forEach((element) {
+              context.read<OrderBloc>().add(LoadOrder(widget.userEmail, "$element"));
+            });
+          }
         }
       },
       child: Visibility(
@@ -55,9 +60,15 @@ class CheckAndPayPageState extends State<CheckAndPayPage> {
             SizedBox(height: Dimens.paddingLarge),
             ElevatedButton(
                 onPressed: () {
-                  context.read<SendOrderBloc>().add(LoadSendOrder(
-                      widget.userEmail, "${widget.selectedDomainItems[0].domainItem?.label}.${widget.selectedDomainItems[0].domainItem?.extension}"));
-                },
+
+                  widget.selectedDomainItems.forEach((element) {
+                    context.read<SendOrderBloc>().add(LoadSendOrder(
+                        widget.userEmail, "${element.domainItem?.label}.${element.domainItem?.extension}"));
+
+                  });
+
+
+                  },
                 child: Text("Pay"),
                 style: ElevatedButton.styleFrom(
                     elevation: 0.0,
@@ -71,7 +82,7 @@ class CheckAndPayPageState extends State<CheckAndPayPage> {
                 if (state is HasDataOrder) {
                   setState(() {
                     orderNumber = state.result.orderNumber!;
-                    widget.callbackSuccessPay(true);
+                    widget.callbackSuccessPay(true, orderPrice);
                   });
                 }
               },

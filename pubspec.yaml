@@ -63,6 +63,10 @@ flutter:
     - assets/xumm_logo.png
     - assets/frame.png
     - assets/purchase.png
+    - assets/facebook.png
+    - assets/twitter.png
+    - assets/mail.png
+    - assets/messenger.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

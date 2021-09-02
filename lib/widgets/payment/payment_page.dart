@@ -27,7 +27,7 @@ class _PaymentPageState extends State<PaymentPage> {
   bool showHidePay = true;
   bool successPay = false;
   String email = "nischal@unstoppabledomains.com";
-
+  int price = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +58,14 @@ class _PaymentPageState extends State<PaymentPage> {
                 EmailPaymentPage(callback: (v) => setState(() => email = v), showHidePay: showHidePay),
                 CreditCardAndCryptoPage(
                     callback: (val) => setState(() => showHidePay = val), showHidePay: showHidePay),
-                CheckAndPayPage(callbackSuccessPay: (val) => setState(() => successPay = val),
+                CheckAndPayPage(callbackSuccessPay: (val, orderPrice) {
+                  setState(() => successPay = val);
+                  setState(() => price = orderPrice);
+                },
                     selectedDomainItems: widget.selectedDomainItems, showHidePay: showHidePay, userEmail: email),
               ],
             )),
-            SuccessPayWidget(showSuccessPay: successPay, email: email),
+            SuccessPayWidget(showSuccessPay: successPay, email: email, orderPrice: price),
             SpaceHeightWidget(),
             BottomTextPoweredWidget(),
           ]),
@@ -75,4 +78,4 @@ class _PaymentPageState extends State<PaymentPage> {
 
 typedef void ShowHidePayCallback(bool val);
 typedef void EmailCallback(String v);
-typedef void ShowSuccessPayCallback(bool v);
+typedef void ShowSuccessPayCallback(bool v, int orderPrice);

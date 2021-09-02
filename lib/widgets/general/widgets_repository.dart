@@ -248,7 +248,7 @@ class TextBold extends StatelessWidget {
 }
 
 const spacePadding = const EdgeInsets.only(
-  top: Dimens.paddingLarge,
+  top: Dimens.paddingXLarge,
   left: Dimens.paddingMediumLarge,
   right: Dimens.paddingMediumLarge,
   bottom: Dimens.paddingMediumLarge,
