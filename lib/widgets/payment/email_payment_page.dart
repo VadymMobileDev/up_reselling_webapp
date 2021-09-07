@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
@@ -59,8 +60,7 @@ class EmailPaymentState extends State<EmailPaymentPage> {
             ),
           ),
           SizedBox(height: Dimens.paddingSemi),
-          Text(
-            "This email address will be used to claim and manage your domain at: https://unstoppabledomains.com/api/v1\n/resellers/{resellerID}/domains",
+          Text(AppText.email_url_domain,
             style: TextStyle(color: AppColor.textGrey),
           ),
           SizedBox(height: Dimens.paddingMedium),

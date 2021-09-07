@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';

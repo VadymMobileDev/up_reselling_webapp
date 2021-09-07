@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/domain_choose_event.dart';
@@ -183,7 +184,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                           style: TextStyle(
                                               color: AppColor.black, fontWeight: FontWeight.bold)),
                                     ),
-                                    Text("This domain is available for purchase",
+                                    Text(AppText.grid_available,
                                         style: TextStyle(color: AppColor.textGrey)),
                                   ],
                                 ),

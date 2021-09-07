@@ -45,7 +45,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                       spinnerItems: AppText.spinnerItems)),
             );
           } else {
-            Text("Please try another domain name.");
+            Text(AppText.x_try_another_domain);
           }
         }
       },
@@ -65,7 +65,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         alignment: Alignment.centerLeft,
                         child: TextField(
                           enabled: widget.enabled ? true : false,
-                          maxLength: 6,
+                          maxLength: 40,
                           controller: widget.enabled
                               ? domainController
                               : domainController = TextEditingController(text: widget.nameEnabled),

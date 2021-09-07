@@ -18,7 +18,7 @@ class _XummPageState extends State<XummPage> {
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => CheckDomainBloc(repository: DomainRepository()),
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            //resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(
               child: Padding(
                 padding: spacePadding,
