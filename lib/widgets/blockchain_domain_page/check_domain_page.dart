@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
+import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
+  final CheckoutDomainAddCallback addCallback;
   final bool showHide;
 
   const CheckoutDomainWidget(
-      {Key? key, required this.selectedDomainItemCarts, required this.showHide})
+      {Key? key,
+        required this.selectedDomainItemCarts,
+        required this.showHide,
+        required this.addCallback,
+      })
       : super(key: key);
 
   @override
@@ -72,6 +78,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                               onPressed: () {
                                                 setState(() {
                                                   widget.selectedDomainItemCarts.removeAt(index);
+                                                  widget.addCallback(item.domainItem);
                                                 });
                                               }),
                                       )

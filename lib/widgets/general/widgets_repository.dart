@@ -48,8 +48,8 @@ class BeckToHomeOpenWidget extends StatelessWidget {
   }
 }
 
-class BeckToHomeCloseWidget extends StatelessWidget {
-  const BeckToHomeCloseWidget({Key? key}) : super(key: key);
+class BackToHomeCloseWidget extends StatelessWidget {
+  const BackToHomeCloseWidget({Key? key}) : super(key: key);
 
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(bottom: Dimens.paddingMedium),
@@ -72,7 +72,7 @@ class BeckToHomeCloseWidget extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     label: Text(
-                      "Beck",
+                      "Back",
                       style: TextStyle(color: AppColor.black),
                     ),
                     style: ElevatedButton.styleFrom(

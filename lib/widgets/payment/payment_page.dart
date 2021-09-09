@@ -49,7 +49,7 @@ class _PaymentPageState extends State<PaymentPage> {
         child: Padding(
           padding: spacePadding,
           child: Column(children: [
-            BeckToHomeCloseWidget(),
+            BackToHomeCloseWidget(),
             Visibility(
                 visible: !successPay,
                 child: Column(

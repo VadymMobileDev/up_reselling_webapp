@@ -1,5 +1,5 @@
 class AppText {
-  static const x_beck = "Beck To Home";
+  static const x_beck = "Back To Home";
   static const x_purchase = "Purchase your\nBlockchain Domain";
   static const x_6_characters = "Please enter at least 6 Characters";
   static const x_unstoppable = "Unstoppable Domains";
@@ -9,6 +9,7 @@ class AppText {
 
   static const grid_looking_for = "Didn't find what you are looking for? How about one of those?";
   static const grid_available = "This domain is available for purchase";
+  static const btn_add_to_cart = "Add to Cart";
 
   static const more_refer =
       "Refer a friend with a \$10 credit and \n earn \$10 credit after they make their \nfirst purchase.";

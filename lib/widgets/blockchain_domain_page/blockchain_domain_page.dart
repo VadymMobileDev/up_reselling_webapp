@@ -47,7 +47,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
           child: Padding(
             padding: spacePadding,
             child: Column(children: [
-              BeckToHomeCloseWidget(),
+              BackToHomeCloseWidget(),
               CardPurchaseWidget(),
               CheckDomainPage(
                   enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),

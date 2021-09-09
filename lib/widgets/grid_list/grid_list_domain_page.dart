@@ -91,7 +91,8 @@ class _GridListDomainState extends State<GridListDomainPage> {
                     domainsLogoSelected: widget.domainsLogoSelected,
                     callback: (val) => setState(() => selectedDomainItemCart = val),
                     callbackShow: (val) => setState(() => showHideAddToCart = val),
-                    stateGrid: (val) => setState(() => stateGrid = val)
+                    stateGrid: (val) => setState(() => stateGrid = val),
+                    remove: (val) => setState(() => listDomainSuggestion.removeAt(val))
                 ),
               ],
             );
@@ -146,7 +147,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                       nameDomain: widget.domainsLogoSelected,
                                       domainItem: selectedGridDomain));
                                 },
-                                label: Text("Add to Cart"),
+                                label: Text(AppText.btn_add_to_cart),
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0.0,
                                     primary: AppColor.primaryBlue,
@@ -166,6 +167,9 @@ class _GridListDomainState extends State<GridListDomainPage> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
+                              final ids = selectedDomainItemCart.map((e) => e.domainItem!.extension).toSet();
+                              selectedDomainItemCart.retainWhere((x) => ids.remove(x.domainItem!.extension));
+
                               showHideAddToCart = true;
                               showHideGridList = false;
                               widget.callback(true);
@@ -206,7 +210,10 @@ class _GridListDomainState extends State<GridListDomainPage> {
           ),
         ),
         CheckoutDomainWidget(
-            selectedDomainItemCarts: selectedDomainItemCart, showHide: showHideAddToCart),
+            selectedDomainItemCarts: selectedDomainItemCart,
+            showHide: showHideAddToCart,
+            addCallback: (val) => setState(() => listDomainSuggestion.add(val!))
+        ),
       ],
     );
   }
@@ -239,3 +246,5 @@ class _GridListDomainState extends State<GridListDomainPage> {
 typedef void SuggestionDomainListCallback(List<DomainItemCart> selectedDomainItemCart);
 typedef void SuggestionShowCartCallback(bool showHideAddToCart);
 typedef void SuggestionGridShowCartCallback(bool stateGrid);
+typedef void SuggestionGridRemoveCallback(int index);
+typedef void CheckoutDomainAddCallback(DomainItem? domainItemCart);
