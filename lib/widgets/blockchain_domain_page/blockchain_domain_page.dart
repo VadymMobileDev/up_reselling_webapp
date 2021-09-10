@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
@@ -47,7 +46,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
           child: Padding(
             padding: spacePadding,
             child: Column(children: [
-              BackToHomeCloseWidget(),
+              BackToHomeCloseWidget(blockchain: true),
               CardPurchaseWidget(),
               CheckDomainPage(
                   enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),

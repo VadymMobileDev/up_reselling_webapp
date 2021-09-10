@@ -4,6 +4,7 @@ import 'package:up_reselling_webapp/application/app_color.dart';
 import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
+import 'package:up_reselling_webapp/widgets/xumm/xumm_page.dart';
 
 class BeckToHomeOpenWidget extends StatelessWidget {
   const BeckToHomeOpenWidget({Key? key}) : super(key: key);
@@ -49,7 +50,8 @@ class BeckToHomeOpenWidget extends StatelessWidget {
 }
 
 class BackToHomeCloseWidget extends StatelessWidget {
-  const BackToHomeCloseWidget({Key? key}) : super(key: key);
+  final bool blockchain;
+  const BackToHomeCloseWidget({Key? key, required this.blockchain}) : super(key: key);
 
   Widget build(BuildContext context) => Padding(
         padding: EdgeInsets.only(bottom: Dimens.paddingMedium),
@@ -69,7 +71,12 @@ class BackToHomeCloseWidget extends StatelessWidget {
                     icon: Icon(Icons.arrow_back_ios,
                         color: AppColor.black, size: Dimens.paddingMedium),
                     onPressed: () {
-                      Navigator.pop(context);
+                      if(blockchain){
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => XummPage()), (route) => false);
+                      }else{
+                        Navigator.pop(context);
+                      }
                     },
                     label: Text(
                       "Back",
@@ -230,6 +237,8 @@ class SpaceHeightWidget extends StatelessWidget {
         ),
       );
 }
+
+
 
 class TextBold extends StatelessWidget {
   final String text;

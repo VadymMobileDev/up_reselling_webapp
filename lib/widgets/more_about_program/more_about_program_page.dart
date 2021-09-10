@@ -32,7 +32,7 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
                     child: Center(
                         child: MergeSemantics(
                             child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(Dimens.paddingMedium),
                       child: Column(
                         children: <Widget>[
                           FittedBox(
@@ -114,18 +114,15 @@ class _MoreAboutProgramingState extends State<MoreAboutProgramingPage> {
             )),
       );
 
-  Widget _circleAvatar(String url, String image)=> Expanded(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-              builder: (context) => WebViewPage(url: url)));
-        },
-        child: CircleAvatar(
-          radius: 28,
-          child: Image.asset(image),
+  Widget _circleAvatar(String url, String image) => Expanded(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(url: url)));
+          },
+          child: CircleAvatar(
+            radius: 28,
+            child: Image.asset(image),
+          ),
         ),
-      ),
-    );
+      );
 }

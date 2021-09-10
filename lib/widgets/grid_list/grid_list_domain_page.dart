@@ -143,9 +143,11 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                 icon: Icon(Icons.add_shopping_cart,
                                     color: AppColor.white, size: Dimens.paddingMediumLarge),
                                 onPressed: () {
-                                  selectedDomainItemCart.add(DomainItemCart(
+
+                                  DomainItemCart domainItemCart = DomainItemCart(
                                       nameDomain: widget.domainsLogoSelected,
-                                      domainItem: selectedGridDomain));
+                                      domainItem: selectedGridDomain);
+                                  selectedDomainItemCart.add(domainItemCart);
                                 },
                                 label: Text(AppText.btn_add_to_cart),
                                 style: ElevatedButton.styleFrom(
