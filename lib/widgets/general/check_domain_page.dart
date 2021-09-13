@@ -15,9 +15,10 @@ class CheckDomainPage extends StatefulWidget {
   final bool enabled;
   final String nameEnabled;
   final String domainEnabled;
+  final GetCheckNewDomainCallback getCheckNewDomainCallback;
 
   CheckDomainPage(
-      {Key? key, required this.enabled, required this.nameEnabled, required this.domainEnabled})
+      {Key? key, required this.enabled, required this.nameEnabled, required this.domainEnabled, required this.getCheckNewDomainCallback})
       : super(key: key);
 
   @override
@@ -26,24 +27,29 @@ class CheckDomainPage extends StatefulWidget {
 
 class CheckDomainPageState extends State<CheckDomainPage> {
   late String dropdownValue = widget.enabled ? AppText.spinnerItems[0] : widget.domainEnabled;
+
   TextEditingController domainController = TextEditingController();
 
   @override
   Widget build(BuildContext context) => BlocListener<CheckDomainBloc, CheckDomainState>(
       listener: (context, state) {
         if (state is HasDataCheckDomain) {
+          bool resellingValidate = state.result.domain.reselling == null ? false : true;
           if (domainController.text.isNotEmpty) {
-            bool resellingValidate = state.result.domain.reselling == null ? false : true;
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BlockchainDomainPage(
-                      domainName: domainController.text,
-                      domainLogo: dropdownValue,
-                      resellingValidate: resellingValidate,
-                      spinnerItems: AppText.spinnerItems)),
-            );
+            if(widget.enabled){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BlockchainDomainPage(
+                        domainName: domainController.text,
+                        domainLogo: dropdownValue,
+                        resellingValidate: resellingValidate,
+                        selectedDomainsBlockchain: [])),
+              );
+            }else {
+              widget.getCheckNewDomainCallback(domainController.text, dropdownValue, resellingValidate, true);
+            }
           } else {
             Text(AppText.x_try_another_domain);
           }
@@ -64,11 +70,10 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                     child: Align(
                         alignment: Alignment.centerLeft,
                         child: TextField(
-                          enabled: widget.enabled ? true : false,
+                          //enabled: widget.enabled ? true : false,
                           maxLength: 40,
-                          controller: widget.enabled
-                              ? domainController
-                              : domainController = TextEditingController(text: widget.nameEnabled),
+                          controller:domainController,
+                          //widget.enabled ? domainController : domainController = TextEditingController(text: widget.nameEnabled),
                           decoration: InputDecoration(
                             counterText: '',
                             focusedBorder: InputBorder.none,
@@ -91,13 +96,14 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         fontWeight: FontWeight.bold),
                     icon: Icon(Icons.arrow_drop_down),
                     underline: Container(height: 0),
-                    onChanged: widget.enabled
-                        ? (String? data) {
+                    onChanged:
+                    //widget.enabled ?
+                        (String? data) {
                             setState(() {
                               dropdownValue = data!;
                             });
-                          }
-                        : null,
+                          },
+                        // : null,
                     items: AppText.spinnerItems.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -113,11 +119,11 @@ class CheckDomainPageState extends State<CheckDomainPage> {
         SizedBox(height: Dimens.paddingMedium),
         ElevatedButton(
             onPressed: () {
-              if (widget.enabled) {
+              //if (widget.enabled) {
                 context
                     .read<CheckDomainBloc>()
                     .add(LoadCheckDomain(resellerID, "${domainController.text}$dropdownValue"));
-              }
+             // }
             },
             child: Text("Check Domain"),
             style: ElevatedButton.styleFrom(

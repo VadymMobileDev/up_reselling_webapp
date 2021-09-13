@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:up_reselling_webapp/application/app_text.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
+import 'package:up_reselling_webapp/models/domains_list.dart';
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/grid_list/grid_list_domain_page.dart';
 
@@ -12,14 +14,14 @@ class BlockchainDomainPage extends StatefulWidget {
   final String domainName;
   final String domainLogo;
   final bool resellingValidate;
-  final List<String> spinnerItems;
+  final List<DomainItemCart> selectedDomainsBlockchain;
 
   BlockchainDomainPage({
     Key? key,
     required this.domainName,
     required this.domainLogo,
     required this.resellingValidate,
-    required this.spinnerItems,
+    required this.selectedDomainsBlockchain,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,11 @@ class BlockchainDomainPage extends StatefulWidget {
 class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
 
   bool showHideBlockchainDomain = true;
+  List<DomainItemCart> selectedDomainsE = [];
+
+  String domainNameBlockchain = "";
+  String domainLogoBlockchain = "";
+  bool resellingValidateBlockchain = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +56,35 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
               BackToHomeCloseWidget(blockchain: true),
               CardPurchaseWidget(),
               CheckDomainPage(
-                  enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo),
+                  enabled: false, nameEnabled: widget.domainName, domainEnabled: widget.domainLogo,
+                getCheckNewDomainCallback: (String domainName, String domainLogo, bool resellingValidate, bool rebuild) {
+                  setState(() => domainNameBlockchain = domainName);
+                  setState(() => domainLogoBlockchain = domainLogo);
+                  setState(() => resellingValidateBlockchain = resellingValidate);
+                  setState(() {
+                    if(rebuild){
+
+                      print("------------selectedDomainsE ${selectedDomainsE.length}");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => BlockchainDomainPage(
+                          domainName: domainNameBlockchain,
+                          domainLogo: domainLogoBlockchain,
+                          resellingValidate: resellingValidate,
+                          selectedDomainsBlockchain: selectedDomainsE)),);
+                      selectedDomainsE.clear();
+                    }
+                  });
+                },),
               TitleExtensionsWidget(domainName: widget.domainName),
               GridListDomainPage(
-                  domainsLogoSelected: widget.domainName + widget.domainLogo, spinnerItems: widget.spinnerItems,
-                  resellingValidate: widget.resellingValidate, callback: (val) => setState(() => showHideBlockchainDomain = val))
+                  domainsLogoSelected: widget.domainName + widget.domainLogo,
+                  resellingValidate: widget.resellingValidate, callback: (val) => setState(() => showHideBlockchainDomain = val),
+                  getChooseDomainListCallback: (selectedDomainItemCarts)=> setState(() => selectedDomainsE.add(selectedDomainItemCarts)),
+                  selectedDomains: widget.selectedDomainsBlockchain),
+
+              Text("--------- ${selectedDomainsE.length} +   $domainNameBlockchain  +   $domainLogoBlockchain   ${widget.selectedDomainsBlockchain.length}")
             ]),
           ),
         ),
@@ -63,3 +94,6 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
 }
 
 typedef void ShowHideCheckCallback(bool val);
+typedef void GetChooseDomainListCallback(DomainItemCart selectedDomainItemCarts);
+typedef void GetCheckNewDomainCallback(String domainName, String domainLogo, bool resellingValidate, bool rebuild);
+

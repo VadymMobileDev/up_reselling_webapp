@@ -20,14 +20,16 @@ class GridListDomainPage extends StatefulWidget {
   final String domainsLogoSelected;
   final bool resellingValidate;
   final ShowHideCheckCallback callback;
-  final List<String> spinnerItems;
+  final GetChooseDomainListCallback getChooseDomainListCallback;
+  final List<DomainItemCart> selectedDomains;
 
   GridListDomainPage({
     Key? key,
     required this.domainsLogoSelected,
     required this.resellingValidate,
     required this.callback,
-    required this.spinnerItems,
+    required this.getChooseDomainListCallback,
+    required this.selectedDomains,
   }) : super(key: key);
 
   @override
@@ -143,11 +145,13 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                 icon: Icon(Icons.add_shopping_cart,
                                     color: AppColor.white, size: Dimens.paddingMediumLarge),
                                 onPressed: () {
-
                                   DomainItemCart domainItemCart = DomainItemCart(
                                       nameDomain: widget.domainsLogoSelected,
                                       domainItem: selectedGridDomain);
                                   selectedDomainItemCart.add(domainItemCart);
+
+                                  widget.getChooseDomainListCallback(domainItemCart);
+
                                 },
                                 label: Text(AppText.btn_add_to_cart),
                                 style: ElevatedButton.styleFrom(
@@ -214,7 +218,8 @@ class _GridListDomainState extends State<GridListDomainPage> {
         CheckoutDomainWidget(
             selectedDomainItemCarts: selectedDomainItemCart,
             showHide: showHideAddToCart,
-            addCallback: (val) => setState(() => listDomainSuggestion.add(val!))
+            addCallback: (val) => setState(() => listDomainSuggestion.add(val!)),
+            selectedDomains: widget.selectedDomains
         ),
       ],
     );
@@ -230,7 +235,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
       });
     } else {
       if (!showHideAddToCart) {
-        widget.spinnerItems.forEach((element) {
+        AppText.spinnerItems.forEach((element) {
           if (stateGrid) {
             listDomainAll.add(DomainItem(label: "", extension: element, price: 0));
           }

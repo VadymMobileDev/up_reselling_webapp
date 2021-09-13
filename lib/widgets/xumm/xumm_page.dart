@@ -18,23 +18,28 @@ class _XummPageState extends State<XummPage> {
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => CheckDomainBloc(repository: DomainRepository()),
         child: Scaffold(
-            //resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(
-              child: Padding(
-                padding: spacePadding,
-                child: Column(
-                  children: [
-                    BeckToHomeOpenWidget(),
-                    CardUnstoppableWidget(),
-                    SizedBox(height: Dimens.paddingSemi),
-                    CardPurchaseWidget(),
-                    CheckDomainPage(enabled: true, nameEnabled: "", domainEnabled: ""),
-                    HelpCenterWidget(),
-                    SpaceHeightWidget(),
-                    BottomTextUnstoppableWidget()
-                  ],
+          child: Padding(
+            padding: spacePadding,
+            child: Column(
+              children: [
+                BeckToHomeOpenWidget(),
+                CardUnstoppableWidget(),
+                SizedBox(height: Dimens.paddingSemi),
+                CardPurchaseWidget(),
+                CheckDomainPage(
+                  enabled: true,
+                  nameEnabled: "",
+                  domainEnabled: "",
+                  getCheckNewDomainCallback:
+                      (String domainName, String domainLogo, bool resellingValidate, bool rebuild) {},
                 ),
-              ),
-            )),
+                HelpCenterWidget(),
+                SpaceHeightWidget(),
+                BottomTextUnstoppableWidget()
+              ],
+            ),
+          ),
+        )),
       );
 }
