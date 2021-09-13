@@ -41,8 +41,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                   builder: (context) => BlockchainDomainPage(
                       domainName: domainController.text,
                       domainLogo: dropdownValue,
-                      resellingValidate: resellingValidate,
-                      spinnerItems: AppText.spinnerItems)),
+                      resellingValidate: resellingValidate)),
             );
           } else {
             Text(AppText.x_try_another_domain);
@@ -122,7 +121,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
             child: Text("Check Domain"),
             style: ElevatedButton.styleFrom(
                 elevation: 0.0,
-                primary: AppColor.primaryBlue,
+                primary: widget.enabled ? AppColor.primaryBlue : AppColor.textGrey,
                 minimumSize: Size(double.infinity, Dimens.margeButtonEdge),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.paddingDefault)))),

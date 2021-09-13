@@ -20,14 +20,12 @@ class GridListDomainPage extends StatefulWidget {
   final String domainsLogoSelected;
   final bool resellingValidate;
   final ShowHideCheckCallback callback;
-  final List<String> spinnerItems;
 
   GridListDomainPage({
     Key? key,
     required this.domainsLogoSelected,
     required this.resellingValidate,
     required this.callback,
-    required this.spinnerItems,
   }) : super(key: key);
 
   @override
@@ -230,7 +228,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
       });
     } else {
       if (!showHideAddToCart) {
-        widget.spinnerItems.forEach((element) {
+        AppText.spinnerItems.forEach((element) {
           if (stateGrid) {
             listDomainAll.add(DomainItem(label: "", extension: element, price: 0));
           }
