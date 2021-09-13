@@ -79,7 +79,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                               onPressed: () {
                                                 setState(() {
                                                   widget.selectedDomainItemCarts.removeAt(index);
-                                                  widget.addCallback(item.domainItem);
+                                                  //widget.addCallback(item.domainItem);
                                                 });
                                               }),
                                       )

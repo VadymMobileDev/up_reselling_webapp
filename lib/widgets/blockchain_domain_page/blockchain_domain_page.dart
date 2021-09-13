@@ -62,8 +62,6 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
                   getChooseDomainListCallback: (selectedDomainItemCarts) =>
                       setState(() => selectedDomainsE.add(selectedDomainItemCarts)),
                   selectedDomains: widget.selectedDomainsBlockchain),
-              Text(
-                  "--------- ${selectedDomainsE.length}  ${widget.selectedDomainsBlockchain.length}")
             ]),
           ),
         ),
