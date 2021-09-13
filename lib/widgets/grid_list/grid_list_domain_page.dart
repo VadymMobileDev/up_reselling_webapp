@@ -44,7 +44,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
   DomainItem? selectedGridDomain;
   bool showHideGridList = true;
 
-  late List<DomainItemCart> selectedDomainItemCart = [];
+  List<DomainItemCart> domains = [];
   bool showHideAddToCart = false;
 
   @override
@@ -52,6 +52,8 @@ class _GridListDomainState extends State<GridListDomainPage> {
     if (stateGrid) {
       context.read<DomainChooseBloc>().add(LoadDomains(widget.domainsLogoSelected));
     }
+    domains.addAll(widget.selectedDomains);
+
     return Column(
       children: [
         SizedBox(height: Dimens.paddingMedium),
@@ -91,10 +93,10 @@ class _GridListDomainState extends State<GridListDomainPage> {
                     resellingValidate: widget.resellingValidate,
                     listDomainSuggestion: listDomainSuggestion,
                     domainsLogoSelected: widget.domainsLogoSelected,
-                    callback: (val) => setState(() => selectedDomainItemCart = val),
+                    callback: (val) => setState(() => domains = val),
                     callbackShow: (val) => setState(() => showHideAddToCart = val),
                     stateGrid: (val) => setState(() => stateGrid = val),
-                    remove: (val) => setState(() => listDomainSuggestion.removeAt(val))
+                    remove: (val) => setState(() => domains.removeAt(val))
                 ),
               ],
             );
@@ -148,7 +150,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
                                   DomainItemCart domainItemCart = DomainItemCart(
                                       nameDomain: widget.domainsLogoSelected,
                                       domainItem: selectedGridDomain);
-                                  selectedDomainItemCart.add(domainItemCart);
+                                  domains.add(domainItemCart);
 
                                   widget.getChooseDomainListCallback(domainItemCart);
 
@@ -173,9 +175,8 @@ class _GridListDomainState extends State<GridListDomainPage> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              final ids = selectedDomainItemCart.map((e) => e.domainItem!.extension).toSet();
-                              selectedDomainItemCart.retainWhere((x) => ids.remove(x.domainItem!.extension));
-
+                              final ids = domains.map((e) => e.domainItem!.extension).toSet();
+                              domains.retainWhere((x) => ids.remove(x.domainItem!.extension));
                               showHideAddToCart = true;
                               showHideGridList = false;
                               widget.callback(true);
@@ -215,16 +216,15 @@ class _GridListDomainState extends State<GridListDomainPage> {
             ),
           ),
         ),
+
         CheckoutDomainWidget(
-            selectedDomainItemCarts: selectedDomainItemCart,
+            selectedDomainItemCarts:  domains,
             showHide: showHideAddToCart,
             addCallback: (val) => setState(() => listDomainSuggestion.add(val!)),
-            selectedDomains: widget.selectedDomains
         ),
       ],
     );
   }
-
   parsingJSONToDomainList(String json, String domain, bool resellingValidate) {
     Map mapValue = jsonDecode(json);
     if (resellingValidate) {

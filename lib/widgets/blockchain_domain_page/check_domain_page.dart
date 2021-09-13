@@ -9,14 +9,12 @@ class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
   final CheckoutDomainAddCallback addCallback;
   final bool showHide;
-  final List<DomainItemCart> selectedDomains;
 
   const CheckoutDomainWidget(
       {Key? key,
         required this.selectedDomainItemCarts,
         required this.showHide,
         required this.addCallback,
-        required this.selectedDomains,
       })
       : super(key: key);
 
@@ -51,7 +49,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                       fontSize: Dimens.paddingMedium,
                                       color: AppColor.black,
                                       fontWeight: FontWeight.bold)),
-                              Text(" ${domainSelect(widget.selectedDomainItemCarts, widget.selectedDomains).length} item(s)",
+                              Text(" ${widget.selectedDomainItemCarts.length} item(s)",
                                   style: TextStyle(
                                       fontSize: Dimens.paddingMedium, color: AppColor.black)),
                             ],
@@ -61,9 +59,9 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: domainSelect(widget.selectedDomainItemCarts, widget.selectedDomains).length,
+                              itemCount: widget.selectedDomainItemCarts.length,
                               itemBuilder: (context, index) {
-                                final item = domainSelect(widget.selectedDomainItemCarts, widget.selectedDomains)[index];
+                                final item = widget.selectedDomainItemCarts[index];
                                 return ListTile(
                                   title: Row(
                                     children: [
@@ -80,7 +78,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                               icon: Icon(Icons.clear),
                                               onPressed: () {
                                                 setState(() {
-                                                  domainSelect(widget.selectedDomainItemCarts, widget.selectedDomains).removeAt(index);
+                                                  widget.selectedDomainItemCarts.removeAt(index);
                                                   widget.addCallback(item.domainItem);
                                                 });
                                               }),
@@ -163,12 +161,4 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
     return total.toString();
   }
 
-  List<DomainItemCart> domainSelect(List<DomainItemCart> selectedDomainItemCarts, List<DomainItemCart> selectedDomains) {
-
-    List<DomainItemCart> domain = [];
-    domain.addAll(selectedDomainItemCarts);
-    domain.addAll(selectedDomains);
-
-    return domain;
-  }
 }

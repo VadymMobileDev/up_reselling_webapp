@@ -28,12 +28,7 @@ class _XummPageState extends State<XummPage> {
                 SizedBox(height: Dimens.paddingSemi),
                 CardPurchaseWidget(),
                 CheckDomainPage(
-                  enabled: true,
-                  nameEnabled: "",
-                  domainEnabled: "",
-                  getCheckNewDomainCallback:
-                      (String domainName, String domainLogo, bool resellingValidate, bool rebuild) {},
-                ),
+                    enabled: true, nameEnabled: "", domainEnabled: "", selectedDomains: []),
                 HelpCenterWidget(),
                 SpaceHeightWidget(),
                 BottomTextUnstoppableWidget()

@@ -6,6 +6,7 @@ import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_event.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_state.dart';
+import 'package:up_reselling_webapp/models/domains_list.dart';
 
 import '../blockchain_domain_page/blockchain_domain_page.dart';
 
@@ -15,10 +16,14 @@ class CheckDomainPage extends StatefulWidget {
   final bool enabled;
   final String nameEnabled;
   final String domainEnabled;
-  final GetCheckNewDomainCallback getCheckNewDomainCallback;
+  final List<DomainItemCart> selectedDomains;
 
   CheckDomainPage(
-      {Key? key, required this.enabled, required this.nameEnabled, required this.domainEnabled, required this.getCheckNewDomainCallback})
+      {Key? key, required this.enabled,
+        required this.nameEnabled,
+        required this.domainEnabled,
+        required this.selectedDomains,
+      })
       : super(key: key);
 
   @override
@@ -36,8 +41,6 @@ class CheckDomainPageState extends State<CheckDomainPage> {
         if (state is HasDataCheckDomain) {
           bool resellingValidate = state.result.domain.reselling == null ? false : true;
           if (domainController.text.isNotEmpty) {
-
-            if(widget.enabled){
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -45,11 +48,7 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         domainName: domainController.text,
                         domainLogo: dropdownValue,
                         resellingValidate: resellingValidate,
-                        selectedDomainsBlockchain: [])),
-              );
-            }else {
-              widget.getCheckNewDomainCallback(domainController.text, dropdownValue, resellingValidate, true);
-            }
+                        selectedDomainsBlockchain: widget.selectedDomains)),);
           } else {
             Text(AppText.x_try_another_domain);
           }
