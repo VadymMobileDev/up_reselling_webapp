@@ -48,10 +48,9 @@ class _GridListDomainState extends State<GridListDomainPage> {
 
   @override
   void didUpdateWidget(covariant GridListDomainPage oldWidget) {
-    print("-----------  didUpdateWidget  ${widget.domainsLogoSelected}   $oldDomainName  $stateGrid");
-
     if(oldDomainName.isNotEmpty && oldDomainName != widget.domainsLogoSelected){
       stateGrid = true;
+      showHideGridList = true;
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -60,7 +59,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
   @override
   Widget build(BuildContext context) {
     if (stateGrid) {
-       print("-----------  build  ${widget.domainsLogoSelected}  $stateGrid");
        oldDomainName = widget.domainsLogoSelected;
       context.read<DomainChooseBloc>().add(LoadDomains(widget.domainsLogoSelected));
     }
@@ -107,11 +105,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
                             }).toList(),
                           ),
                         )),
-
-
-
-
-
                     SuggestionListForm(
                         resellingValidate: widget.resellingValidate,
                         listDomainSuggestion: listDomainSuggestion,
@@ -121,8 +114,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
                         callbackShow: (val) => setState(() => showHideAddToCart = val),
                         stateGrid: (val) => setState(() => stateGrid = val),
                         remove: (val) => setState(() => listDomainSuggestion.removeAt(val))),
-
-
                   ],
                 );
               } else {
@@ -131,7 +122,7 @@ class _GridListDomainState extends State<GridListDomainPage> {
             }),
             SizedBox(height: Dimens.paddingMedium),
             Visibility(
-              visible: showHideGridList,
+              visible: widget.resellingValidate ? true : false,
               child: Visibility(
                 visible: selectedGridDomain != null ? true : false,
                 child: Card(
@@ -195,15 +186,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
                           color: AppColor.backgroundLightBlue,
                           child: Padding(
                             padding: EdgeInsets.all(Dimens.paddingDefault),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  final ids = domains.map((e) => e.domainItem!.extension).toSet();
-                                  domains.retainWhere((x) => ids.remove(x.domainItem!.extension));
-                                  showHideAddToCart = true;
-                                  showHideGridList = false;
-                                });
-                              },
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
@@ -233,7 +215,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
                               ),
                             ),
                           ),
-                        )
                       ],
                     ),
                   ),

@@ -79,10 +79,8 @@ class _SuggestionListFormState extends State<SuggestionListForm> {
 
                                   DomainItemCart addedDomain = DomainItemCart(
                                       nameDomain: widget.domainsLogoSelected, domainItem: item);
-
                                     selectedDomainItemCart.add(addedDomain);
                                     widget.domainItemCart(addedDomain);
-
                                     setState(() {
                                       widget.callbackShow(true);
                                       widget.stateGrid(false);

@@ -66,10 +66,7 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
                   addSelectedDomainsCallback: (selectedDomainItemCarts) =>
                       setState(() => selectedDomains.add(selectedDomainItemCarts))),
 
-              CheckoutDomainWidget(
-                selectedDomainItemCarts: selectedDomains,
-                showHide: true
-              ),
+              CheckoutDomainWidget(selectedDomainItemCarts: selectedDomains),
             ]),
           ),
         ),

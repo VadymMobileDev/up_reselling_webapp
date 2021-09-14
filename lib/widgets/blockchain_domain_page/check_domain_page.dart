@@ -7,14 +7,9 @@ import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
-  final bool showHide;
 
   const CheckoutDomainWidget(
-      {Key? key,
-        required this.selectedDomainItemCarts,
-        required this.showHide,
-      })
-      : super(key: key);
+      {Key? key, required this.selectedDomainItemCarts}) : super(key: key);
 
   @override
   CheckoutDomainWidgetState createState() => CheckoutDomainWidgetState();
@@ -23,7 +18,7 @@ class CheckoutDomainWidget extends StatefulWidget {
 class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
 
   Widget build(BuildContext context) => Visibility(
-    visible: widget.showHide,
+    visible: widget.selectedDomainItemCarts.isNotEmpty,
     child: Card(
       color: AppColor.backgroundLightBlue,
       child: Column(

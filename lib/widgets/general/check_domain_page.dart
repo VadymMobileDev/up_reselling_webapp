@@ -29,23 +29,19 @@ class CheckDomainPage extends StatefulWidget {
 }
 
 class CheckDomainPageState extends State<CheckDomainPage> {
-  //late String dropdownValue = widget.enabled ? AppText.spinnerItems[0] : widget.domainEnabled;
   late String dropdownValue = AppText.spinnerItems[0];
-
   TextEditingController domainController = TextEditingController();
 
   @override
   Widget build(BuildContext context) => BlocListener<CheckDomainBloc, CheckDomainState>(
       listener: (context, state) {
         if (state is HasDataCheckDomain) {
-          print("--------- state.result.domain ${state.result.domain}");
-
           if (domainController.text.isNotEmpty) {
-              widget.domainCallback(state.result.domain);
-            }
-          } else {
-            Text(AppText.x_try_another_domain);
+            widget.domainCallback(state.result.domain);
           }
+        } else {
+          Text(AppText.x_try_another_domain);
+        }
       },
       child: Column(children: [
         Card(
@@ -62,10 +58,8 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                     child: Align(
                         alignment: Alignment.centerLeft,
                         child: TextField(
-                          //enabled: widget.enabled ? true : false,
                           maxLength: 40,
                           controller: domainController,
-                          //widget.enabled ? domainController : domainController = TextEditingController(text: widget.nameEnabled),
                           decoration: InputDecoration(
                             counterText: '',
                             focusedBorder: InputBorder.none,
@@ -88,14 +82,11 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         fontWeight: FontWeight.bold),
                     icon: Icon(Icons.arrow_drop_down),
                     underline: Container(height: 0),
-                    onChanged:
-                        //widget.enabled ?
-                        (String? data) {
+                    onChanged: (String? data) {
                       setState(() {
                         dropdownValue = data!;
                       });
                     },
-                    // : null,
                     items: AppText.spinnerItems.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -111,8 +102,6 @@ class CheckDomainPageState extends State<CheckDomainPage> {
         SizedBox(height: Dimens.paddingMedium),
         ElevatedButton(
             onPressed: () {
-
-              print("--------- ElevatedButton ${domainController.text}$dropdownValue");
               context
                   .read<CheckDomainBloc>()
                   .add(LoadCheckDomain(resellerID, "${domainController.text}$dropdownValue"));
