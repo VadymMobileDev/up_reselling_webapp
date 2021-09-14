@@ -7,14 +7,12 @@ import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
-  final CheckoutDomainAddCallback addCallback;
   final bool showHide;
 
   const CheckoutDomainWidget(
       {Key? key,
         required this.selectedDomainItemCarts,
         required this.showHide,
-        required this.addCallback,
       })
       : super(key: key);
 

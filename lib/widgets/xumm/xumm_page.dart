@@ -5,6 +5,7 @@ import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dar
 import 'package:up_reselling_webapp/repository/domain_repository.dart';
 import 'package:up_reselling_webapp/widgets/general/check_domain_page.dart';
 import 'package:up_reselling_webapp/widgets/general/widgets_repository.dart';
+import 'package:up_reselling_webapp/widgets/xumm/check_domain_xumm_page.dart';
 
 class XummPage extends StatefulWidget {
   XummPage({Key? key}) : super(key: key);
@@ -27,8 +28,7 @@ class _XummPageState extends State<XummPage> {
                 CardUnstoppableWidget(),
                 SizedBox(height: Dimens.paddingSemi),
                 CardPurchaseWidget(),
-                CheckDomainPage(
-                    enabled: true, nameEnabled: "", domainEnabled: "", selectedDomains: []),
+                CheckDomainXummPage(),
                 HelpCenterWidget(),
                 SpaceHeightWidget(),
                 BottomTextUnstoppableWidget()

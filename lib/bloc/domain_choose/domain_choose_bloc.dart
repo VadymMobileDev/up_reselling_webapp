@@ -21,12 +21,12 @@ class DomainChooseBloc extends Bloc<DomainChooseEvent, DomainChooseState> {
   Stream<DomainChooseState> loadDomainsListToState(String domains) async* {
     try {
       yield Loading();
-      var games = await repository.getDomainNameList(domains);
+      var domain = await repository.getDomainNameList(domains);
 
-      if (games.isEmpty) {
+      if (domain.isEmpty) {
         yield NoData("Domain Choose Found");
       } else {
-        yield HasData(games);
+        yield HasData(domain);
       }
     } on DioError {}
   }
