@@ -7,24 +7,18 @@ import 'package:up_reselling_webapp/widgets/payment/payment_page.dart';
 
 class CheckoutDomainWidget extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItemCarts;
-  final CheckoutDomainAddCallback addCallback;
-  final bool showHide;
 
   const CheckoutDomainWidget(
-      {Key? key,
-        required this.selectedDomainItemCarts,
-        required this.showHide,
-        required this.addCallback,
-      })
-      : super(key: key);
+      {Key? key, required this.selectedDomainItemCarts}) : super(key: key);
 
   @override
   CheckoutDomainWidgetState createState() => CheckoutDomainWidgetState();
 }
 
 class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
+
   Widget build(BuildContext context) => Visibility(
-    visible: widget.showHide,
+    visible: widget.selectedDomainItemCarts.isNotEmpty,
     child: Card(
       color: AppColor.backgroundLightBlue,
       child: Column(
@@ -78,7 +72,7 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
                                               onPressed: () {
                                                 setState(() {
                                                   widget.selectedDomainItemCarts.removeAt(index);
-                                                  widget.addCallback(item.domainItem);
+                                                  //widget.addCallback(item.domainItem);
                                                 });
                                               }),
                                       )
@@ -159,4 +153,5 @@ class CheckoutDomainWidgetState extends State<CheckoutDomainWidget> {
     });
     return total.toString();
   }
+
 }

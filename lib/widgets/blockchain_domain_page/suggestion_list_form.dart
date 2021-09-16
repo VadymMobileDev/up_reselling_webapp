@@ -12,7 +12,7 @@ class SuggestionListForm extends StatefulWidget {
   final List<DomainItem> listDomainSuggestion;
   final String domainsLogoSelected;
 
-  final SuggestionDomainListCallback callback;
+  final SuggestionDomainListCallback domainItemCart;
   final SuggestionShowCartCallback callbackShow;
   final SuggestionGridShowCartCallback stateGrid;
   final SuggestionGridRemoveCallback remove;
@@ -22,7 +22,7 @@ class SuggestionListForm extends StatefulWidget {
     required this.resellingValidate,
     required this.listDomainSuggestion,
     required this.domainsLogoSelected,
-    required this.callback,
+    required this.domainItemCart,
     required this.callbackShow,
     required this.stateGrid,
     required this.remove,
@@ -76,10 +76,11 @@ class _SuggestionListFormState extends State<SuggestionListForm> {
                                 icon: Icon(Icons.add_shopping_cart,
                                     color: AppColor.white, size: Dimens.paddingMedium),
                                 onPressed: () {
-                                    selectedDomainItemCart.add(DomainItemCart(
-                                        nameDomain: widget.domainsLogoSelected, domainItem: item));
 
-                                    widget.callback(selectedDomainItemCart);
+                                  DomainItemCart addedDomain = DomainItemCart(
+                                      nameDomain: widget.domainsLogoSelected, domainItem: item);
+                                    selectedDomainItemCart.add(addedDomain);
+                                    widget.domainItemCart(addedDomain);
                                     setState(() {
                                       widget.callbackShow(true);
                                       widget.stateGrid(false);

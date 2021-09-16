@@ -6,30 +6,23 @@ import 'package:up_reselling_webapp/application/style/dimens.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_event.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_state.dart';
-import 'package:up_reselling_webapp/models/domain_check.dart';
 
 import '../blockchain_domain_page/blockchain_domain_page.dart';
 
 const resellerID = "unstoppabledomains";
 
-class CheckDomainPage extends StatefulWidget {
-  final bool enabled;
-  final Domain domain;
-  final CheckDomainCallback domainCallback;
-
-  CheckDomainPage({
+class CheckDomainXummPage extends StatefulWidget {
+  CheckDomainXummPage({
     Key? key,
-    required this.enabled,
-    required this.domain,
-    required this.domainCallback,
   }) : super(key: key);
 
   @override
-  CheckDomainPageState createState() => CheckDomainPageState();
+  CheckDomainXummPageState createState() => CheckDomainXummPageState();
 }
 
-class CheckDomainPageState extends State<CheckDomainPage> {
+class CheckDomainXummPageState extends State<CheckDomainXummPage> {
   late String dropdownValue = AppText.spinnerItems[0];
+
   TextEditingController domainController = TextEditingController();
 
   @override
@@ -37,10 +30,13 @@ class CheckDomainPageState extends State<CheckDomainPage> {
       listener: (context, state) {
         if (state is HasDataCheckDomain) {
           if (domainController.text.isNotEmpty) {
-            widget.domainCallback(state.result.domain);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => BlockchainDomainPage(domain: state.result.domain,)));
+          } else {
+            Text(AppText.x_try_another_domain);
           }
-        } else {
-          Text(AppText.x_try_another_domain);
         }
       },
       child: Column(children: [
@@ -82,7 +78,8 @@ class CheckDomainPageState extends State<CheckDomainPage> {
                         fontWeight: FontWeight.bold),
                     icon: Icon(Icons.arrow_drop_down),
                     underline: Container(height: 0),
-                    onChanged: (String? data) {
+                    onChanged:
+                        (String? data) {
                       setState(() {
                         dropdownValue = data!;
                       });
