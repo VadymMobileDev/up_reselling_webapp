@@ -45,7 +45,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
   String oldDomainName = "";
 
 
-
   @override
   void didUpdateWidget(covariant GridListDomainPage oldWidget) {
     if(oldDomainName.isNotEmpty && oldDomainName != widget.domainsLogoSelected){
@@ -55,14 +54,12 @@ class _GridListDomainState extends State<GridListDomainPage> {
     super.didUpdateWidget(oldWidget);
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (stateGrid) {
        oldDomainName = widget.domainsLogoSelected;
       context.read<DomainChooseBloc>().add(LoadDomains(widget.domainsLogoSelected));
     }
-
     return BlocListener<DomainChooseBloc, DomainChooseState>(
         listener: (context, state) {
           if (state is HasData) {
@@ -245,8 +242,6 @@ class _GridListDomainState extends State<GridListDomainPage> {
         });
 
     }
-
-
     final ids = listDomainAll.map((e) => e.extension).toSet();
     listDomainAll.retainWhere((x) => ids.remove(x.extension));
   }
@@ -256,4 +251,3 @@ typedef void SuggestionDomainListCallback(DomainItemCart domainItemCart);
 typedef void SuggestionShowCartCallback(bool showHideAddToCart);
 typedef void SuggestionGridShowCartCallback(bool stateGrid);
 typedef void SuggestionGridRemoveCallback(int index);
-typedef void CheckoutDomainAddCallback(DomainItem? domainItemCart);
