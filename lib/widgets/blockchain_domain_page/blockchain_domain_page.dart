@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:up_reselling_webapp/bloc/check_domain_bloc/check_domain_bloc.dart';
+import 'package:up_reselling_webapp/bloc/currency_bloc/bloc.dart';
 import 'package:up_reselling_webapp/bloc/domain_choose/bloc.dart';
 import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/domains_list.dart';
@@ -44,6 +45,9 @@ class _BlockchainDomainPageState extends State<BlockchainDomainPage> {
         ),
         BlocProvider(
           create: (context) => CheckDomainBloc(repository: DomainRepository()),
+        ),
+        BlocProvider(
+          create: (context) => CurrencyDomainBloc(repository: DomainRepository()),
         ),
       ],
       child: Scaffold(

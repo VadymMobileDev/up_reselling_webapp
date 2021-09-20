@@ -1,3 +1,4 @@
+import 'package:up_reselling_webapp/models/currency_domain.dart';
 import 'package:up_reselling_webapp/models/domain_check.dart';
 import 'package:up_reselling_webapp/models/order.dart';
 import 'package:up_reselling_webapp/models/order_send.dart';
@@ -34,5 +35,10 @@ class DomainRepository implements Repository {
   @override
   Future<OrderSend> sendOrderNumber(String resellerID, String email, String json) async {
     return await apiRepository.sendOrderNumber(resellerID, email, json);
+  }
+
+  @override
+  Future<CurrencyDomain> getRatesCurrency(String keyHeader, String apiHeader, String currency) async {
+    return await apiRepository.getRatesCurrency(keyHeader, apiHeader, currency);
   }
 }

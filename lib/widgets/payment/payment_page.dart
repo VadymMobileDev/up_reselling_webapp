@@ -15,8 +15,9 @@ import 'email_payment_page.dart';
 
 class PaymentPage extends StatefulWidget {
   final List<DomainItemCart> selectedDomainItems;
+  final double currencyDomain;
 
-  PaymentPage({Key? key, required this.selectedDomainItems}) : super(key: key);
+  PaymentPage({Key? key, required this.selectedDomainItems, required this.currencyDomain}) : super(key: key);
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -54,7 +55,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 visible: !successPay,
                 child: Column(
               children: [
-                CardPaymentDataWidget(selectedDomainItems: widget.selectedDomainItems),
+                CardPaymentDataWidget(selectedDomainItems: widget.selectedDomainItems, currencyDomain: widget.currencyDomain),
                 EmailPaymentPage(callback: (v) => setState(() => email = v), showHidePay: showHidePay),
                 CreditCardAndCryptoPage(
                     callback: (val) => setState(() => showHidePay = val), showHidePay: showHidePay),

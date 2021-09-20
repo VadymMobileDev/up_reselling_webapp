@@ -51,6 +51,7 @@ class BeckToHomeOpenWidget extends StatelessWidget {
 
 class BackToHomeCloseWidget extends StatelessWidget {
   final bool blockchain;
+
   const BackToHomeCloseWidget({Key? key, required this.blockchain}) : super(key: key);
 
   Widget build(BuildContext context) => Padding(
@@ -71,10 +72,10 @@ class BackToHomeCloseWidget extends StatelessWidget {
                     icon: Icon(Icons.arrow_back_ios,
                         color: AppColor.black, size: Dimens.paddingMedium),
                     onPressed: () {
-                      if(blockchain){
+                      if (blockchain) {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => XummPage()), (route) => false);
-                      }else{
+                      } else {
                         Navigator.pop(context);
                       }
                     },
@@ -187,8 +188,11 @@ class BottomTextUnstoppableWidget extends StatelessWidget {
 
 class CardPaymentDataWidget extends StatelessWidget {
   final List<DomainItemCart> selectedDomainItems;
+  final double currencyDomain;
 
-  const CardPaymentDataWidget({Key? key, required this.selectedDomainItems}) : super(key: key);
+  const CardPaymentDataWidget(
+      {Key? key, required this.selectedDomainItems, required this.currencyDomain})
+      : super(key: key);
 
   Widget build(BuildContext context) => Card(
         color: AppColor.backgroundLightBlue,
@@ -202,10 +206,25 @@ class CardPaymentDataWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = selectedDomainItems[index];
                 return ListTile(
-                    title: TextBold(
-                        text: "${item.domainItem?.label}.${item.domainItem?.extension} - \$${item.domainItem!.price ~/ 100}",
-                        fontSize: Dimens.paddingMedium,
-                        color: AppColor.black));
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextBold(
+                          text:
+                              "${item.domainItem?.label}.${item.domainItem?.extension} - \$${item.domainItem!.price ~/ 100}",
+                          fontSize: Dimens.paddingMedium,
+                          color: AppColor.black),
+                      Row(
+                        children: [
+                          Text("~${(item.domainItem!.price ~/ 100) * currencyDomain} XRP",
+                              style: TextStyle(fontSize: Dimens.paddingSemi, color: AppColor.primaryBlue)),
+                          Text(" (\$${ item.domainItem!.price ~/ 100})",
+                              style: TextStyle(fontSize: Dimens.paddingSemi, color: AppColor.black)),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ),
@@ -237,8 +256,6 @@ class SpaceHeightWidget extends StatelessWidget {
         ),
       );
 }
-
-
 
 class TextBold extends StatelessWidget {
   final String text;
